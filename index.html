@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1B365D">
+<title>Foundations - Brainnovation Network</title>
+<style>
+:root{
+  --bn-navy:#1B365D;
+  --bn-navy-2:#0F2240;
+  --bn-blue:#407EC9;
+  --bn-light-blue:#8BD3E6;
+  --bn-teal:#6DCDB8;
+  --bn-gold:#F1B434;
+  --bn-pink:#E06287;
+  --bn-text:#1B365D;
+  --bn-muted:#5a6a82;
+  --bn-bg:#eef2f8;
+  --bn-card:#ffffff;
+  --bn-border:rgba(27,54,93,.10);
+  --radius:22px;
+  --radius-sm:14px;
+  --ease-spring:cubic-bezier(.34,1.4,.5,1);
+  --ease-out-quint:cubic-bezier(.22,1,.36,1);
+  --ease-in-quart:cubic-bezier(.5,0,.75,0);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bn-bg);color:var(--bn-text);
+  font-family:'Inter','Montserrat',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  background:
+    radial-gradient(80% 60% at 100% 0%, rgba(64,126,201,.18), transparent 60%),
+    radial-gradient(70% 60% at 0% 100%, rgba(141,211,230,.20), transparent 55%),
+    radial-gradient(60% 50% at 50% 50%, rgba(109,205,184,.10), transparent 60%),
+    linear-gradient(180deg, #eaf0fa 0%, #e9eef8 35%, #f0f4fb 100%);
+  background-attachment:fixed;
+}
+.wrap{max-width:880px;margin:0 auto;padding:24px 22px 60px;position:relative}
+
+/* ---- header ---- */
+header.site{
+  display:flex;align-items:center;gap:14px;padding:10px 18px;margin-bottom:18px;
+  background:rgba(255,255,255,.55);
+  backdrop-filter:blur(20px) saturate(160%);
+  -webkit-backdrop-filter:blur(20px) saturate(160%);
+  border:1px solid rgba(255,255,255,.6);
+  border-radius:18px;
+  box-shadow:0 8px 28px rgba(27,54,93,.08), inset 0 1px 0 rgba(255,255,255,.7);
+}
+.bn-logo{display:block;height:auto;width:auto;max-width:140px;max-height:34px;flex-shrink:0;
+  transition:transform 420ms var(--ease-spring), filter 220ms ease}
+.bn-logo.pulse{animation:logoPulse 700ms var(--ease-spring)}
+@keyframes logoPulse{
+  0%{transform:scale(1)}
+  35%{transform:scale(1.07);filter:drop-shadow(0 4px 14px rgba(64,126,201,.35))}
+  100%{transform:scale(1);filter:drop-shadow(0 0 0 transparent)}
+}
+header.site .title{color:var(--bn-navy);font-weight:700;font-size:14px;letter-spacing:.02em;flex:1}
+header.site .badge{font-size:11px;font-weight:700;color:var(--bn-blue);background:rgba(64,126,201,.10);padding:5px 10px;border-radius:99px;letter-spacing:.06em;text-transform:uppercase}
+
+h1{font-size:30px;line-height:1.2;margin:0 0 6px;color:var(--bn-navy);font-weight:800;letter-spacing:-.01em}
+h2{font-size:22px;margin:0 0 10px;color:var(--bn-navy);font-weight:700;letter-spacing:-.005em}
+h3{font-size:17px;margin:14px 0 8px;color:var(--bn-navy);font-weight:600}
+p{margin:0 0 14px}
+.lede{color:var(--bn-muted);margin:0 0 18px;font-size:15px;line-height:1.6}
+.tagline{font-style:italic;color:var(--bn-blue);font-size:16px;margin:0 0 20px;font-weight:500}
+
+/* ---- progress (modules) ---- */
+.progress-wrap{display:flex;align-items:center;gap:14px;margin:6px 0 18px;padding:14px 18px;
+  background:rgba(255,255,255,.55);backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,.55);border-radius:14px;
+  box-shadow:0 4px 14px rgba(27,54,93,.05);
+}
+.progress-track{flex:1;height:6px;background:rgba(27,54,93,.12);border-radius:99px;overflow:hidden;position:relative}
+.progress-fill{position:absolute;top:0;left:0;height:100%;background:linear-gradient(90deg,var(--bn-blue),var(--bn-light-blue));border-radius:99px;width:0%;transition:width 700ms var(--ease-spring);box-shadow:0 0 12px rgba(64,126,201,.4)}
+.progress-text{font-size:11px;font-weight:800;color:var(--bn-muted);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+
+/* ---- stage and modules ---- */
+.module-stage{position:relative;transition:height 460ms var(--ease-out-quint);will-change:height}
+.module-stage.measuring{transition:none}
+.module{
+  position:absolute;top:0;left:0;width:100%;
+  background:rgba(255,255,255,.78);
+  backdrop-filter:blur(28px) saturate(170%);
+  -webkit-backdrop-filter:blur(28px) saturate(170%);
+  border:1px solid rgba(255,255,255,.6);
+  border-radius:var(--radius);
+  padding:38px 34px 32px;
+  box-shadow:
+    0 1px 2px rgba(27,54,93,.04),
+    0 8px 24px rgba(27,54,93,.07),
+    0 32px 80px rgba(27,54,93,.08),
+    inset 0 1px 0 rgba(255,255,255,.85);
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(18px) scale(.97);
+  filter:blur(0);
+  transition:
+    opacity 280ms var(--ease-in-quart),
+    transform 280ms var(--ease-in-quart),
+    filter 220ms var(--ease-in-quart);
+  will-change:opacity,transform,filter;
+}
+.module::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(110% 70% at 50% -8%,rgba(64,126,201,.10),transparent 55%);
+  opacity:.7;
+}
+.module.active{
+  position:relative;
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0) scale(1);
+  filter:blur(0);
+  transition:
+    opacity 540ms var(--ease-spring) 80ms,
+    transform 620ms var(--ease-spring) 80ms,
+    filter 220ms var(--ease-out-quint) 80ms;
+}
+.module.exiting-forward{
+  opacity:0;
+  transform:translateY(-18px) scale(.96);
+  filter:blur(8px);
+  transition:opacity 240ms var(--ease-in-quart),transform 280ms var(--ease-in-quart),filter 240ms var(--ease-in-quart);
+}
+.module.exiting-back{
+  opacity:0;
+  transform:translateY(18px) scale(.96);
+  filter:blur(8px);
+  transition:opacity 240ms var(--ease-in-quart),transform 280ms var(--ease-in-quart),filter 240ms var(--ease-in-quart);
+}
+.module.entering-back{transform:translateY(-18px) scale(.97)}
+.module.stale{display:none !important}
+.module.shake{animation:shake 360ms var(--ease-out-quint)}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+
+/* staggered children */
+.module.active > .module-body > *{
+  animation:moduleChild 620ms var(--ease-spring) backwards;
+}
+.module.active > .module-body > *:nth-child(1){animation-delay:140ms}
+.module.active > .module-body > *:nth-child(2){animation-delay:200ms}
+.module.active > .module-body > *:nth-child(3){animation-delay:260ms}
+.module.active > .module-body > *:nth-child(4){animation-delay:320ms}
+.module.active > .module-body > *:nth-child(5){animation-delay:380ms}
+.module.active > .module-body > *:nth-child(6){animation-delay:440ms}
+.module.active > .module-body > *:nth-child(7){animation-delay:500ms}
+@keyframes moduleChild{0%{opacity:0;transform:translateY(18px) scale(.97);filter:blur(4px)}60%{opacity:1;transform:translateY(-2px) scale(1.005);filter:blur(0)}100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+
+.mod-num{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;color:var(--bn-blue);letter-spacing:.12em;text-transform:uppercase;background:rgba(64,126,201,.10);padding:6px 12px;border-radius:99px;margin-bottom:14px}
+.mod-num .dot{width:6px;height:6px;background:var(--bn-blue);border-radius:50%;box-shadow:0 0 8px rgba(64,126,201,.6)}
+.mod-title{font-size:24px;font-weight:700;color:var(--bn-navy);line-height:1.3;margin-bottom:10px;letter-spacing:-.005em}
+.mod-objective{color:var(--bn-muted);font-size:14px;font-weight:500;margin-bottom:22px;padding-left:14px;border-left:3px solid var(--bn-blue)}
+.module-body{position:relative;z-index:1}
+.body-text{font-size:16px;line-height:1.65;color:#293b54;margin-bottom:22px}
+.body-text p{margin-bottom:14px}
+.body-text p{margin:0 0 14px;font-size:16px;line-height:1.65;color:#293b54}
+.body-text p:last-child{margin-bottom:0}
+.body-text .body-heading{font-size:15px;font-weight:800;color:var(--bn-navy);text-transform:uppercase;letter-spacing:.06em;margin:24px 0 12px;padding-left:14px;border-left:3px solid var(--bn-blue)}
+.body-text .body-heading:first-child{margin-top:0}
+.body-text .body-quote{margin:18px 0;padding:18px 22px 18px 24px;background:linear-gradient(135deg,rgba(64,126,201,.08),rgba(141,211,230,.10));border-left:4px solid var(--bn-blue);border-radius:0 14px 14px 0;font-size:17px;line-height:1.55;font-weight:600;font-style:italic;color:var(--bn-navy);position:relative}
+.body-text .body-quote::before{content:\"\201C\";position:absolute;top:-12px;left:14px;font-size:48px;color:var(--bn-blue);font-family:Georgia,serif;line-height:1;background:var(--bn-card);padding:0 6px}
+.body-text .body-list,.body-text .body-list-num{margin:14px 0 18px;padding-left:0;list-style:none}
+.body-text .body-list li,.body-text .body-list-num li{position:relative;padding:6px 0 6px 30px;font-size:15.5px;line-height:1.6;color:#293b54;border-bottom:1px solid rgba(64,126,201,.08)}
+.body-text .body-list li:last-child,.body-text .body-list-num li:last-child{border-bottom:0}
+.body-text .body-list li::before{content:\"\";position:absolute;left:8px;top:14px;width:8px;height:8px;border-radius:50%;background:var(--bn-blue);box-shadow:0 0 0 3px rgba(64,126,201,.15)}
+.body-text .body-list-num{counter-reset:bn-step}
+.body-text .body-list-num li{counter-increment:bn-step;padding-left:42px}
+.body-text .body-list-num li::before{content:counter(bn-step);position:absolute;left:0;top:6px;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--bn-blue),var(--bn-light-blue));color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(64,126,201,.30)}
+.body-text strong{font-weight:700;color:var(--bn-navy);background:linear-gradient(180deg,transparent 60%,rgba(241,180,52,.30) 60%);padding:0 2px}
+
+/* ---- key facts callout ---- */
+.key-facts{background:linear-gradient(135deg,rgba(64,126,201,.08),rgba(141,211,230,.10));border-left:4px solid var(--bn-blue);padding:16px 18px 12px;border-radius:0 14px 14px 0;margin:18px 0}
+.key-facts h4{font-size:11px;font-weight:800;color:var(--bn-blue);letter-spacing:.12em;text-transform:uppercase;margin:0 0 10px}
+.key-facts ul{margin:0;padding-left:18px}
+.key-facts li{margin:0 0 8px;font-size:14px;color:#34465f}
+.key-facts li:last-child{margin-bottom:0}
+
+/* ---- myth callout ---- */
+.myth-card{background:linear-gradient(135deg,rgba(241,180,52,.08),rgba(224,98,135,.06));border:1px solid rgba(241,180,52,.30);border-radius:14px;padding:16px 18px;margin:18px 0;position:relative}
+.myth-card::before{content:"\2728";position:absolute;top:-12px;left:14px;background:var(--bn-card);padding:0 6px;font-size:18px}
+.myth-card h4{font-size:11px;font-weight:800;color:#a17500;letter-spacing:.12em;text-transform:uppercase;margin:0 0 6px}
+.myth-card p{margin:0;font-size:14px;color:#5a4a25}
+
+/* clinician note callout */
+.clinician-note{background:linear-gradient(135deg,rgba(64,126,201,.06),rgba(109,205,184,.08));border:1px solid rgba(64,126,201,.25);border-left:4px solid var(--bn-blue);border-radius:0 14px 14px 0;padding:16px 18px;margin:18px 0;position:relative}
+.clinician-note::before{content:"\2695\FE0F";position:absolute;top:-12px;left:14px;background:var(--bn-card);padding:0 6px;font-size:16px}
+.clinician-note h4{font-size:11px;font-weight:800;color:var(--bn-navy);letter-spacing:.12em;text-transform:uppercase;margin:0 0 6px}
+.clinician-note p{margin:0;font-size:13.5px;color:#34465f;line-height:1.55}
+
+/* ---- citations toggle ---- */
+.citations{margin-top:18px;font-size:12px}
+.citations summary{cursor:pointer;font-weight:600;color:var(--bn-muted);font-size:12px;letter-spacing:.05em;text-transform:uppercase;list-style:none;display:inline-flex;align-items:center;gap:6px}
+.citations summary::-webkit-details-marker{display:none}
+.citations summary::before{content:"\203A";display:inline-block;transition:transform .25s var(--ease-out-quint);font-weight:800}
+.citations[open] summary::before{transform:rotate(90deg)}
+.citations ol{margin:8px 0 0;padding-left:18px;color:var(--bn-muted);line-height:1.5}
+.citations li{margin-bottom:6px;font-size:11px}
+
+/* ---- nav ---- */
+.module-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:22px;padding:12px 16px;background:rgba(255,255,255,.55);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.55);border-radius:14px}
+.btn{
+  appearance:none;border:0;background:var(--bn-navy);color:#fff;font-weight:600;
+  padding:13px 22px;border-radius:12px;font-size:15px;cursor:pointer;
+  font-family:inherit;min-height:48px;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  transition:background 200ms var(--ease-out-quint),transform 200ms var(--ease-spring),box-shadow 200ms var(--ease-out-quint);
+  box-shadow:0 4px 14px rgba(27,54,93,.18);
+}
+.btn:hover{background:#142844;transform:translateY(-2px);box-shadow:0 10px 26px rgba(27,54,93,.28)}
+.btn:active{transform:translateY(0) scale(.98)}
+.btn:disabled{background:#9aa5b8;cursor:not-allowed;transform:none;box-shadow:none;opacity:.65}
+.btn.ghost{background:rgba(255,255,255,.7);color:var(--bn-navy);border:1.5px solid rgba(27,54,93,.15);box-shadow:0 2px 8px rgba(27,54,93,.06)}
+.btn.ghost:hover{background:rgba(255,255,255,.95);border-color:var(--bn-blue)}
+.btn.ghost-hidden{visibility:hidden}
+.btn .arrow{font-size:18px;line-height:1}
+
+/* ---- click ripple ---- */
+.click-ripple{
+  position:fixed;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(64,126,201,.50) 0%,rgba(64,126,201,.18) 35%,rgba(64,126,201,0) 70%);
+  transform:translate(-50%,-50%) scale(0);
+  animation:clickRipple 700ms var(--ease-out-quint) forwards;
+  z-index:9999;
+  width:140px;height:140px;
+}
+@keyframes clickRipple{0%{transform:translate(-50%,-50%) scale(.1);opacity:1}80%{opacity:.3}100%{transform:translate(-50%,-50%) scale(2.5);opacity:0}}
+
+/* ---- interactivity components ---- */
+
+/* reveal_cards */
+.reveal-stack{display:grid;gap:12px;margin:14px 0}
+.reveal-card{
+  position:relative;background:rgba(255,255,255,.65);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1.5px solid rgba(64,126,201,.20);border-radius:14px;
+  padding:18px 20px;cursor:pointer;text-align:left;font-family:inherit;
+  transition:transform 280ms var(--ease-spring),box-shadow 280ms var(--ease-out-quint),border-color 220ms ease,background 220ms ease;
+  overflow:hidden;
+}
+.reveal-card:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(27,54,93,.12);border-color:var(--bn-blue)}
+.reveal-card .reveal-front{font-weight:600;color:var(--bn-navy);font-size:15px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.reveal-card .reveal-front::after{content:"+";font-size:22px;color:var(--bn-blue);font-weight:300;transition:transform .35s var(--ease-spring)}
+.reveal-card[data-revealed="true"] .reveal-front::after{transform:rotate(45deg)}
+.reveal-card .reveal-back{
+  font-size:14px;color:#3b4f6e;margin-top:0;max-height:0;overflow:hidden;
+  transition:max-height 460ms var(--ease-out-quint),margin-top 280ms ease,opacity 320ms ease;
+  opacity:0;
+}
+.reveal-card[data-revealed="true"]{background:rgba(255,255,255,.92);border-color:var(--bn-blue);box-shadow:0 8px 22px rgba(64,126,201,.18)}
+.reveal-card[data-revealed="true"] .reveal-back{max-height:600px;margin-top:12px;opacity:1}
+
+/* before_after */
+.before-after{margin:14px 0}
+.ba-tabs{display:inline-flex;background:rgba(27,54,93,.06);border-radius:99px;padding:4px;margin-bottom:14px;gap:0}
+.ba-tab{appearance:none;border:0;background:transparent;color:var(--bn-muted);font-weight:600;padding:8px 18px;border-radius:99px;cursor:pointer;font-family:inherit;font-size:14px;transition:all 280ms var(--ease-spring)}
+.ba-tab.active{background:var(--bn-navy);color:#fff;box-shadow:0 4px 12px rgba(27,54,93,.25)}
+.ba-panels{position:relative;min-height:120px}
+.ba-panel{
+  position:absolute;inset:0;background:rgba(255,255,255,.65);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(64,126,201,.18);border-radius:14px;padding:18px 20px;
+  opacity:0;pointer-events:none;transform:translateY(8px);
+  transition:opacity 320ms var(--ease-out-quint),transform 380ms var(--ease-spring);
+}
+.ba-panel.active{position:relative;opacity:1;pointer-events:auto;transform:translateY(0)}
+.ba-panel h5{font-size:13px;font-weight:800;color:var(--bn-blue);text-transform:uppercase;letter-spacing:.08em;margin:0 0 8px}
+.ba-panel p{font-size:14px;color:#34465f;margin:0 0 8px;line-height:1.6}
+
+/* diagram_click */
+.diagram{position:relative;background:rgba(255,255,255,.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(64,126,201,.18);border-radius:16px;padding:20px;margin:14px 0;min-height:280px}
+.diagram-svg{width:100%;height:auto;display:block}
+.diagram-hotspot{cursor:pointer;transition:transform 280ms var(--ease-spring),filter 280ms ease}
+.diagram-hotspot:hover{filter:drop-shadow(0 0 8px rgba(64,126,201,.6))}
+.diagram-hotspot.active{filter:drop-shadow(0 0 12px rgba(64,126,201,.9))}
+.diagram-info{margin-top:12px;padding:14px 16px;background:rgba(64,126,201,.08);border-left:3px solid var(--bn-blue);border-radius:0 12px 12px 0;font-size:14px;color:#34465f;min-height:56px;transition:background 280ms ease}
+.diagram-info strong{color:var(--bn-navy)}
+
+/* drag_match */
+.drag-match{margin:14px 0}
+.dm-instruction{font-size:13px;color:var(--bn-muted);margin-bottom:14px;font-style:italic}
+.dm-board{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dm-col{background:rgba(255,255,255,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(64,126,201,.15);border-radius:14px;padding:16px;min-height:60px}
+.dm-col h5{font-size:11px;font-weight:800;color:var(--bn-blue);text-transform:uppercase;letter-spacing:.08em;margin:0 0 10px}
+.dm-item{padding:10px 14px;background:rgba(255,255,255,.85);border:1.5px solid rgba(64,126,201,.18);border-radius:10px;margin-bottom:8px;cursor:grab;font-size:14px;color:var(--bn-navy);font-weight:500;user-select:none;transition:transform 200ms var(--ease-spring),box-shadow 200ms ease,border-color 200ms ease}
+.dm-item:active{cursor:grabbing}
+.dm-item.dragging{opacity:.5;transform:scale(.97)}
+.dm-item.matched{background:rgba(109,205,184,.18);border-color:var(--bn-teal);color:#0e5240}
+.dm-slot{padding:14px 16px;background:rgba(64,126,201,.04);border:1.5px dashed rgba(64,126,201,.30);border-radius:10px;margin-bottom:8px;min-height:48px;display:flex;align-items:center;font-size:14px;color:var(--bn-muted);transition:all 200ms ease}
+.dm-slot.over{background:rgba(64,126,201,.10);border-color:var(--bn-blue);border-style:solid}
+.dm-slot.filled{border-style:solid;border-color:var(--bn-teal);background:rgba(109,205,184,.10);color:var(--bn-navy);font-weight:500}
+.dm-slot .dm-target{display:block;font-size:13px;color:var(--bn-muted);margin-bottom:4px;font-style:italic}
+.dm-feedback{margin-top:14px;padding:12px 16px;border-radius:12px;font-size:14px;font-weight:500;display:none}
+.dm-feedback.success{display:block;background:rgba(109,205,184,.18);border-left:3px solid var(--bn-teal);color:#0e5240}
+
+/* micro_quiz */
+.mquiz{margin:14px 0}
+.mquiz-q{margin-bottom:18px}
+.mquiz-q:last-child{margin-bottom:0}
+.mquiz-prompt{font-size:15px;font-weight:600;color:var(--bn-navy);margin-bottom:12px;line-height:1.5}
+.mquiz-opts{display:flex;flex-direction:column;gap:8px}
+.mquiz-opt{appearance:none;border:1.5px solid rgba(64,126,201,.20);background:rgba(255,255,255,.7);color:var(--bn-navy);padding:13px 16px;border-radius:12px;font-size:14px;text-align:left;cursor:pointer;font-family:inherit;font-weight:500;transition:all 200ms var(--ease-spring);position:relative;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.mquiz-opt:hover:not(:disabled){border-color:var(--bn-blue);background:rgba(255,255,255,.95);transform:translateY(-1px);box-shadow:0 6px 16px rgba(64,126,201,.12)}
+.mquiz-opt.correct{background:rgba(109,205,184,.20);border-color:var(--bn-teal);color:#0e5240}
+.mquiz-opt.correct::after{content:"\2713";color:var(--bn-teal);font-weight:800;font-size:18px}
+.mquiz-opt.incorrect{background:rgba(224,98,135,.18);border-color:var(--bn-pink);color:#7a1d3a}
+.mquiz-opt.incorrect::after{content:"\2715";color:var(--bn-pink);font-weight:800;font-size:18px}
+.mquiz-opt:disabled{cursor:default}
+.mquiz-explain{margin-top:12px;padding:12px 16px;background:rgba(64,126,201,.08);border-left:3px solid var(--bn-blue);border-radius:0 12px 12px 0;font-size:13px;color:#34465f;display:none}
+.mquiz-explain.show{display:block;animation:fadeIn 360ms var(--ease-spring)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* slider_explore */
+.slider-explore{margin:14px 0;padding:20px;background:rgba(255,255,255,.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(64,126,201,.16);border-radius:16px}
+.se-visual{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px;background:rgba(255,255,255,.7);border-radius:12px;margin:14px 0}
+.se-body-figure{width:130px;height:auto;display:block}
+.se-body-figure .pain-region{transition:rx 220ms var(--ease-out-quint),ry 220ms var(--ease-out-quint),opacity 220ms var(--ease-out-quint),cy 220ms var(--ease-out-quint)}
+.se-vis-caption{font-size:11px;font-weight:700;color:var(--bn-muted);letter-spacing:.06em;text-transform:uppercase;text-align:center}
+.breath-stage{position:relative;width:170px;height:170px;display:flex;align-items:center;justify-content:center}
+.breath-circle{width:78px;height:78px;border-radius:50%;background:radial-gradient(circle at 35% 35%,var(--bn-light-blue),var(--bn-blue));box-shadow:0 8px 28px rgba(64,126,201,.35);transition:transform var(--breath-dur,4s) ease-in-out;will-change:transform}
+.breath-circle.inhale{transform:scale(1.7)}
+.breath-circle.exhale{transform:scale(.85)}
+.breath-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:14px;font-weight:700;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.4);pointer-events:none;letter-spacing:.04em}
+.bn-slider{display:block;width:100%;height:44px;margin:18px 0 6px;cursor:pointer;accent-color:var(--bn-blue);position:relative;z-index:5;pointer-events:auto !important;-webkit-transform:translateZ(0);transform:translateZ(0);-webkit-appearance:auto;touch-action:pan-y;-webkit-tap-highlight-color:rgba(0,0,0,0)}
+.se-label{font-size:14px;font-weight:600;color:var(--bn-navy);margin-bottom:12px}
+.se-anchors{display:flex;justify-content:space-between;font-size:12px;color:var(--bn-muted);margin-top:-8px;margin-bottom:14px}
+.se-output{padding:14px 16px;background:linear-gradient(135deg,rgba(27,54,93,.05),rgba(64,126,201,.08));border-radius:12px;font-size:14px;color:#34465f;min-height:60px;transition:background 280ms ease}
+.se-output strong{color:var(--bn-navy);display:block;margin-bottom:4px;font-size:15px}
+
+/* timeline_scrub */
+.timeline{margin:14px 0;padding:20px;background:rgba(255,255,255,.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(64,126,201,.16);border-radius:16px}
+.tl-track{position:relative;height:6px;background:rgba(27,54,93,.12);border-radius:99px;margin:30px 16px 50px}
+.tl-fill{position:absolute;top:0;left:0;height:100%;background:linear-gradient(90deg,var(--bn-blue),var(--bn-light-blue));border-radius:99px;width:0%;transition:width 460ms var(--ease-spring)}
+.tl-marker{position:absolute;top:50%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;background:#fff;border:2.5px solid var(--bn-blue);cursor:pointer;transition:all 280ms var(--ease-spring);z-index:2}
+.tl-marker:hover,.tl-marker.active{transform:translate(-50%,-50%) scale(1.35);box-shadow:0 0 0 6px rgba(64,126,201,.20)}
+.tl-marker.active{background:var(--bn-blue)}
+.tl-label{position:absolute;top:24px;left:50%;transform:translateX(-50%);font-size:11px;font-weight:700;color:var(--bn-navy);white-space:nowrap}
+.tl-info{padding:14px 16px;background:linear-gradient(135deg,rgba(27,54,93,.05),rgba(64,126,201,.08));border-radius:12px;font-size:14px;color:#34465f;margin-top:14px;transition:background 320ms ease}
+.tl-info strong{color:var(--bn-navy);display:block;margin-bottom:4px;font-size:15px}
+
+
+/* drag_match bucket variant */
+.dm-board-bucket{display:grid;grid-template-columns:1fr;gap:14px}
+.dm-pool{display:flex;flex-wrap:wrap;gap:8px}
+.dm-pool .dm-item{margin-bottom:0}
+.dm-bucket{padding:14px 16px;background:rgba(64,126,201,.05);border:1.5px dashed rgba(64,126,201,.30);border-radius:12px;margin-bottom:10px;transition:all 200ms ease}
+.dm-bucket.over{background:rgba(64,126,201,.10);border-color:var(--bn-blue);border-style:solid}
+.dm-bucket-label{font-weight:700;color:var(--bn-navy);font-size:14px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.04em}
+.dm-bucket-items{display:flex;flex-wrap:wrap;gap:6px;min-height:36px}
+.dm-bucket-items .dm-item{background:rgba(109,205,184,.18);border-color:var(--bn-teal);color:#0e5240;cursor:default;font-size:13px;padding:6px 10px}
+@media (max-width:600px){.dm-board-bucket{grid-template-columns:1fr}}
+
+/* comparison_table */
+.cmp{margin:14px 0;background:rgba(255,255,255,.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(64,126,201,.16);border-radius:16px;overflow:hidden}
+.cmp-grid{display:grid;gap:1px;background:rgba(64,126,201,.12)}
+.cmp-grid.cols-2{grid-template-columns:1fr 1fr}
+.cmp-grid.cols-3{grid-template-columns:1fr 1fr 1fr}
+.cmp-grid.cols-4{grid-template-columns:1fr 1fr 1fr 1fr}
+.cmp-cell{background:rgba(255,255,255,.85);padding:12px 14px;font-size:13px;color:#34465f;line-height:1.5}
+.cmp-cell.head{background:rgba(64,126,201,.08);font-weight:700;color:var(--bn-navy);font-size:13px;text-transform:uppercase;letter-spacing:.04em}
+.cmp-cell.row-label{font-weight:600;color:var(--bn-navy);background:rgba(255,255,255,.95)}
+
+/* completion screen */
+.completion{text-align:center;padding:30px 20px}
+.completion h1{font-size:28px;margin-bottom:6px}
+.completion-icon{font-size:56px;margin-bottom:14px;display:inline-block;animation:bounceIn 800ms var(--ease-spring)}
+@keyframes bounceIn{0%{transform:scale(0)}55%{transform:scale(1.18)}100%{transform:scale(1)}}
+.completion-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:14px;margin:24px 0}
+.completion-stats .stat{padding:14px 16px;background:rgba(64,126,201,.08);border-radius:12px}
+.completion-stats .stat .n{font-size:24px;font-weight:800;color:var(--bn-navy)}
+.completion-stats .stat .l{font-size:11px;color:var(--bn-muted);font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+
+/* toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(0);background:var(--bn-navy);color:#fff;padding:11px 20px;border-radius:99px;font-size:14px;box-shadow:0 8px 22px rgba(27,54,93,.30);z-index:50;opacity:0;transition:opacity .25s,transform .25s var(--ease-spring);pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(-8px)}
+
+.hidden{display:none !important}
+
+/* responsive */
+@media (max-width:600px){
+  .wrap{padding:18px 14px 40px}
+  .module{padding:28px 22px 24px}
+  h1{font-size:24px}
+  .mod-title{font-size:20px}
+  .dm-board{grid-template-columns:1fr}
+  .cmp-grid.cols-3,.cmp-grid.cols-4{grid-template-columns:1fr 1fr;font-size:12px}
+}
+
+/* reduced motion */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.01ms !important;animation-duration:.01ms !important;animation-iteration-count:1 !important;scroll-behavior:auto !important}
+}
+button:focus-visible,.reveal-card:focus-visible,.mquiz-opt:focus-visible{outline:3px solid var(--bn-gold);outline-offset:2px}
+</style>
+</head>
+<body>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div class="wrap">
+  <header class="site no-ripple">
+    <svg class="bn-logo" viewBox="0 0 1786 600" role="img" aria-label="Brainnovation Network" xmlns="http://www.w3.org/2000/svg"><path fill="#c0c39c" stroke="#c0c39c" d="m1522.5 0 2.5.5-2.5.5zm7 0 2.5.5-2.5.5zm-9 1v1zm13 0 2.5 1.5-1.5-.5q-2.4-.1-1-1Zm-15 1v1zm-2 1 .5.5-3.5 3.5-.5-.5zm21 0 3.5 3.5-.5.5-3.5-3.5zm-25 5v1zm29 0v1zm-30 2v1zm31 0v1zm1 3 .5 29.5h-1zm-33 1 .5 27.5h-1zm1 30 .5 1.5h-1zm31 1v1zm-30 2q2.5 1 1 2-2.5-1-1-2Zm29 0v1zm-1 2 .5.5-3.5 3.5-.5-.5zm-26 1 2.5 2.5-.5.5-2.5-2.5zm4 3v1zm17 0v1zm-15 1v1zm13 0v1zm-10 1 2.5.5-2.5.5zm5 0 3.5.5-3.5.5zm3 33v1zm6 3v1zm-22 1q1.5 1-1 2-1.5-1 1-2Zm25 2v1zm-28 2v1zm-1 2v1zm148 2 2.5.5-2.5.5zm6 0 2.5.5-2.5.5zm-9 1v1zm13 0v1zm-15 1v1zm17 0v1zm2 1 2.5 2.5-.5.5-2.5-2.5zm4 5v1zm1 2v1zm1 3 .5 7.5h-1zm-1 10v1zm-1 2q1.5 1-1 2-1.5-1 1-2Zm-54 8v1zm-1 2v1zm-1 2 .5 1.5h-1zm-9 7 .5 7.5h-1zm9 2 .5 1.5h-1zm-184 3 5.5.5-5.5.5zm185 0v1zm-189 1 1.5.5-1.5.5zm13 0v1zm-15 1q1.5 1-1 2-1.5-1 1-2Zm17 0q2.5 1 1 2-2.5-1-1-2Zm175 0q2.5 1 1 2-2.5-1-1-2Zm-10 3 2.5 4.5q-1 1.5-2-1-1.7-1.5-.5-3.5Zm14 1q2.5 1 1 2-2.5-1-1-2Zm20 0q1.5 1-1 2-1.5-1 1-2Zm-221 1q1.5 1-1 2-1.5-1 1-2Zm204 1v1zm14 0v1zm-11 1 1.5.5-1.5.5zm7 0 1.5.5-1.5.5zm-216 1 .5 1.5h-1zm192 1 4.5 4.5-.5.5-4.5-4.5zm-193 3 .5 5.5h-1zm199 2v1zm2 1v1zm3 1 1.5.5-1.5.5zm7 2 .5.5-62 62 .5.5 105.5.5-107.5.5-.5-.5zm-210 2v1zm2 4v1zm90 53 .5 1.5h-1zm21 0v1zm-2 1v1zm-2 1v1zm-4 1v1zm9 0 .5 1.5h-1zm-1189 1 7.5.5-7.5.5zm779 0 7.5.5-7.5.5zm249 0 65.5.5-65.5.5zm138 0v1zm199 0 57.5.5-57.5.5zm-1369 1 1.5.5q-5.7 1.8-8.5 6.5l-.5-.5 5.5-5.5zm13 0 1.5.5-1.5.5zm767 0v1zm13 0v1zm235 0 1.5.5-1.5.5zm72 0 1.5.5-1.5.5zm236 0v1zm30 0v1zm63 0 1.5.5-1.5.5zm-1413 1 5.5 4.5-.5.5-3-3q-3.8-.7-2-2Zm762 0v1zm17 0v1zm231 0v1zm77 0q2.5 1 1 2-2.5-1-1-2Zm66 0v1zm25 0q2.5 1 1 2-2.5-1-1-2Zm144 0v1zm26 0v1zm68 0q2.5 1 1 2-2.5-1-1-2Zm-656 1 .5.5-4.5 4.5-.5-.5zm21 0 3.5 3.5-.5.5-3.5-3.5zm227 0 .5.5-4 4-1.5 2.5.5-1.5zm316 0 4.5 4.5-.5.5-4.5-4.5zm22 0 .5.5-4.5 4.5-.5-.5zm-256 1 2.5 2.5-.5.5-2.5-2.5zm329 0q2.5 1 1 2-2.5-1-1-2Zm-290 3q2.5 1 1 2-2.5-1-1-2Zm19 0q1.5 1-1 2-1.5-1 1-2Zm35 0q2.5 1 1 2-2.5-1-1-2Zm-1177 1v1zm779 0 1.5 2.5h-1zm308 0v1zm329 0v1zm-1446 1v1zm779 0v1zm377 0 1.5.5-1.5.5zm13 0v1zm41 0 1.5.5-1.5.5zm143 0v1zm12 0v1zm-1334 1v1zm1087 0v1zm42 0 5.5.5-5.5.5zm53 0v1zm234 0v1zm-1448 1 .5 1.5h-1zm779 0 .5 1.5h-1zm248 0 .5 1.5h-1zm328 0v1zm10 0 .5 1.5h-1zm-1332 1 .5 3.5h-1zm779 0 .5 1.5h-1zm308 0 .5 3.5h-1zm93 1 .5 8.5h-1zm236 0 .5 8.5h-1zm-93 2 .5 4.5h-1zm-1357 1 .5 1.5h-1zm34 3 .5 2.5h-1zm1087 0 .5 2.5h-1zm-308 1 .5 2.5h-1zm-33 1 .5 1.5h-1zm248 0 .5 1.5h-1zm338 0 .5 1.5h-1zm-1365 1 2.5 4.5q-1 1.5-2-1zm1355 0 .5 1.5-2.5 3.5.5-1.5zm-1323 1 .5 1.5-5.5 6.5-.5-.5 4-4zm1087 0 .5 1.5q-1 2.5-2 1zm95 0v1zm234 0v1zm-668 1v1zm31 0v1zm217 0v1zm338 0v1zm81 1v1zm-666 1q2.5 1 1 2-2.5-1-1-2Zm29 0 .5.5-5.5 5.5-3 1v-1q5.8-1.2 8-6Zm219 0q2.8 4.8 8.5 6.5l-1.5.5-7.5-6.5zm338 0q2.5 1 1 2-2.5-1-1-2Zm-250 1 .5.5-3.5 3.5-.5-.5zm329 0 .5.5-3.5 3.5-.5-.5zm-1443 1q2.5 1 1 2-2.5-1-1-2Zm1367 1 2.5 2.5-.5.5-2.5-2.5zm-1364 1q2.5 1 1 2-2.5-1-1-2Zm779 0q2.5 1 1 2-2.5-1-1-2Zm564 0q1.5 1-1 2-1.5-1 1-2Zm-1324 1v1zm1087 0v1zm76 0 5.5.5-5.5.5zm253 0v1zm-1432 1 1.5.5-1.5.5zm14 0v1zm765 0 1.5.5-1.5.5zm322 0v1zm75 0v1zm11 0 1.5.5-1.5.5zm150 0v1zm28 0 1.5.5-1.5.5zm65 0v1zm-1427 1 8.5.5-8.5.5zm779 0 9.5.5-9.5.5zm248 0 68.5.5-68.5.5zm143 0 1.5.5-3.5 2.5-.5-.5zm17 0q2.5 1 1 2-2.5-1-1-2Zm36 0 108.5.5-108.5.5zm142 0 59.5.5-59.5.5zm-199 4 .5.5-2 2-1.5 3.5-.5-1.5zm-4 8 .5 72.5h-1zm33 8 .5 64.5h-1zm80 44 1.5.5-1.5.5zm7 0 1.5.5-1.5.5zm-10 1v1zm14 0v1zm-16 1q1.5 1-1 2-1.5-1 1-2Zm18 0q2.5 1 1 2-2.5-1-1-2Zm-22 4q1.5 1-1 2-1.5-1 1-2Zm-2 3v1zm-1 2 .5 1.5h-1zm0 9 .5 1.5h-1zm-100 3v1zm31 0v1zm70 0v1zm-100 2v1zm29 0v1zm72 0v1zm-100 2 3.5 3.5-.5.5-3.5-3.5zm27 0 .5.5-4.5 4.5-2 1q-1.5-1 1-2zm-22 4 2.5 1.5-1.5.5q-2.5-1-1-2Zm4 2 1.5.5-1.5.5zm8 0 1.5.5-1.5.5zm154 17q2.5 1 1 2-2.5-1-1-2Zm2 3v1zm1 3 .5 1.5h-1zm0 7 .5 1.5h-1zm-1 4v1zm-1 2q1.5 1-1 2-1.5-1 1-2Zm-4 4q1.5 1-1 2-1.5-1 1-2Zm-19 1v1zm2 1v1zm14 0v1zm-12 1 1.5.5-1.5.5zm9 0 1.5.5-1.5.5z" opacity=".1"/><path fill="#bab7a2" stroke="#bab7a2" d="m1525.5 0 7 1q5.5 2 8.5 6.5l2 4v33q-2 5.5-6.5 8.5l-4 2q-4.2-.7-6 1l-9-3-3.5-3.5-3-6v-32q2-5.5 6.5-8.5zm137 100 6 1 4 2 4.5 4.5 2 4v11l-3 5-27.5 27.5-5 3-8 1-6-2-4.5-3.5-4-8v-6l3-7 29.5-29.5zm-51 45 1.5 10.5q2.7 5.8 7.5 9.5l7 3 7.5.5-64 64 .5.5h109q6.2 2.3 9.5 7.5l2 4v9l-3 6-2.5 2.5-5 3h-111l-7-7-4-2q-4.2.7-6-1l-2 1-1.5-1.5v-11l.5-1.5-4-1-5.5-4.5-2-3-2-6v-3l3-8zm-176 5h10l5 3 63.5 63.5 2 4 1 7-3 8-3.5 3.5-5 3h-10l-6-3-62.5-62.5-3-6v-9l1-3 4.5-5.5zm-1088 83h10q6 2 9.5 6.5l2 4 1 7-3 8-4.5 4.5-4 2h-11l-3-1-5.5-4.5-3-6v-8l2-5 5.5-5.5zm779 0h11q5.5 2 8.5 6.5l3 7v5l-2 6-5.5 5.5-4 2h-11l-7.5-4.5-4-8v-7l2-5 5.5-5.5zm249 0h69q6 2 9.5 6.5l2 4 1 7-3 8-4.5 4.5-4 2h-71q-6.2-2.3-9.5-7.5l-2-5v-7q2.3-6.7 7.5-10.5zm337 0h61q6 2 9.5 6.5l2 4v11q-2 5.5-6.5 8.5l-4 2h-62l-3-1-3-3h-1.5l-4-8.5v-7l2-5 5.5-5.5zm-190 31h9l6.5 3v10.5l5 7v67q-2 5.5-6.5 8.5l-3 2-9 1-7-3-4.5-4.5-2-4v-76l4-6V268h1.5zm103 65 8 1 5 3 45.5 45.5 3 5 1 8-2 6-3.5 4.5-8 4h-6l-7-3-47.5-47.5-3-7v-6l2-5 3.5-4.5 5-3q3.3.8 4-1Z"/><path fill="#3d4046" stroke="#3d4046" d="m1523.5 88 1.5.5-1.5.5zm7 0v1zm-10 1v1zm13 0v1zm-15 1v1zm17 0v1zm3 2q2.5 1 1 2-2.5-1-1-2Zm3 4v1zm1 2v1zm-31 1v1zm32 2 .5 1.5h-1zm-33 1 .5 110.5h-1zm7 126v1zm19 0v1zm-15 2v1zm11 0v1zm-7 1 3.5.5-3.5.5zm23 25v1zm-2 1v1zm-2 1 .5.5-4.5 4.5-.5-.5zm-1474 5 4.5.5-4.5.5zm7 1 2.5.5-2.5.5zm1462 0v1zm-1458 1 1.5.5-1.5.5zm3 1 1.5.5-1.5.5zm1454 0v1zm-1451 1v1zm2 1v1zm2 1 2.5 2.5-.5.5-2.5-2.5zm951 0 26.5.5-26.5.5zm-947 3 3.5 3.5-.5.5-3.5-3.5zm5 6q2.5 1 1 2-2.5-1-1-2Zm2 3v1zm1 2v1zm-75 2 31.5.5-32 .5-.5 38-.5-37.5zm76 0 .5 1.5h-1zm-40 1 1.5.5-1.5.5zm1480 0 57.5 57.5-.5.5-57.5-57.5zm-1477 1q3.9.6 5.5 3.5l-.5.5-2-2-3-1zm38 2 .5 1.5h-1zm936 2v1zm-967 1q2.9 1.6 3.5 5.5h-1l-3-5zm32 2 .5 9.5h-1zm934 0 .5.5-3.5 3.5-.5-.5zm-856 2h6l.5.5V323l-7-.5 6-.5v-24.5q-.1-1.1-5.5-.5zm262 0 13.5.5-13.5.5zm129 0 13.5.5-13.5.5zm122 0 15.5.5-15.5.5zm517 0 14.5.5-14.5.5zm141 0 13.5.5-13.5.5zm-1176 1 1.5.5-1.5.5zm261 0 1.5.5-1.5.5zm23 0 1.5.5-1.5.5zm107 0 1.5.5-1.5.5zm23 0 1.5.5-1.5.5zm98 0 1.5.5-1.5.5zm25 0 2.5.5-2.5.5zm491 0 2.5.5-2.5.5zm26 0 1.5.5-1.5.5zm116 0 1.5.5-1.5.5zm23 0 1.5.5-1.5.5zm-1197 1 1.5.5-1.5.5zm67 0 4.5.5-4.5.5zm15 0 3.5.5-3.5.5zm179 0 1.5.5-1.5.5zm31 0 1.5.5-1.5.5zm99 0 1.5.5-1.5.5zm31 0 1.5.5-1.5.5zm90 0v1zm34 0 1.5.5-1.5.5zm213 0 4.5.5-4.5.5zm15 0 3.5.5-3.5.5zm84 0 2.5.5-2.5.5zm170 0 1.5.5-1.5.5zm35 0 1.5.5-1.5.5zm107 0 1.5.5-1.5.5zm31 0 1.5.5-1.5.5zm-1298 1 .5 2.5h-1zm95 0v1zm64 0 1.5.5-1.5.5zm27 0 1.5.5-1.5.5zm24 0 .5 14.5-.5.5-5.5-5.5.5-.5 4 4 .5-.5zm26 0 .5 112.5h-1zm52 0 .5 112.5h-1zm25 0 .5 112.5h-1zm26 0 1 10 3-3 .5.5-4.5 4.5-.5-.5zm16 0 1.5.5-1.5.5zm38 0v1zm92 0v1zm37 0 1.5.5-1.5.5zm83 0 1.5.5-1.5.5zm42 0 1.5.5-1.5.5zm71 0v1zm60 0v1zm73 0 1.5.5-1.5.5zm27 0 1.5.5-1.5.5zm24 0 .5 14.5-.5.5-5.5-5.5.5-.5 4 4 .5-.5zm26 0 .5 112.5h-1zm14 0 .5 23h18.5l1.5 1.5-.5 55.5-.5-56h-20zm78 0 .5 24-31-.5 30-.5zm47 0 .5 112.5h-1zm54 0 1.5.5-1.5.5zm42 0 1.5.5-1.5.5zm85 0 1 10 3-3 .5.5-4.5 4.5-.5-.5zm16 0 1.5.5-1.5.5zm38 0v1zm-1210 1 1.5.5-4.5 2.5q-1.5-1 1-2zm63 0 1.5.5-1.5.5zm35 0 1.5.5-1.5.5zm163 0v1zm42 0v1zm88 0v1zm42 0v1zm78 0v1zm47 0v1zm197 0 1.5.5-1.5.5zm35 0 1.5.5-1.5.5zm237 0v1zm47 0 1.5.5-1.5.5zm96 0v1zm42 0v1zm-1152 1 1.5.5-1.5.5zm41 0v1zm158 0v1zm46 0v1zm84 0v1zm46 0v1zm73 0v1zm52 0 1.5.5-1.5.5zm38 0v1zm29 0v1zm58 0v1zm29 0v1zm38 0 1.5.5-1.5.5zm41 0v1zm231 0 1.5.5-1.5.5zm53 0v1zm91 0v1zm46 0v1zm-1156 1v1zm45 0 4.5 2.5-1.5-.5-3-1zm154 0q1.5 1-1 2-1.5-1 1-2Zm50 0v1zm80 0v1zm50 0q2.5 1 1 2-2.5-1-1-2Zm69 0v1zm57 0v1zm187 0v1zm45 0v1zm227 0v1zm57 0v1zm87 0v1zm50 0v1zm-1221 1q1.5 1-1 2-1.5-1 1-2Zm61 0v1zm253 0q2.5 1 1 2-2.5-1-1-2Zm76 0q1.5 1-1 2-1.5-1 1-2Zm119 0v1zm61 0 3.5 2.5-1.5-.5q-3.8-.7-2-2Zm34 0 .5 1.5h-1zm114 0 .5 1.5h-1zm35 0v1zm49 0v1zm223 0q1.5 1-1 2l-2 1q-1.5-1 1-2zm61 0v1zm83 0q1.5 1-1 2-1.5-1 1-2Zm54 0 2.5 2.5-.5.5-2.5-2.5zm-1164 1v1zm200 0q1.5 1-1 2-1.5-1 1-2Zm186 0 2.5 2.5-.5.5-2.5-2.5zm62 0q1.5 1-1 2-1.5-1 1-2Zm126 0v1zm56 0v1zm62 0v1zm53 0v1zm284 0q2.5 1 1 2-2.5-1-1-2Zm-1091 1 .5.5-5.5 5.5-.5-.5zm60 0q1.5 1-1 2l-2 1q-1.5-1 1-2zm57 0q2.5 1 1 2-2.5-1-1-2Zm273 0 .5.5-3.5 3.5-.5-.5zm362 0v1zm57 0 2.5 2.5-.5.5-2.5-2.5zm-488 1 4.5 4.5-.5.5-4.5-4.5zm186 0q1.5 1-1 2-1.5-1 1-2Zm71 0q2.5 1 1 2-2.5-1-1-2Zm30 0v1zm112 0v1zm30 0q1.5 1-1 2-1.5-1 1-2Zm273 0q1.5 1-1 2-1.5-1 1-2Zm71 0q2.5 1 1 2-2.5-1-1-2Zm136 0 4.5 4.5-.5.5-4.5-4.5zm-1314 1 .5 2.5h-1zm27 0 .5 2.5h-1zm694 0v1zm54 0v1zm-187 1 .5.5-4.5 4.5-.5-.5zm243 0 .5.5-3.5 3.5-.5-.5zm350 0 3.5 3.5-.5.5-3.5-3.5zm-1043 1 .5.5-9.5 9.5-.5-.5zm528 0 8.5 8.5-.5.5-8.5-8.5zm27 0v1zm81 0 .5 1.5h-1zm29 0v1zm300 0 .5.5-8.5 8.5-.5-.5zm-381 1v1zm-723 1 .5 1.5q-1 2.5-2 1zm27 0 .5 1.5h-1zm513 0 2.5 2.5-.5.5-2.5-2.5zm155 0 .5 1.5h-1zm108 0 .5 1.5h-1zm-79 1 .5 1.5h-1zm50 0 .5 1.5h-1zm546 0 2.5 2.5-.5.5-2.5-2.5zm-908 1q2.5 1 1 2-2.5-1-1-2Zm-386 1v1zm557 0 .5.5-4.5 4.5-.5-.5zm113 0v1zm106 0v1zm-804 1 .5.5-4.5 4.5-.5-.5zm545 0v1zm182 0 .5 1.5h-1zm48 0 .5 1.5h-1zm416 0 3.5 3.5-.5.5-3.5-3.5zm-1164 1v1zm389 0v1zm283 0 .5 1.5h-1zm104 0 .5 1.5h-1zm23 0 .5.5-2.5 2.5-.5-.5zm499 0v1zm-779 1 1.5 2.5h-1zm-520 1q1.5 1-1 2-1.5-1 1-2Zm391 0v1zm311 0 .5 1.5h-1zm46 0v1zm552 0v1zm-626 1v1zm102 0v1zm295 0 .5.5-2.5 2.5-.5-.5zm-1103 1q1.5 1-1 2l-1.5-.5zm137 0q1.5 1-1 2-1.5-1 1-2Zm287 0v1zm162 0q1.5 1-1 2-1.5-1 1-2Zm99 0q2.5 1 1 2-2.5-1-1-2Zm516 0q2.5 1 1 2-2.5-1-1-2Zm132 0v1zm215 0 2.5.5-2.5.5zm7 0v1zm-1525 1 .5.5-2.5 2.5-.5-.5zm150 0 2.5.5-2.5.5zm11 0 2.5.5-2.5.5zm179 0 2.5.5-2.5.5zm9 0 2.5.5-2.5.5zm120 0 2.5.5-2.5.5zm10 0 2.5.5-2.5.5zm45 0v1zm76 0 4.5.5-4.5.5zm8 0 3.5.5-3.5.5zm97 0v1zm44 0v1zm49 0-.5 1.5-1.5 2.5.5-1.5zm44 0 2.5.5-2.5.5zm10 0 2.5.5-2.5.5zm264 0 4.5.5-4.5.5zm8 0 3.5.5-3.5.5zm125 0 1.5.5-1.5.5zm9 0 2.5.5-2.5.5zm257 0 1.5.5-1.5.5zm-1549 1v1zm180 0 1.5.5-1.5.5zm20 0v1zm170 0 1.5.5-1.5.5zm18 0 1.5.5-1.5.5zm41 0 .5 1.5h-1zm71 0 1.5.5-1.5.5zm18 0v1zm112 0 1.5.5-1.5.5zm18 0 1.5.5-1.5.5zm63 0v1zm100 0v1zm61 0 1.5.5-1.5.5zm20 0v1zm254 0 1.5.5-1.5.5zm19 0v1zm114 0 1.5.5-1.5.5zm18 0 1.5.5-1.5.5zm41 0 .5 1.5h-1zm209 0q1.5 1-1 2-1.5-1 1-2Zm-1552 1 2.5.5-2.5.5zm119 0 1.5.5-1.5.5zm25 0q1.5 1-1 2-1.5-1 1-2Zm39 0v1zm25 0v1zm165 0v1zm23 0v1zm106 0 1.5.5-4.5 2.5q-1.5-1 1-2zm23 0q3.9.6 5.5 3.5l-.5.5-2-2-3-1zm39 0 .5 1.5h-1zm29 0q1.5 1-1 2-1.5-1 1-2Zm39 0 1.5.5-1.5.5zm25 0v1zm39 0v1zm179 0v1zm25 0v1zm209 0v1zm39 0 1.5.5-1.5.5zm25 0v1zm39 0q2.5 1 1 2-2.5-1-1-2Zm70 0v1zm23 0v1zm-1189 1v1zm65 0v1zm29 0v1zm161 0v1zm27 0q2.5 1 1 2-2.5-1-1-2Zm232 0v1zm29 0v1zm58 0 .5 1.5h-1zm28 0v1zm42 0v1zm28 0 .5 1.5h-1zm57 0 1.5.5-2.5 1.5q-1.5-1 1-2Zm30 0v1zm244 0v1zm29 0 2.5 1.5-1.5-.5q-2.4-.1-1-1Zm105 0v1zm27 0q2.5 1 1 2-2.5-1-1-2Zm242 0 .5.5-4.5 4.5-.5-.5zm-1436 1v1zm66 0v1zm33 0q2.5 1 1 2-2.5-1-1-2Zm157 0 .5.5-2.5 2.5-.5-.5zm66 0 .5 1.5h-1zm193 0v1zm33 0v1zm36 0 2.5 4.5h-1l-2-4zm207 0q2.5 1 1 2-2.5-1-1-2Zm204 0v1zm36 0q1.5 1-1 2-1.5-1 1-2Zm134 0q1.5 1-1 2-1.5-1 1-2Zm66 0 .5 1.5h-1zm-1233 1v1zm31 0v1zm35 0 .5.5-7.5 7.5-.5-.5zm224 0 3.5 3.5-.5.5-3.5-3.5zm164 0 .5 1.5h-1zm26 0v1zm35 0 .5.5-2.5 2.5-.5-.5zm37 0 2.5 2.5-.5.5-2.5-2.5zm171 0v1zm35 0 .5.5-2.5 2.5-.5-.5zm310 0q2.5 1 1 2-2.5-1-1-2Zm35 0v1zm96 0 3.5 3.5-.5.5-3.5-3.5zm-1277 1 .5.5-2.5 2.5-.5-.5zm76 0 .5.5-2.5 2.5-.5-.5zm106 0 5.5 5.5-.5.5-5.5-5.5zm281 0 .5.5-3.5 3.5-.5-.5zm222 0v1zm28 0v1zm40 0v1zm28 0v1zm93 0 5.5 5.5-.5.5-5.5-5.5zm200 0v1zm34 0 .5.5-6.5 6.5-.5-.5zm-1000 1v1zm449 0v1zm243 0v1zm382 0v1zm-779 1 .5 1.5h-1zm311 0 .5 1.5h-1zm38 0 .5 1.5h-1zm321 0v1zm77 0q2.5 1 1 2-2.5-1-1-2Zm162 0 .5 2.5h-1zm-1316 1q1.5 1-1 2-1.5-1 1-2Zm111 0 .5 1.5h-1zm394 0q2.5 1 1 2-2.5-1-1-2Zm55 0 .5 1.5h-1zm130 0v1zm94 0v1zm19 0v1zm384 0v1zm328 0v1zm-1181 1q1.5 1-1 2-1.5-1 1-2Zm42 0q2.5 1 1 2-2.5-1-1-2Zm161 0 .5 2.5h-1zm134 0v1zm405 0v1zm167 0q1.5 1-1 2-1.5-1 1-2Zm42 0 2.5 4.5h-1l-2-4zm-1288 1v1zm466 0q1.5 1-1 2-1.5-1 1-2Zm128 0 .5.5-2.5 2.5-.5-.5zm49 0 2.5 2.5-.5.5-2.5-2.5zm51 0 .5 1.5h-1zm28 0 .5 1.5h-1zm36 0 .5 1.5h-1zm28 0 .5 1.5h-1zm51 0 .5.5-2.5 2.5-.5-.5zm680 0v1zm-1515 1v1zm75 0q1.5 1-1 2-1.5-1 1-2Zm36 0v1zm397 0v1zm52 0v1zm113 0v1zm130 0v1zm273 0 .5 1.5h-1zm82 0q2.5 1 1 2-2.5-1-1-2Zm31 0v1zm-1187 1v1zm331 0v1zm46 0 .5 1.5h-1zm506 0q2.5 1 1 2-2.5-1-1-2Zm357 0v1zm-1238 1q2.5 1 1 2-2.5-1-1-2Zm137 0q1.5 1-1 2-1.5-1 1-2Zm53 0v1zm215 0 .5 76.5h-1zm53 0v1zm47 0 .5 1.5h-1zm184 0v1zm28 0 .5 1.5h-1zm34 0 .5 1.5h-1zm28 0v1zm19 0 .5 1.5h-1zm304 0q1.5 1-1 2-1.5-1 1-2Zm84 0 .5 1.5h-1zm324 0 .5 1.5h-1zm-1441 1v1zm37 0 .5 1.5h-1zm222 0v1zm227 0v1zm30 0-.5 1.5-.5 1.5-.5-1.5zm55 0v1zm30 0 .5 1.5h-1zm158 0v1zm243 0 .5 1.5h-1zm85 0 2.5 4.5h-1l-2-4zm81 0v1zm77 0 .5 75.5h-1zm-1311 1q2.5 1 1 2-2.5-1-1-2Zm188 0v1zm185 0 .5 1.5h-1zm314 0 .5 1.5h-1zm88 0 .5 1.5h-1zm105 0v1zm402 0 .5 1.5h-1zm-1217 1v1zm67 0v1zm322 0v1zm49 0 .5 1.5h-1zm135 0v1zm77 0v1zm32 0v1zm77 0v1zm273 0v1zm136 0 .5 1.5h-1zm-1044 1v1zm135 0 .5 1.5h-1zm227 0 .5 1.5h-1zm117 0 .5 2.5h-1zm126 0 .5 1.5h-1zm87 0v1zm303 0 .5 1.5h-1zm-1180 1 3.5 3.5-.5.5-3.5-3.5zm60 0 .5 1.5h-1zm38 0 .5 1.5h-1zm29 0v1zm449 0v1zm59 0v1zm49 0v1zm86 0v1zm49 0v1zm244 0 .5 1.5h-1zm29 0v1zm-906 1 .5 1.5h-1zm184 0 .5 4.5h-1zm342 0v1zm30 0v1zm136 0 .5 1.5h-1zm401 0 .5 70.5h-1zm-830 1 .5 69.5h-1zm126 0 .5 1.5h-1zm243 0 .5 1.5h-1zm334 0 .5 1.5h-1zm-1026 1v1zm510 0v1zm49 0v1zm84 0v1zm322 0v1zm90 0 .5 2.5h-1zm-994 1 .5 1.5h-1zm313 0 .5 67.5h-1zm46 0 .5 2.5h-1zm119 0 .5 3.5h-1zm48 0v1zm28 0v1zm48 0 .5 3.5h-1zm90 0 .5 1.5h-1zm-875 1 2.5 2.5-.5.5-2.5-2.5zm55 0 .5 66.5h-1zm38 0 .5 3.5h-1zm477 0 .5 1.5h-1zm112 0 .5 1.5h-1zm82 0 .5 1.5h-1zm294 0 .5 3.5h-1zm91 0 .5 2.5h-1zm-1224 1 35.5.5-36 .5v42h33.5v1h-33l-1.5-1.5v-41zm196 0 .5 1.5h-1zm512 0 .5 2.5h-1zm180 0 .5 1.5h-1zm273 0 .5 1.5h-1zm-1122 1 1.5.5-1.5.5zm746 0v1zm26 0v1zm-769 1 1.5.5-1.5.5zm217 0 .5 3.5h-1zm499 0v1zm80 0v1zm-793 1q2.5 1 1 2-2.5-1-1-2Zm33 0v1zm708 0 .5 1.5h-1zm24 0 .5 1.5h-1zm141 0 .5 5.5h-1zm-307 1 .5 10.5h-1zm-596 1 4.5 4.5-.5.5-4.5-4.5zm31 0v1zm680 0v1zm78 0v1zm50 0 .5 8.5h-1zm338 0 .5 8.5h-1zm-1030 1 .5 6.5h-1zm592 0 .5 1.5h-1zm22 0 .5 1.5h-1zm351 0 .5 6.5h-1zm93 0 .5 6.5h-1zm-1173 1v1zm629 0 .5 4.5h-1zm51 0 .5 1.5h-1zm76 0 .5 1.5h-1zm-755 2 .5 1.5h-1zm707 0 .5 1.5h-1zm20 0 .5 1.5h-1zm-47 1v1zm74 0v1zm116 0 .5 5.5h-1zm-898 1v1zm29 1 .5 2.5h-1zm177 0 .5 3.5h-1zm503 0 .5 1.5h-1zm27 0v1zm18 0v1zm27 0 .5 1.5h-1zm-780 1v1zm709 2v1zm27 0v1zm16 0v1zm27 0v1zm-778 1 .5 1.5h-1zm113 0 .5 3.5h-1zm540 0 .5 1.5h-1zm425 0 .5 3.5h-1zm-1050 1 .5 12.5h-1zm113 0 .5 1.5h-1zm540 0 .5 3.5h-1zm124 0 .5 3.5h-1zm28 0 .5 1.5h-1zm273 0 .5 1.5h-1zm63 0 .5 1.5h-1zm-607 1 .5 2.5h-1zm28 0 .5 1.5h-1zm119 0v1zm27 0v1zm14 0v1zm27 0v1zm118 0 .5 1.5h-1zm-692 1 .5 1.5h-1zm994 0 .5 2.5h-1zm-545 1 .5 1.5h-1zm58 0 .5 1.5h-1zm39 0 .5 1.5h-1zm27 0 .5 1.5h-1zm-634 1v1zm449 0 .5 1.5h-1zm146 0v1zm97 0 .5 1.5h-1zm273 0v1zm61 0 .5 1.5h-1zm-966 1 .5 1.5h-1zm692 0 .5 1.5h-1zm-780 1 .5 1.5h-1zm537 0 .5 1.5h-1zm29 0 .5 1.5h-1zm31 0v1zm27 0 .5 1.5h-1zm10 0 .5 1.5h-1zm27 0v1zm304 0 .5 1.5h-1zm-936 1v1zm420 0 .5 1.5h-1zm29 0v1zm214 0 .5 1.5h-1zm29 0v1zm273 0v1zm59 0v1zm29 0 .5 1.5h-1zm-1196 1 .5 2.5h-1zm201 0v1zm573 0 .5 1.5h-1zm119 0v1zm92 0 .5 2.5h-1zm-841 1v1zm449 0v1zm57 0v1zm62 0v1zm27 0 .5 1.5h-1zm8 0 .5 1.5h-1zm89 0v1zm273 0v1zm57 0v1zm-1051 1 .5 1.5h-1zm85 0v1zm479 0 .5 1.5h-1zm213 0v1zm188 0 .5 1.5h-1zm-935 1q2.5 1 1 2-2.5-1-1-2Zm419 0v1zm30 0v1zm55 0q1.5 1-1 2-1.5-1 1-2Zm64 0 .5 1.5h-1zm60 0 .5 1.5h-1zm34 0 .5 1.5h-1zm30 0v1zm273 0q2.5 1 1 2-2.5-1-1-2Zm55 0v1zm30 0 .5 1.5h-1zm-996 1q1.5 1-1 2-1.5-1 1-2Zm541 0 .5 1.5h-1zm6 0 .5 1.5h-1zm145 0q1.5 1-1 2-1.5-1 1-2Zm-892 1v1zm596 0 3.5 3.5-.5.5-3.5-3.5zm83 0 .5 1.5h-1zm160 0 2.5 2.5-.5.5-2.5-2.5zm148 0v1zm95 0 .5 1.5h-1zm83 0 .5.5-2.5 2.5-.5-.5zm-1048 1v1zm31 0 7.5 7.5-.5.5-7.5-7.5zm418 0v1zm82 0 .5.5-6.5 6.5-.5-.5zm67 0v1zm58 0v1zm36 0 .5 1.5h-1zm304 0 6.5 6.5-.5.5-6.5-6.5zm82 0v1zm-1196 1v1zm199 0 .5.5-5.5 5.5-.5-.5zm544 0v1zm4 0v1zm144 0 .5.5-5.5 5.5-.5-.5zm98 0 2.5 3.5-.5.5-2.5-2.5zm-870 1 .5 1.5h-1zm449 0 3.5 6.5q-1 1.5-2-1l-2-4zm111 0v1zm38 0 .5 1.5h-1zm56 0 .5 1.5h-1zm311 0v1zm111 0 .5 1.5h-1zm-1196 1 .5.5-4.5 4.5-.5-.5zm30 0 .5 1.5h-1zm782 0v1zm-209 1 2.5 2.5-.5.5-2.5-2.5zm76 0 .5 1.5q-1 2.5-2 1zm66 0v1zm2 0v1zm339 0v1zm-965 1v1zm598 0v1zm54 0v1zm40 0v1zm34 0 2.5 2.5-.5.5-2.5-2.5zm114 0 .5 1.5h-1zm200 0 .5.5-2.5 2.5-.5-.5zm34 0v1zm-108 1v1zm-1058 1v1zm93 0v1zm71 0q1.5 1-1 2-1.5-1 1-2Zm414 0q2.5 1 1 2-2.5-1-1-2Zm35 0q1.5 1-1 2-1.5-1 1-2Zm172 0v1zm71 0q1.5 1-1 2-1.5-1 1-2Zm110 0 2.5 1.5-1.5.5q-2.5-1-1-2Zm128 0q2.5 1 1 2-2.5-1-1-2Zm71 0-.5 1.5-1.5 2.5.5-1.5zm-1200 1q1.5 1-1 2l-1.5-.5zm165 0v1zm518 0v1zm43 0v1zm52 0v1zm79 0 2.5 1.5-1.5.5q-2.5-1-1-2Zm237 0v1zm69 0v1zm-1129 1 .5 1.5h-1zm95 0v1zm38 0v1zm29 0v1zm420 0v1zm29 0v1zm176 0v1zm67 0v1zm80 0 .5 1.5h-1zm37 0v1zm127 0v1zm29 0v1zm-1165 1v1zm173 0v1zm25 0v1zm385 0v1zm39 0 1.5.5-1.5.5zm24 0 1.5.5-1.5.5zm40 0q1.5 1-1 2-1.5-1 1-2Zm45 0 .5 1.5h-1zm50 0 .5 1.5h-1zm84 0v1zm24 0 1.5.5-1.5.5zm123 0 16.5.5-16.5.5zm87 0q2.5 1 1 2-2.5-1-1-2Zm39 0 1.5.5-1.5.5zm25 0v1zm-1167 1 1.5.5-1.5.5zm138 0q2.5 1 1 2-2.5-1-1-2Zm41 0 1.5.5-1.5.5zm19 0 1.5.5-1.5.5zm431 0 1.5.5-1.5.5zm18 0 1.5.5-1.5.5zm183 0q2.5 1 1 2-2.5-1-1-2Zm41 0 1.5.5-1.5.5zm19 0 1.5.5-1.5.5zm255 0 1.5.5-1.5.5zm18 0 1.5.5-1.5.5zm-1122 1v1zm142 0 2.5.5-2.5.5zm10 0 2.5.5-2.5.5zm395 0q2.5 1 1 2-2.5-1-1-2Zm45 0 4.5.5-4.5.5zm7 0 4.5.5-4.5.5zm235 0 2.5.5-2.5.5zm10 0 2.5.5-2.5.5zm92 0v1zm173 0 3.5.5-3.5.5zm7 0 3.5.5-3.5.5zm48 0q1.5 1-1 2-1.5-1 1-2Zm-517 1q1.5 1-1 2-1.5-1 1-2Zm48 0v1zm48 0v1zm321 0q2.5 1 1 2-2.5-1-1-2Zm-1065 1q1.5 1-1 2-1.5-1 1-2Zm100 0q2.5 1 1 2-2.5-1-1-2Zm692 0q2.5 1 1 2-2.5-1-1-2Zm146 0 1.5 2.5q-1 1.5-2-1zm-195 1 .5 1.5h-1zm420 0 .5.5-9.5 9.5-.5-.5zm-612 1 8.5 8.5-.5.5-8.5-8.5zm95 0 .5.5-7.5 7.5-.5-.5zm51 0v1zm-699 1q1.5 1-1 2-1.5-1 1-2Zm796 0 8.5 8.5-.5.5-8.5-8.5zm274 0 6.5 6.5-.5.5-6.5-6.5zm-965 1 7.5 7.5-.5.5-7.5-7.5zm595 0 .5 1.5h-1zm44 0v1zm198 0v1zm-66 2 .5 14.5h-1v-12l-1-1zm67 0 7.5 7.5-.5.5-7.5-7.5zm-759 1 .5 13.5h-1zm517 0v1zm42 0v1zm-561 2 .5.5-2.5 2.5-.5-.5zm520 0 .5 1.5h-1zm40 0 .5 1.5h-1zm-749 1 .5.5-2.5 2.5-.5-.5zm570 1 2.5 2.5-.5.5-2.5-2.5zm75 0q1.5 1-1 2-1.5-1 1-2Zm441 0q2.5 1 1 2-2.5-1-1-2Zm75 0 .5.5-2.5 2.5-.5-.5zm-1040 1 4.5 3.5-1.5-.5-3.5-2.5zm589 0v1zm38 0v1zm65 0 2.5 2.5-.5.5-2.5-2.5zm-817 1v1zm188 0 .5.5-2.5 2.5-.5-.5zm458 0q1.5 1-1 2-1.5-1 1-2Zm234 0 .5.5-2.5 2.5-.5-.5zm213 0q2.5 1 1 2-2.5-1-1-2Zm-1095 1v1zm580 0v1zm385 0 3.5 2.5-1.5-.5q-3.8-.7-2-2Zm198 0v1zm-1165 1v1zm584 0 4.5 2.5-1.5.5-3.5-2.5zm63 0v1zm72 0v1zm36 0v1zm70 0v1zm275 0v1zm63 0q1.5 1-1 2l-3 1v-1zm-1165 1v1zm137 0v1zm53 0q1.5 1-1 2l-2 1q-1.5-1 1-2zm457 0v1zm182 0 4.5 2.5-1.5.5-3.5-2.5zm53 0v1zm222 0v1zm-1107 1 1.5.5-1.5.5zm142 0v1zm506 0v1zm77 0 .5 1.5h-1zm34 0 .5 1.5h-1zm124 0q1.5 1-1 2l-3 1v-1zm94 0 1.5.5-1.5.5zm132 0v1zm-1112 1 1.5.5-1.5.5zm147 0v1zm451 0v1zm51 0v1zm334 0 1.5.5-1.5.5zm131 0v1zm51 0v1zm-1170 1 2.5.5-2.5.5zm154 0v1zm41 0 1.5.5-1.5.5zm410 0 1.5.5-1.5.5zm46 0 1.5.5-1.5.5zm195 0v1zm145 0 2.5.5-2.5.5zm130 0 1.5.5-1.5.5zm47 0v1zm-1177 1 5.5.5-5.5.5zm166 0v1zm36 0v1zm415 0 1.5.5-1.5.5zm40 0 1.5.5-1.5.5zm86 0v1zm32 0v1zm82 0 1.5.5-1.5.5zm37 0v1zm111 0 5.5.5-5.5.5zm128 0 1.5.5-1.5.5zm40 0 1.5.5-1.5.5zm-1004 1 1.5.5-1.5.5zm30 0v1zm421 0 1.5.5-1.5.5zm33 0 1.5.5-1.5.5zm208 0v1zm29 0 1.5.5-1.5.5zm247 0 1.5.5-1.5.5zm33 0 1.5.5-1.5.5zm-997 1 2.5.5-2.5.5zm21 0 1.5.5-1.5.5zm431 0 2.5.5-2.5.5zm23 0 2.5.5-2.5.5zm217 0 2.5.5-2.5.5zm21 0 1.5.5-1.5.5zm255 0 2.5.5-2.5.5zm23 0 2.5.5-2.5.5zm-984 1 8.5.5-8.5.5zm453 0 9.5.5-9.5.5zm239 0 8.5.5-8.5.5zm277 0 9.5.5-9.5.5zm309 26 10.5.5-10.5.5zm-703 8 .5 148.5h-1zm10 0v1zm86 0 .5 128.5q-1 1.5-2-1l1-1zm-85 2q2.5 1 1 2-2.5-1-1-2Zm2 3q2.5 1 1 2-2.5-1-1-2Zm259.5 2 11 .5-10 .5-.5 22zm-257.5 1q2.5 1 1 2-2.5-1-1-2Zm2 3q2.5 1 1 2-2.5-1-1-2Zm2 3q2.5 1 1 2-2.5-1-1-2Zm2 3q2.5 1 1 2-2.5-1-1-2Zm-10 3q2.8 1.3.5 2.5l-.5 126.5zm12 0q2.5 1 1 2-2.5-1-1-2Z" opacity=".3"/><path fill="#3d4046" stroke="#3d4046" d="M835.5 471q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm-10 3q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm-10 3q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm243 2 .5 1.5-2.5 2.5-.5-.5zm-253 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm649 1q2.8-.2 2.5.5v10q-1 2.5-5.5 1.5v-1h4.5v-10l-2-.5zm-500 1 2.5.5-2.5.5zm16 0 3.5.5-3.5.5zm344 0 3.5.5-3.5.5zm18 0 2.5.5-2.5.5zm115 0 1.5.5-1.5.5zm-652 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm142 0 1.5.5-1.5.5zm27 0 1.5.5-1.5.5zm65 0 1.5.5-1.5.5zm268 0 1.5.5-1.5.5zm29 0 1.5.5-1.5.5zm105 0v1zm-497 1v1zm34 0 1.5.5-1.5.5zm45 0 .5 9.5h-1zm76 0 .5 1.5h-1zm12 0 .5 1.5h-1zm130 0v1zm12 0v1zm50 0 1.5.5-1.5.5zm37 0 1.5.5-1.5.5zm76 0 1 17 1.5-.5-2.5 2.5-.5-.5zm22 0v1zm-497 1v1zm40 0v1zm188 0 .5 1.5h-1zm14 0 .5 1.5h-1zm118 0v1zm42 0 1.5.5-1.5.5zm93 0v1zm108 0 .5.5-2.5 2.5-.5-.5zm15 0v1zm-764 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm132 0v1zm44 0 1.5.5-1.5.5zm257 0 .5 1.5h-1zm58 0v1zm48 0v1zm88 0v1zm-497 1v1zm49 0v1zm266 0 .5 1.5h-1zm44 0v1zm52 0v1zm84 0v1zm124 0 .5.5-2.5 2.5-.5-.5zm-621 1v1zm53 0q2.5 1 1 2-2.5-1-1-2Zm112 0 .5 1.5h-1zm12 0 .5 1.5h-1zm56 0 .5 1.5h-1zm16 0 .5 1.5h-1zm110 0v1zm56 0v1zm80 0q1.5 1-1 2-1.5-1 1-2Zm-633 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm124 0v1zm359 0q1.5 1-1 2-1.5-1 1-2Zm60 0v1zm187 0 .5.5-2.5 2.5-.5-.5zm-608 1 .5.5-2.5 2.5-.5-.5zm60 0q2.5 1 1 2-2.5-1-1-2Zm248 0 .5 1.5h-1zm115 0q2.5 1 1 2-2.5-1-1-2Zm73 0 .5.5-8.5 8.5-.5-.5zm-468 1 5.5.5-5.5.5zm208 0 .5 1.5h-1zm84 0v1zm38 0q1.5 1-1 2-1.5-1 1-2Zm262 0 .5.5-3.5 3.5-.5-.5zm-752 1 2.5 2.5-.5.5-2.5-2.5zm153 0 2.5.5-2.5.5zm17 0 2.5.5-2.5.5zm25 0 8.5 8.5-.5.5-8.5-8.5zm107 0v1zm12 0v1zm72 0v1zm128 0 2.5.5-2.5.5zm16 0 2.5.5-2.5.5zm28 0 3.5 3.5-.5.5-3.5-3.5zm178 0 .5.5-3.5 3.5-.5-.5zm-723 1q2.5 1 1 2-2.5-1-1-2Zm115 0 .5.5-8.5 8.5-.5-.5zm21 0 1.5.5-1.5.5zm26 0v1zm264 0 .5 1.5h-1zm48 0 .5.5-9.5 9.5-.5-.5zm23 0 1.5.5-1.5.5zm25 0 1.5.5-1.5.5zm110 0 1.5.5-1.5.5zm-499 1 1.5.5-1.5.5zm32 0v1zm189 0 .5 1.5h-1zm84 0 .5 1.5h-1zm56 0 1.5.5-1.5.5zm32 0v1zm103 0 1.5.5-1.5.5zm-498 1v1zm36 0 4.5 2.5-1.5-.5-3-1zm123 0 .5 1.5h-1zm12 0 .5 1.5h-1zm72 0v1zm118 0v1zm36 0 1.5.5-1.5.5zm99 0v1zm107 0 .5.5-3.5 3.5-.5-.5zm-744 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm127 0v1zm360 0 1.5.5-4.5 2.5q-1.5-1 1-2zm42 0v1zm93 0 1.5.5-2.5 1.5q-1.5-1 1-2Zm94 0 .5.5-2.5 2.5-.5-.5zm-591 1q1.5 1-1 2-1.5-1 1-2Zm298 0 .5 1.5h-1zm108 0v1zm-360 1q2.5 1 1 2-2.5-1-1-2Zm180 0v1zm11 0v1zm11 0v1zm62 0v1zm98 0q2.5 1 1 2-2.5-1-1-2Zm86 0q1.5 1-1 2-1.5-1 1-2Zm-629 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm120 0 .5.5-3.5 3.5-.5-.5zm167 0v1zm12 0 .5 1.5h-1zm181 0q1.5 1-1 2-1.5-1 1-2Zm-121 1 .5 1.5h-1zm255 0 .5.5-7.5 7.5-.5-.5zm95 0 .5.5-2.5 2.5-.5-.5zm15 0 .5.5-2.5 2.5-.5-.5zm-551 1 3.5 3.5-.5.5-3.5-3.5zm175 0v1zm13 0v1zm11 0 .5 1.5h-1zm48 0 .5 1.5h-1zm12 0 .5 1.5h-1zm103 0 7.5 7.5-.5.5-7.5-7.5zm15 0 2.5 2.5-.5.5-2.5-2.5zm-560 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm286 0 .5 1.5h-1zm188 0 .5.5-5.5 5.5-.5-.5zm-288 1q2.5 1 1 2-2.5-1-1-2Zm112 0 .5 1.5h-1zm58 0 .5 1.5h-1zm-257 1q1.5 1-1 2-1.5-1 1-2Zm246 0v1zm15 0 .5 1.5h-1zm11 0 .5 1.5h-1zm331 0 .5.5-2.5 2.5-.5-.5zm15 0 .5.5-3.5 3.5-.5-.5zm-727 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm110 0 .5.5-3.5 3.5-.5-.5zm305 0v1zm12 0v1zm28 0q1.5 1-1 2-1.5-1 1-2Zm94 0q2.5 1 1 2-2.5-1-1-2Zm-363 1v1zm99 0 .5 1.5h-1zm12 0 .5 1.5h-1zm56 0 .5 1.5h-1zm-258 1-.5 1.5-1.5 2.5.5-1.5zm79 0q2.5 1 1 2-2.5-1-1-2Zm168 0v1zm17 0 .5 1.5h-1zm11 0 .5 1.5h-1zm-380 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm185 0 2.5 4.5h-1l-2-4zm227 0 .5 1.5h-1zm12 0 .5 1.5h-1zm27 0v1zm98 0 2.5 3.5q-1 1.5-2-1zm144 0 .5.5-2.5 2.5-.5-.5zm15 0 .5.5-3.5 3.5-.5-.5zm-424 1 .5 1.5h-1zm66 0 .5 1.5h-1zm114 0 .5.5-2.5 2.5-.5-.5zm136 0q1.5 1-1 2-1.5-1 1-2Zm-496 1q1.5 1-1 2-1.5-1 1-2Zm70 0q2.5 1 1 2-2.5-1-1-2Zm122 0 .5 1.5h-1zm43 0 .5 1.5h-1zm19 0 .5 1.5h-1zm11 0 .5 1.5h-1zm81 0v1zm87 0q2.5 1 1 2-2.5-1-1-2Zm-547 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm687 0 .5.5-3.5 3.5-.5-.5zm-599 1v1zm259 0 .5 1.5h-1zm62 0 .5 1.5h-1zm12 0 .5 1.5h-1zm26 0v1zm149 0v1zm-496 1v1zm74 0v1zm109 0 .5 1.5h-1zm53 0 .5 1.5h-1zm21 0 .5 1.5h-1zm11 0 .5 1.5h-1zm91 0v1zm78 0q2.5 1 1 2-2.5-1-1-2Zm13 0 1.5 3.5h-1q-1.7-1.5-.5-3.5Zm150 0 .5.5-2.5 2.5-.5-.5zm-710 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm85 0 .5 1.5h-1zm99 0v1zm109 0 .5 1.5h-1zm151 0v1zm149 0v1zm-496 1v1zm76 0 .5 1.5h-1zm171 0 .5 1.5h-1zm74 0 .5 1.5h-1zm38 0v1zm224 0 .5.5-2.5 2.5-.5-.5zm-495 1 .5 1.5h-1zm97 0 .5 1.5h-1zm51 0 .5 1.5h-1zm23 0 .5 1.5h-1zm50 0v1zm37 0v1zm94 0v1zm-547 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm82 0v1zm12 0v1zm198 0 .5 1.5h-1zm73 0v1zm88 0v1zm137 0v1zm101 0 .5.5-3.5 3.5-.5-.5zm-519 1v1zm169 0 .5 1.5h-1zm195 0 .5 1.5h-1zm12 0v1zm-467 1 .5 1.5h-1zm12 0v1zm91 0 .5 1.5h-1zm146 0 .5 1.5h-1zm25 0 .5 1.5h-1zm48 0 .5 1.5h-1zm12 0 .5 1.5h-1zm25 0v1zm12 0v1zm221 0 .5.5-2.5 2.5-.5-.5zm-683 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm279 0 .5 1.5h-1zm85 0v1zm223 0 .5 2.5h-1zm-416 1v1zm120 0 .5 1.5h-1zm244 0v1zm12 0 .5 1.5h-1zm137 0 .5.5-3.5 3.5-.5-.5zm-594 1v1zm248 0v1zm16 0 .5 1.5h-1zm58 0 .5 1.5h-1zm25 0 .5 1.5h-1zm12 0v1zm-459 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm76 0v1zm105 0 .5 2.5h-1zm97 0 .5 1.5h-1zm47 0v1zm38 0v1zm35 0 .5 1.5h-1zm266 0 .5.5-2.5 2.5-.5-.5zm-494 1 .5 1.5h-1zm364 0v1zm-447 1 .5 1.5h-1zm203 0 .5 1.5h-1zm45 0v1zm18 0 .5 1.5h-1zm93 0v1zm100 0 .5 1.5h-1zm-556 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm322 0v1zm40 0 .5 1.5h-1zm45 0 .5 1.5h-1zm25 0 .5 1.5h-1zm242 0 .5.5-3.5 3.5-.5-.5zm-601 1 .5 1.5h-1zm204 0 .5 1.5h-1zm118 0 .5 1.5h-1zm138 0 .5 2.5h-1zm124 0 .5.5-2.5 2.5-.5-.5zm-368 1 .5 1.5h-1zm43 0v1zm20 0 .5 1.5h-1zm91 0 .5 2.5h-1zm-453 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm82 0 .5 3.5h-1zm85 0 .5 6-86-.5 85-.5zm11 0 .5 6.5h-1zm141 0v1zm42 0 .5 1.5h-1zm43 0 .5 1.5h-1zm-128 1 .5 1.5h-1zm116 0 .5 1.5h-1zm151 0 .5 3.5h-1zm108 0q1.5 1-1 2-1.5-1 1-2Zm16 0 .5.5-3.5 3.5-.5-.5zm-338 1v1zm-339 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm286 0 .5 1.5h-1zm30 0v1zm33 0v1zm11 0 .5 1.5h-1zm67 0 .5 5.5h-1zm103 0 .5 4.5h-1zm-462 1 .5 14.5h-1zm333 0 .5 1.5h-1zm-126 1 .5 1.5h-1zm51 0v1zm63 0 .5 1.5h-1zm49 0 .5 12.5h-1zm222 0v1zm-670 1 2.5 2.5-.5.5-2.5-2.5zm12 0q2.5 1 1 2-2.5-1-1-2Zm313 0 .5 1.5h-1zm35 0v1zm11 0 .5 1.5h-1zm-74 1 .5 1.5h-1zm113 0 .5 1.5h-1zm260 0 2.5 2.5-.5.5-2.5-2.5zm-335 1 .5 1.5h-1zm-321 1 2.5 2.5-.5.5-2.5-2.5zm272 0v1zm38 0 .5 1.5h-1zm37 0v1zm37 0 .5 1.5h-1zm-395 1q2.5 1 1 2-2.5-1-1-2Zm369 0v1zm286 0 4.5 4.5-.5.5-4.5-4.5zm-360 1v1zm36 0 .5 1.5h-1zm75 0 .5 1.5h-1zm-122 1 .5 1.5h-1zm36 0 .5 1.5h-1zm39 0v1zm-357 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm356 0v1zm24 0v1zm280 0 11.5 11.5-.5.5-11.5-11.5zm-587 1 96.5.5-96.5.5zm209 0 .5 1.5h-1zm34 0 .5 1.5h-1zm104 0 .5 6.5h-1zm-115 1 .5 1.5h-1zm41 0v1zm45 0v1zm132 0 .5 4.5h-1zm-533 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm269 0v1zm86 0v1zm22 0 .5 1.5h-1zm-64 1 .5 1.5h-1zm-32 1 .5 1.5h-1zm64 0v1zm43 0 .5 1.5h-1zm144 0 .5 3.5h-1zm116 0 7.5 7.5-.5.5-7.5-7.5zm-658 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm69 0 .5 2.5h-1zm199 0 .5 1.5h-1zm32 0v1zm54 0 .5 1.5h-1zm-44 1 .5 1.5h-1zm64 0 .5 1.5h-1zm-30 1v1zm84 0 .5 2.5h-1zm-438 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm278 0v1zm19 0v1zm56 0 .5 1.5h-1zm30 0v1zm-327 1 .5 2.5h-1zm211 0v1zm40 0 .5 1.5h-1zm209 0 .5 1.5h-1zm-173 1v1zm28 0v1zm44 0 .5 1.5h-1zm-425 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm66 0 .5 1.5h-1zm211 0 .5 1.5h-1zm17 0v1zm58 0 .5 1.5h-1zm28 0 .5 1.5h-1zm145 0 .5 1.5h-1zm-259 1 .5 1.5h-1zm38 0 .5 1.5h-1zm121 0v1zm-83 1 .5 1.5h-1zm26 0 .5 1.5h-1zm145 0v1zm-523 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm53 0 .5 1.5h-1zm12 0 .5 1.5h-1zm226 0v1zm60 0 .5 1.5h-1zm315 0 11.5 11.5-.5.5-11.5-11.5zm-390 1 .5 1.5h-1zm101 0v1zm35 0v1zm12 0 .5 1.5h-1zm98 0 .5 1.5h-1zm130 0 7.5 7.5-.5.5-7.5-7.5zm-387 1 .5 1.5h-1zm36 0v1zm40 0 .5 1.5h-1zm169 0v1zm-520 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm64 0 .5 1.5h-1zm224 0 .5 1.5h-1zm62 0 .5 1.5h-1zm13 0 .5 1.5h-1zm-311 1v1zm322 0 .5 1.5h-1zm37 0v1zm12 0v1zm84 0 .5 1.5h-1zm-361 1 2.5 1.5-1.5-.5q-2.4-.1-1-1Zm118 0 .5 1.5h-1zm11 0 .5 1.5h-1zm23 0v1zm42 0 .5 1.5h-1zm179 0v1zm-529 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm63 0v1zm222 0 .5 1.5h-1zm137 0v1zm-371 1v1zm97 0v1zm201 0v1zm11 0 .5 1.5h-1zm50 0v1zm94 0v1zm12 0 .5 1.5h-1zm-452 1v1zm79 0v1zm7 0v1zm47 0 .5 2.5h-1zm77 0 .5 1.5h-1zm21 0v1zm44 0 .5 1.5h-1zm32 0 .5 1.5h-1zm52 0v1zm-433 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm50 0v1zm100 0 1.5 2.5h-1zm111 0 .5 1.5h-1zm21 0 .5 1.5h-1zm127 0v1zm92 0q1.5 1-1 2-1.5-1 1-2Zm-438 1v1zm77 0v1zm208 0v1zm9 0 .5 1.5h-1zm65 0 3.5 4.5-.5.5-2.5-2.5zm91 0v1zm-462 1 1.5 2.5q-1 1.5-2-1zm241 0v1zm46 0 .5 1.5h-1zm30 0 .5 1.5h-1zm42 0 1.5 2.5q-1 1.5-2-1zm-420 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm62 0q2.5 1 1 2-2.5-1-1-2Zm75 0v1zm45 0 .5 2.5h-1zm78 0 .5 1.5h-1zm11 0 .5 1.5h-1zm8 0 .5 1.5h-1zm218 0q1.5 1-1 2-1.5-1 1-2Zm13 0v1zm146 0 7.5 7.5-.5.5-7.5-7.5zm-508 1v1zm46 0 .5 1.5h-1zm153 0v1zm-211 1q1.5 1-1 2-1.5-1 1-2Zm153 0v1zm48 0 .5 1.5h-1zm17 0 .5 1.5h-1zm155 0q1.5 1-1 2-1.5-1 1-2Zm-519 1q2.5 1 1 2-2.5-1-1-2Zm12 0q2.5 1 1 2-2.5-1-1-2Zm49 0v1zm96 0v1zm218 0 .5 1.5h-1zm45 0v1zm85 0 .5.5-7.5 7.5-.5-.5zm179 0 11.5 11.5-.5.5-11.5-11.5zm-609 1 6.5 6.5-.5.5-6.5-6.5zm130 0 1.5 2.5q-1 1.5-2-1zm66 0 .5 1.5h-1zm11 0 .5 1.5h-1zm6 0v1zm70 0 .5 1.5h-1zm-296 1q2.5 1 1 2-2.5-1-1-2Zm94 0v1zm37 0 .5 1.5h-1zm105 0v1zm50 0 .5 1.5h-1zm73 0q2.5 1 1 2-2.5-1-1-2Zm14 0 4.5 4.5-.5.5-4.5-4.5zm82 0v1zm-515 1q2.5 1 1 2-2.5-1-1-2Zm141 0 .5.5-5.5 5.5-.5-.5zm220 0 .5 1.5h-1zm11 0 .5 1.5h-1zm-219 1v1zm117 0 .5 1.5h-1zm11 0 .5 1.5h-1zm4 0v1zm72 0 .5 1.5h-1zm-295 1 2.5 2.5-.5.5-2.5-2.5zm130 0v1zm13 0q2.5 1 1 2-2.5-1-1-2Zm90 0 .5 1.5h-1zm52 0 .5 1.5h-1zm74 0 3.5 3.5-.5.5-3.5-3.5zm92 0 .5.5-2.5 2.5-.5-.5zm-511 1 2.5 2.5-.5.5-2.5-2.5zm150 0 .5.5-2.5 2.5-.5-.5zm41 1 2.5 4.5q-1 1.5-2-1-1.7-1.5-.5-3.5Zm91 0v1zm74 0 .5 1.5h-1zm2 0v1zm11 0 .5 1.5h-1zm68 0 2.5 2.5-.5.5-2.5-2.5zm-168 1 .5 1.5h-1zm11 0 1.5 2.5q-1 1.5-2-1zm12 0 .5 1.5h-1zm54 0 .5 1.5h-1zm328 0 7.5 7.5-.5.5-7.5-7.5zm-594 1q2.5 1 1 2-2.5-1-1-2Zm52 0q1.5 1-1 2-1.5-1 1-2Zm359 0q1.5 1-1 2l-2 1q-1.5-1 1-2zm-488 1q2.5 1 1 2-2.5-1-1-2Zm61 0 3.5 3.5-.5.5-3.5-3.5zm144 0q2.5 1 1 2-2.5-1-1-2Zm149 0v1zm11 0 .5 1.5h-1zm73 0 4.5 2.5-1.5.5-3.5-2.5zm66 0 .5.5-2.5 2.5-.5-.5zm-424 1v1zm46 0v1zm17 0 .5.5-4.5 4.5-.5-.5zm145 0 .5 1.5h-1zm-206 1v1zm42 0v1zm84 0v1zm59 0v1zm77 0v1zm139 0v1zm-481 1q2.5 1 1 2-2.5-1-1-2Zm82 0v1zm38 0v1zm88 0 1.5.5-1.5.5zm214 0 3.5 3.5-.5.5-3.5-3.5zm20 0v1zm36 0 1.5.5-1.5.5zm-393 1v1zm32 0v1zm73 0 3.5 3.5-.5.5-3.5-3.5zm22 0 2.5.5-2.5.5zm73 0 .5 1.5h-1zm77 0 .5 1.5h-1zm82 0 1.5.5-1.5.5zm32 0v1zm21 0 .5.5-2.5 2.5-.5-.5zm-432 1 2.5 2.5-.5.5-2.5-2.5zm23 0 1.5.5-1.5.5zm25 0 1.5.5-1.5.5zm153 0 .5 1.5h-1zm77 0v1zm104 0 1.5.5-1.5.5zm25 0 1.5.5-1.5.5zm219 0 9.5 9.5-.5.5-9.5-9.5zm-689 1q2.5 1 1 2-2.5-1-1-2Zm90 0 3.5.5-3.5.5zm14 0 3.5.5-3.5.5zm29 0 .5.5-2.5 2.5-.5-.5zm316 0 2.5.5-2.5.5zm16 0 2.5.5-2.5.5zm-183 1 .5 1.5h-1zm143 0q2.5 1 1 2-2.5-1-1-2Zm66 0q1.5 1-1 2-1.5-1 1-2Zm-424 1q2.5 1 1 2-2.5-1-1-2Zm275 0v1zm17 0v1zm-357 1q2.5 1 1 2-2.5-1-1-2Zm127 0v1zm65 0 4.5 2.5-1.5.5-3.5-2.5zm71 0v1zm163 0v1zm60 0q1.5 1-1 2l-5 2v-1zm191 0 5.5 5.5-.5.5-5.5-5.5zm-609 1v1zm57 0q1.5 1-1 2l-1.5-.5zm154 0 .5 1.5h-1zm149 0v1zm-358 1v1zm271 0v1zm15 0 .5 1.5h-1zm74 0v1zm-428 1q2.5 1 1 2-2.5-1-1-2Zm70 0v1zm49 0v1zm77 0v1zm66 0 .5 1.5h-1zm168 0v1zm-358 1 1.5.5-1.5.5zm45 0v1zm81 0 1.5.5-1.5.5zm78 0 .5 1.5h-1zm156 0v1zm44 0v1zm-401 1v1zm39 0v1zm89 0 2.5.5-2.5.5zm137 0v1zm13 0v1zm82 0v1zm38 0v1zm-395 1 1.5.5-1.5.5zm32 0 1.5.5-1.5.5zm328 0 1.5.5-1.5.5zm31 0 1.5.5-1.5.5zm-387 1 3.5.5-3.5.5zm22 0 2.5.5-2.5.5zm339 0 2.5.5-2.5.5zm20 0 3.5.5-3.5.5zm-372 1 5.5.5-5.5.5zm361 0 4.5.5-4.5.5z" opacity=".3"/><path fill="#295f9c" stroke="#295f9c" d="m1525.5 88 7 1q5.5 2 8.5 6.5l3 8v109l-4 4-2 4-1 7-2.5 2.5-3 1h-9l-3-1-2.5-2.5-1-7-5-7v-113l2-5 4.5-4.5zm28 167 1.5.5-1.5.5zm4 1 2.5.5-2.5.5zm4 1v1zm2 1 7.5 7.5-.5.5-7.5-7.5z"/><path fill="#3e3e40" stroke="#3e3e40" d="M1547.5 257v1zm-7 6v1zm-1465 1v1zm1464 1v1zm-1456 1v1zm1455 2v1zm-1447 2v1zm9 9v1zm1443 5v1zm-1440 1v1zm-34 2v1zm35 1v1zm938 0v1zm-966 5v1zm965 0v1zm-964 2v1zm963 0v1zm-858 2v1zm262 0v1zm146 0v1zm105 0v1zm343 0v1zm192 0v1zm123 0v1zm-914 1v1zm156 0v1zm441 0v1zm312 0v1zm-1086 1v1zm207 0v1zm96 0v1zm158 0v1zm45 0v1zm116 0v1zm318 0v1zm176 0v1zm-1206 1v1zm64 0v1zm30 0v1zm167 0v1zm168 0v1zm195 0v1zm60 0v1zm72 0v1zm30 0v1zm-788 1v1zm304 0v1zm86 0v1zm120 0v1zm49 0v1zm232 0v1zm235 0v1zm49 0v1zm138 0v1zm-1215 1v1zm62 0v1zm42 0v1zm286 0v1zm211 0v1zm114 0v1zm81 0v1zm230 0v1zm-920 1v1zm333 0v1zm190 0v1zm58 0v1zm111 0v1zm-690 1v1zm149 0v1zm54 0v1zm256 0v1zm182 0v1zm51 0v1zm222 0v1zm144 0v1zm54 0v1zm-1283 1v1zm505 0v1zm62 0v1zm65 0v1zm451 0v1zm65 0v1zm-1091 1q1.5 1-1 2-1.5-1 1-2Zm117 0v1zm273 0v1zm246 0v1zm56 0v1zm117 0v1zm-751 1v1zm449 0v1zm71 0v1zm31 0v1zm110 0v1zm31 0v1zm273 0v1zm145 0 .5.5-3.5 3.5-.5-.5zm-910 1 .5.5-2.5 2.5-.5-.5zm64 0q2.5 1 1 2-2.5-1-1-2Zm-201 1 3.5 3.5-.5.5-3.5-3.5zm383 0q1.5 1-1 2-1.5-1 1-2Zm133 0v1zm54 0v1zm406 0q2.5 1 1 2-2.5-1-1-2Zm-1043 1v1zm528 0q2.5 1 1 2-2.5-1-1-2Zm164 0v1zm273 0q1.5 1-1 2-1.5-1 1-2Zm-1024 1v1zm-80 2v1zm541 0v1zm-129 1v1zm909 0v1zm-624 1v1zm104 0v1zm298 0q1.5 1-1 2-1.5-1 1-2Zm-1101 1v1zm545 0v1zm130 0q2.5 1 1 2-2.5-1-1-2Zm-541 1q1.5 1-1 2-1.5-1 1-2Zm449 0q1.5 1-1 2-1.5-1 1-2Zm609 0q2.5 1 1 2-2.5-1-1-2Zm-646 1v1zm279 0v1zm-828 1v1zm182 1v1zm2 0v1zm189 0v1zm128 0v1zm2 0v1zm47 0v1zm154 0v1zm27 0v1zm46 0v1zm27 0v1zm70 0v1zm2 0v1zm406 0v1zm-1285 1v1zm29 0v1zm149 0v1zm190 0v1zm145 0v1zm73 0v1zm42 0v1zm57 0v1zm417 0v1zm42 0v1zm148 0v1zm252 0v1zm-1546 1v1zm114 0v1zm86 0v1zm188 0v1zm130 0v1zm108 0v1zm23 0v1zm181 0v1zm62 0v1zm273 0v1zm132 0v1zm247 0v1zm-1547 1v1zm113 0v1zm384 0v1zm26 0v1zm190 0v1zm27 0v1zm44 0v1zm85 0v1zm274 0v1zm-1033 1v1zm30 0v1zm255 0v1zm35 0v1zm159 0v1zm103 0v1zm175 0v1zm306 0v1zm35 0v1zm96 0v1zm240 0 .5.5-2.5 2.5-.5-.5zm-1335 1v1zm155 0v1zm537 0v1zm238 0v1zm134 0v1zm-1167 1v1zm554 0v1zm33 0v1zm48 0v1zm42 0v1zm81 0v1zm240 0v1zm72 0v1zm-1005 1v1zm41 0q2.5 1 1 2-2.5-1-1-2Zm187 0v1zm221 0v1zm516 0v1zm-1109 1v1zm667 0v1zm21 0v1zm94 0v1zm96 0 2.5 2.5-.5.5-2.5-2.5zm198 0v1zm237 0v1zm-598 1v1zm-718 1v1zm113 0v1zm78 0q2.5 1 1 2-2.5-1-1-2Zm316 0v1zm164 0v1zm407 0v1zm-744 1v1zm44 0v1zm865 0v1zm44 0v1zm-1290 1v1zm115 0v1zm30 0v1zm321 0v1zm98 0v1zm81 0v1zm162 0v1zm30 0v1zm273 0v1zm81 0v1zm-1114 1v1zm305 0v1zm29 0v1zm182 0v1zm193 0v1zm376 0v1zm129 0v1zm226 0v1zm-628 1v1zm-775 1v1zm29 0v1zm420 0v1zm113 0v1zm432 0v1zm-1101 1v1zm68 0v1zm389 0v1zm77 0v1zm156 0v1zm88 0v1zm379 0v1zm-830 1v1zm-324 1v1zm552 0v1zm28 0v1zm215 0v1zm360 0v1zm28 0v1zm323 0v1zm-1132 1v1zm79 0v1zm615 0v1zm215 0v1zm-568 1v1zm32 0v1zm135 0v1zm-752 1v1zm510 0v1zm49 0v1zm84 0v1zm49 0v1zm273 0v1zm137 0v1zm-1169 1v1zm1121 0v1zm-1082 1v1zm566 0v1zm48 0v1zm30 0v1zm-617 1v1zm512 0v1zm453 0v1zm-902 2v1zm525 0v1zm28 0v1zm-736 1v1zm-32 1v1zm843 0v1zm338 0v1zm-1179 1v1zm149 0v1zm564 0v1zm78 0v1zm323 0v1zm-1111 2 2.5 2.5-.5.5-2.5-2.5zm687 0v1zm-657 1v1zm89 1v1zm593 1v1zm74 0v1zm298 0v1zm0 2v1zm-965 1v1zm594 0v1zm46 0v1zm26 0v1zm-98 2v1zm-681 1v1zm562 0v1zm172 0v1zm18 0v1zm-612 1v1zm965 0v1zm-1078 1v1zm682 0v1zm68 0v1zm55 0v1zm-97 1v1zm16 0v1zm145 0v1zm-692 1v1zm-203 2v1zm140 0v1zm595 0v1zm14 0v1zm356 0v1zm63 0v1zm-1055 1v1zm566 0v1zm516 1v1zm-1195 1v1zm141 0v1zm692 0v1zm273 0v1zm61 0v1zm-456 1v1zm62 0v1zm120 0v1zm-243 1v1zm429 0v1zm-273 1v1zm388 0v1zm-545 1v1zm-650 2v1zm116 0v1zm29 0v1zm420 0v1zm84 0v1zm65 0v1zm58 0v1zm213 0v1zm125 0v1zm-911 1v1zm692 0v1zm-864 1v1zm713 0v1zm6 0v1zm336 0v1zm-965 1v1zm30 0v1zm419 0v1zm30 0v1zm51 0q1.5 1-1 2-1.5-1 1-2Zm68 0v1zm56 0v1zm38 0v1zm30 0v1zm147 0v1zm126 0q2.5 1 1 2-2.5-1-1-2Zm51 0v1zm30 0v1zm-997 2 .5.5-2.5 2.5-.5-.5zm371 0v1zm109 0v1zm65 0v1zm4 0v1zm143 0q1.5 1-1 2-1.5-1 1-2Zm-891 1 .5.5-3.5 3.5-.5-.5zm29 1v1zm542 0v1zm107 0v1zm409 0v1zm32 0q2.5 1 1 2-2.5-1-1-2Zm-964 1v1zm449 0v1zm41 0v1zm75 0v1zm25 0v1zm2 0v1zm25 0v1zm42 0v1zm347 0v1zm-589 1v1zm105 0v1zm171 0v1zm114 0v1zm126 0v1zm-1060 1v1zm165 0v1zm414 0v1zm35 0v1zm173 0v1zm70 0v1zm238 0v1zm-1129 1v1zm579 0v1zm310 0v1zm114 0v1zm128 0v1zm67 0v1zm-1200 1v1zm861 0v1zm28 0v1zm119 0v1zm90 0v1zm37 0v1zm-1138 1v1zm136 0v1zm62 0v1zm449 0v1zm516 0v1zm-985 1v1zm408 0v1zm42 0v1zm15 0v1zm227 0v1zm274 0v1zm57 0v1zm-517 1v1zm291 0v1zm128 0v1zm-1067 1v1zm102 0v1zm596 0v1zm46 0v1zm196 1v1zm-387 1q2.5 1 1 2-2.5-1-1-2Zm609 0q1.5 1-1 2-1.5-1 1-2Zm-1164 1v1zm647 0 .5.5-4.5 4.5-.5-.5zm296 0v1zm-144 1q2.5 1 1 2-2.5-1-1-2Zm274 0 3.5 3.5-.5.5-3.5-3.5zm-965 1 4.5 4.5-.5.5-4.5-4.5zm594 0v1zm42 0v1zm-184 2q2.5 1 1 2-2.5-1-1-2Zm386 0v1zm-243 1v1zm40 0v1zm60 0 2.5 2.5-.5.5-2.5-2.5zm355 0q1.5 1-1 2-1.5-1 1-2Zm-1166 3v1zm646 0v1zm312 0q2.5 1 1 2-2.5-1-1-2Zm131 0v1zm-515 1v1zm587 0v1zm-1164 1v1zm646 0v1zm70 0v1zm36 0v1zm68 0v1zm275 0v1zm-1097 1v1zm189 0v1zm692 0v1zm86 0v1zm-969 1v1zm586 0v1zm61 0v1zm455 0v1zm61 0v1zm-1026 1v1zm51 0v1zm400 0v1zm57 0v1zm184 0v1zm51 0v1zm93 0v1zm131 0v1zm57 0v1zm-1022 1v1zm47 0v1zm404 0v1zm53 0v1zm188 0v1zm47 0v1zm281 0v1zm-1168 1v1zm193 0v1zm649 0v1zm43 0v1zm-890 1v1zm158 0v1zm38 0v1zm413 0v1zm279 0v1zm109 0v1zm171 0v1zm-1007 1v1zm32 0v1zm692 0v1zm248 1v1zm-949 1v1zm439 0v1zm15 0v1zm238 0v1zm278 0v1zm-395 38v1zm2 3v1zm2 3v1zm2 3v1zm2 3v1zm2 3v1zm-10 1q2.5 1 1 2-2.5-1-1-2Zm12 2v1zm-9 2v1zm11 1v1zm-9 2v1zm11 1v1zm-9 2v1zm11 1v1zm244 1v1zm-253 1v1zm252 1q1.5 1-1 2-1.5-1 1-2Zm-80 1v1zm355 0v1zm6 0v1zm124 0v1zm-655 1v1zm178 0v1zm362 0v1zm-388 1v1zm92 0v1zm268 0v1zm32 0v1zm102 0v1zm-497 1v1zm298 0v1zm11 0v1zm-456 1v1zm186 0v1zm118 0v1zm200 0v1zm135 0v1zm109 0v1zm-606 1v1zm173 0v1zm444 0q1.5 1-1 2-1.5-1 1-2Zm-619 1v1zm413 0v1zm-551 1v1zm190 0v1zm252 0v1zm190 0v1zm109 1v1zm-608 1v1zm24 0v1zm36 0v1zm193 0v1zm170 0v1zm-404 1v1zm23 0v1zm277 0v1zm61 0v1zm22 0v1zm93 0q1.5 1-1 2-1.5-1 1-2Zm123 0v1zm-573 1v1zm79 0v1zm47 0v1zm235 0v1zm-525 1v1zm115 0q1.5 1-1 2-1.5-1 1-2Zm17 0v1zm51 0v1zm190 0v1zm101 0q1.5 1-1 2-1.5-1 1-2Zm54 0v1zm18 0v1zm176 0v1zm-592 1v1zm39 0v1zm321 0v1zm40 0v1zm-402 1v1zm298 0v1zm62 0v1zm122 0q1.5 1-1 2-1.5-1 1-2Zm122 0v1zm-730 1v1zm124 0v1zm165 0v1zm73 0v1zm10 0v1zm160 0v1zm-360 1v1zm128 0v1zm318 0v1zm97 0v1zm-529 1q2.5 1 1 2-2.5-1-1-2Zm177 0v1zm71 0v1zm47 0v1zm-479 1v1zm105 0q1.5 1-1 2-1.5-1 1-2Zm13 0v1zm231 0v1zm22 0v1zm50 0v1zm192 0q1.5 1-1 2-1.5-1 1-2Zm110 0q1.5 1-1 2-1.5-1 1-2Zm-187 1q2.5 1 1 2-2.5-1-1-2Zm66 0v1zm107 0q1.5 1-1 2-1.5-1 1-2Zm-347 1v1zm100 0v1zm-460 1v1zm346 0v1zm83 0v1zm120 0v1zm-363 1v1zm101 0v1zm184 0v1zm-480 1v1zm108 0v1zm507 0v1zm96 0v1zm13 0v1zm-713 1v1zm108 0q1.5 1-1 2-1.5-1 1-2Zm235 0v1zm112 0v1zm82 0q2.5 1 1 2-2.5-1-1-2Zm-362 1v1zm11 0v1zm-195 1v1zm104 0v1zm-93 1v1zm185 0v1zm110 0v1zm45 0v1zm123 0v1zm86 0v1zm50 0v1zm94 0v1zm13 0q1.5 1-1 2-1.5-1 1-2Zm-614 1v1zm11 0v1zm72 0v1zm248 0v1zm115 0v1zm-547 1v1zm195 0v1zm99 0v1zm127 0v1zm38 0v1zm-448 1v1zm174 0v1zm285 0v1zm-274 1v1zm109 0v1zm153 0v1zm91 0v1zm148 0v1zm-695 1v1zm184 0v1zm523 0v1zm-696 1v1zm537 0v1zm11 0v1zm44 0v1zm-507 1v1zm89 0v1zm192 0v1zm-375 1v1zm426 0v1zm121 0v1zm141 0v1zm-677 1v1zm281 0v1zm160 0v1zm148 0v1zm100 0v1zm-516 1v1zm192 0v1zm172 0v1zm-546 1v1zm101 0v1zm200 0v1zm48 0v1zm111 0v1zm97 0v1zm125 0q1.5 1-1 2-1.5-1 1-2Zm-671 1v1zm438 0v1zm-266 1v1zm10 0v1zm182 0v1zm37 0v1zm135 0v1zm146 0q1.5 1-1 2-1.5-1 1-2Zm-691 1v1zm98 0v1zm248 0v1zm-335 1v1zm289 0v1zm120 0v1zm255 0v1zm-385 1v1zm46 0v1zm38 0v1zm-372 1v1zm343 0v1zm64 0v1zm-396 1v1zm84 0v1zm588 0v1zm-350 1v1zm335 0v1zm-666 1v1zm340 0v1zm101 1v1zm102 0v1zm-461 1v1zm216 0v1zm32 0v1zm84 0v1zm262 0v1zm-674 1v1zm286 0v1zm51 0v1zm321 0 1.5.5-1.5.5zm-297 1v1zm40 0v1zm-311 1v1zm237 0v1zm-30 1v1zm39 0v1zm26 1v1zm38 1v1zm-28 1v1zm38 0v1zm248 0 3.5 2.5-.5.5-2-2q-2.4-.1-1-1Zm-370 1v1zm75 0v1zm-347 1v1zm357 1v1zm-9 1v1zm-346 1v1zm72 0v1zm199 0v1zm85 1v1zm-9 1v1zm43 0v1zm-388 1v1zm280 0v1zm381 0 3.5 3.5-.5.5-3.5-3.5zm-306 1v1zm-364 1v1zm355 0v1zm31 0v1zm-375 1v1zm385 0v1zm264 0 2.5 2.5-.5.5-2.5-2.5zm-380 1v1zm31 0v1zm219 0v1zm-528 1v1zm354 0v1zm-343 1v1zm527 0v1zm-230 1v1zm-306 1v1zm353 0v1zm82 0v1zm-424 1v1zm55 0v1zm459 0v1zm-220 1v1zm85 0v1zm-388 1v1zm276 0v1zm10 0v1zm-275 1v1zm511 0v1zm-457 1v1zm237 0v1zm75 0v1zm47 0v1zm-422 1v1zm309 0v1zm124 0v1zm97 0v1zm134 0 2.5 2.5-.5.5-2.5-2.5zm-653 1v1zm508 0v1zm159 0 3.5 3.5-.5.5-3.5-3.5zm-614 1v1zm11 0v1zm348 0v1zm-421 1v1zm156 0q1.5 1-1 2-1.5-1 1-2Zm51 0v1zm99 0v1zm53 0v1zm13 0v1zm10 0v1zm134 0v1zm11 0v1zm-516 1v1zm147 0v1zm116 0v1zm241 1v1zm11 0v1zm-524 1v1zm152 0v1zm43 0v1zm108 0v1zm55 0v1zm-347 1v1zm51 0v1zm99 0v1zm260 0v1zm91 0v1zm-438 1v1zm209 0v1zm150 0v1zm-431 1v1zm61 0v1zm239 0v1zm57 0v1zm63 0v1zm-409 1v1zm137 0v1zm218 0v1zm10 0v1zm132 0v1zm-446 1v1zm96 0v1zm114 0v1zm149 0v1zm12 0v1zm86 0v1zm151 0 2.5 2.5-.5.5-2.5-2.5zm-668 1v1zm192 0v1zm88 0v1zm17 0v1zm59 0v1zm-345 1v1zm144 0v1zm-93 1v1zm301 0v1zm58 0v1zm82 0q1.5 1-1 2-1.5-1 1-2Zm-501 1v1zm73 0 3.5 3.5-.5.5-3.5-3.5zm129 0v1zm83 0v1zm9 0v1zm390 1 3.5 3.5-.5.5-3.5-3.5zm-672 1v1zm50 0v1zm77 0 .5.5-2.5 2.5-.5-.5zm231 0v1zm51 0q2.5 1 1 2-2.5-1-1-2Zm90 0v1zm-509 1v1zm190 0v1zm12 0v1zm66 0v1zm14 0v1zm213 0q1.5 1-1 2-1.5-1 1-2Zm-217 1v1zm-87 1v1zm90 1v1zm156 0v1zm-306 1v1zm61 0v1zm484 0 2.5 2.5-.5.5-2.5-2.5zm-595 1v1zm126 0v1zm72 0q2.5 1 1 2-2.5-1-1-2Zm209 0v1zm-279 1v1zm157 0v1zm76 0v1zm44 0v1zm-275 1v1zm59 0v1zm77 0v1zm97 0v1zm40 0v1zm-397 1v1zm36 0v1zm72 0 2.5 2.5-.5.5-2.5-2.5zm19 0v1zm214 0q2.5 1 1 2-2.5-1-1-2Zm54 0v1zm-392 1v1zm30 0v1zm100 0v1zm259 0v1zm20 0v1zm-428 1v1zm23 0v1zm254 0v1zm105 0v1zm22 0v1zm-338 1v1zm295 0v1zm-358 1v1zm-65 1v1zm125 0v1zm67 0v1zm148 0v1zm15 0v1zm71 0v1zm58 0v1zm-361 1v1zm71 0v1zm234 0v1zm54 0v1zm208 0 3.5 3.5-.5.5-3.5-3.5zm-569 1v1zm75 0v1zm234 0v1zm50 0v1zm199 0 2.5 2.5-.5.5-2.5-2.5zm-677 1v1zm339 0v1zm137 0v1zm-403 1v1zm41 0v1zm319 0v1zm40 0v1zm-362 1v1zm325 0v1zm34 0v1zm-390 1v1zm386 0v1zm-19 1v1zm12 0v1z"/><path fill="#3e3e40" stroke="#3e3e40" d="M1551.5 256h5l6 2 61.5 61.5-10.5 1.5-7.5 5.5-4 7v4l-1.5 3.5-60.5-59.5-2-4v-8l3-7 3.5-3.5zM1 264h73.5l15 5 10.5 9.5 3 5 2 6v3l1 1v11l-1 1-1 7-3 6-8.5 9.5-7.5 4.5q11.8 4.7 19 14l6 12q-1 4 1 5v13l-1 1v4l-3 8-4 6-6.5 6.5-11 6-6 1-1 1h-4l-1 1H1zm26 21v39h38l8-4q4-3 6-9v-12l-2-5-7-7-6-1-1-1zm0 61v44h38l1-1 7-1 5-3 3-3 3-6q-1-5 1-6l-1-9-4-7-5-5-9-3zm1016-76h25v29h30v23h-30v53.5q2 6 6.5 9.5l6 3h18.5v23h-26.5l-1-1h-4l-6-3h-2l-9.5-7.5-7-12v-3l-2-5V322h-20v-23h15.5l4.5-3.5q1.7-1.8 1-6l1-1zm-859.5 27h6l.5.5V322h-8.5l-1 1-6 1q-7.7 3.3-12.5 9.5l-4 9V411h-26.5l-.5-.5V299h26v12.5h1l2.5-3.5 5-4 10-5 7-1zm262 0h15l1 1h4l6 2q11 4.5 17.5 13.5l5 9 2 6v5l1 1V411h-27v-71.5l-2-6-4-5V327h-1.5l-7-5-3-1h-6l-2-1-1 1h-6l-9 4-6.5 6.5-3 6q1 4-1 5V411h-25.5l-.5-.5V299h25v11.5l1.5.5 9-8 9-4 8-1zm129 0h15l1 1 8 1 13 7 6.5 6.5 6 11 1 6 1 1v6l1 1V411h-27v-69.5l-4-11-5.5-5.5-8-4h-6l-3-1-1 1h-5l-6 2-10.5 9.5-3 7V411h-26.5l-.5-.5V299h26v11.5l.5.5 4-4 12-7 6-2h4zm122 0h17l1 1h5l4 2h3l12 6 11.5 9.5 6 8 5 10 2 6v4l1 1 1 14-1 1v7q-2 1-1 5l-7 16-13.5 14.5-6 4-14 6q-3.2-.7-4 1h-6l-1 1h-13l-1-1h-6l-1-1h-3l-6-2-13-7-8.5-7.5-6-8-5-10-2-6v-3l-1-1-1-17 1-1v-6l1-1v-3l3-9q5.6-11.4 14.5-19.5l14-9h2l6-3 9-1zm1.5 24q-1 2-4 1l-9 5-7 7-3 5-2 6v3l-1 1v14l1 1 1 6 5 9 9 7 10 4h15q0-2 4-1l9-5 7-8 5-15v-10q-2-2-1-6l-6-12-6-7-8-4q-4 1-4-1zm514.5-24h17l1 1h5l1 1 6 1 14 7 10.5 9.5 7 10 4 9v3l2 5v5l1 1v12l-1 1v5l-1 1v3l-3 9q-5.2 10.8-13.5 18.5l-8 6-16 7q-3.2-.7-4 1h-6l-1 1h-13l-1-1-10-1-14-6q-9.8-5.7-16.5-14.5l-4-6-5-11v-3l-2-5v-10l-1-1 1-1v-10l1-1 2-10 7-13 7.5-8.5 13-9h2l5-3h3l4-2h5zm1.5 24-6 2-7 4-8 9-3 6-1 7-1 1v12q2 1 1 5l6 12 9 7 10 4h15q0-2 4-1l9-5 7-8 3-6 1-7 1-1v-13l-1-1v-3l-2-6-3-5-7-8-8-4q-4 1-4-1zm140.5-24h15l1 1h4l6 2q11 4.5 17.5 13.5l5 9 1 6 1 1v4l1 1V411h-27v-71.5l-3-8-7.5-7.5-7-3q-5.5 1-8-1l-1 1h-6l-9 4-6.5 6.5-4 10V411h-25.5l-.5-.5V299h25v11.5l1.5.5 9-8 6-3 6-1 1-1h4zm-1113 2h20l1 1 7 1 11 6 8 8 .5-16h24.5l.5.5V411h-25v-13.5l-.5-.5-8 8-11 6-6 2q-4.7-1.2-6 1h-12l-1-1h-5l-9-3-8-4-14.5-13.5-7-12-3-9q1-4-1-5v-9l-1-3 1-1v-9q2-1 1-5l4-9v-2l4-7 9.5-10.5 13-8h2l3-2 7-1zm13.5 21-1 1h-6l-3 1-9 5-8 9-3 6-1 7-1 1v12q2 1 1 5l6 12 9 7 9 4h16l10-4 4-3 5-6 5-12v-18l-2-6-5-9q-5-7-13-10zm84-21h26.5l.5.5V411h-26.5l-.5-.5zm430 0h26.5l.5 1.5 3 9 2 3 5 17 2 3 4 14 2 3 5 17 2 3 4 14 1.5 1.5 1.5-1.5 4-14 2-3 5-17 2-3 5-17 2-3 4-14 2-3 3-10.5h26.5q.8-.2.5 2.5l-3 6-3 10-2 3-3 10-2 3-4 13-4 8-4 13-4 8-4 13-4 8-4 13-1.5 1.5h-30l-1.5-1.5-4-13-4-8-4-13-4-8-4-13-2-3-3-10-7-16-1-5-7-16zm164.5 0h20l1 1h3l6 2q10.6 4.4 17 13l.5-16h24.5l.5.5V411h-25v-13.5l-.5-.5-8 8-11 6-6 2q-4.7-1.2-6 1h-12l-1-1h-5l-1-1-6-1-10-5-10.5-8.5-7-9-6-13v-3l-2-5-1-16 1-1v-7l1-1v-3l3-9q5.3-11.7 14.5-19.5l15-9 10-2zm13.5 21-1 1h-6l-6 2-5 3-9 10-5 13v14l1 1 1 6 5 9 7 6 11 5h16l10-4 5-4 4-5 5-13v-16l-1-1-1-6-6-10q-5-6-12-9zm172-21h25.5l.5.5V411h-25.5l-.5-.5zm406 142h9.5l.5.5v91l1.5.5 57-46 3-2h11q1.5 1-1 2l-59.5 48.5 63 60-10.5.5-63-58h-1.5v57.5l-.5.5h-9.5zm-702 8h8.5l1.5 1.5L918.5 578l.5-129h9.5l.5.5V596h-8.5l-.5-1.5-5-6L833.5 467l-.5 129h-9.5l-.5-.5zm273 7h10v29h36.5l.5.5v7.5h-38v70.5l1 1v5l2 6 7.5 8.5 7 3q4.8-1.2 6 1h15.5v7.5l-.5.5h-23l-12-5-7.5-7.5-4-8-1-9-1-1V493h-21v-8h14.5l6.5-3.5 1-2zm-86.5 26 17 2 6 3h2q8.8 4.7 15.5 11.5 7.9 8.6 12 21l1 8 1 1V543h-96.5q-.9-.1-.5 3.5l1 1v5l1 1v3l2 6q4.3 9.8 11.5 16.5l7 5 13 5h21l1-1 7-1 8-4 6.5-5.5 8.5-13.5q5 1 7.5 4.5-5.1 12.9-15.5 20.5l-11 6-6 2q-3.2-.7-4 1h-6l-1 1h-12l-1-1-9-1-12-5q-9.2-5.3-15.5-13.5l-4-6-6-14-1-8-1-1v-17l1-1 1-9 4-10 5-8 7.5-8.5q6.8-6.2 16-10l6-2h3l1-1h7zm-3.5 9-1 1h-4l-6 2-10 6-10 11-6 13q1 3-1 4v6l-1 1h87l-1-12-2-6-5-9-9-10-5-3h-2l-6-3h-5l-1-1zm364.5-9q4-1 5 1h8l1 1 10 2q13.7 5.8 22.5 16.5l6 9 3 7 2 6v4l1 1v9l1 3-1 1v9q-2 1-1 5l-4 9v2l-7 11-8.5 8.5-4 3-16 7q-3.2-.7-4 1h-6l-1 1h-10l-1-1h-6q-.7-1.7-4-1l-14-6q-7.8-4.7-13.5-11.5l-5-7-7-17q1-4-1-5v-19l1-1v-5l3-9 4-8 10.5-12.5 8-6 11-5h3l5-2h8zm-1.5 9-1 1h-6l-9 3-7 4-5 5h-2v2l-6 7-4 8-1 6-1 1v4l-1 1v16q2 1 1 6l2 6 6 11 11 10 5 3 11 4h6l1 1h8l1-1h6q0-2 4-1 8-3 15-8l10-12 3-6 2-6v-4l1-1v-20l-1-1-2-10-7-12-6-7-12-7-6-1-1-1h-6l-1-1zm131.5-9h3.5v10h-6.5l-1 1-6 1-11 6-5.5 5.5-3 4-4 9V596h-9.5l-.5-.5V485h9v18.5l.5.5 2.5-2.5 5.5-7.5q5.9-5.6 14-9l6-2h5zm-350 3h10q.8-.2.5 2.5l2 4v3l3 8 2 11 2 4 1 7 2 4 1 7 2 4 1 7 5 15v3l4 12 1 7 1.5 1.5 11.5-34.5v-3l8-22v-3l8-22v-3l4-10V485h12.5q.8-.2.5 2.5l16 48v3l8 22v3l7.5 20.5 3.5-9.5 1-7 2-4 2-11 2-4 1-7 5-15v-3l4-12 1-7 2-4 1-7 2-4v-3l1.5-1.5h9.5v3.5l-4 11-1 7-2 4v3l-2 4v3l-2 4v3l-2 4-2 10-2 4-1 7-2 4v3l-2 4v3l-2 4v3l-2 4v3l-2 4-2 10-1.5 1.5h-11l-.5-1.5-32.5-97.5-13.5 38.5v3l-13 37v3l-6 17.5h-12.5q-.7.3-.5-2.5l-4-12v-3l-2-4v-3l-2-4v-3l-2-4v-3l-2-4v-3l-2-4v-3l-5-15v-3l-2-4v-3l-2-4v-3l-2-4v-3l-2-4-1-7-2-4v-3z"/><path fill="#3b3d41" stroke="#3b3d41" d="m1549.5 256 1.5.5-1.5.5zm-4 2v1zM0 263l70 .5-69 .5v147h65.5v1H0zm76.5 1v1zm4 1v1zm1491 1 53.5 53.5-.5.5-53.5-53.5zm-1485 1v1zm1452 0v1zm-1450 1v1zm2 1v1zm952 1 .5 17.5h-1zm26 0 .5 28.5h-1zm-974 2 5.5 5.5-.5.5-5.5-5.5zm7 8v1zm1 2v1zm1 2v1zm-76 1v1z" opacity=".7"/><path fill="#3b3d41" stroke="#3b3d41" d="m60.5 285 2.5.5-2.5.5zm1484 0 56 56 .5-.5.5-1.5.5 3.5-.5.5-57.5-57.5zm-1478 1v1zm38 1v1zm-32 2 3.5 3.5-.5.5-3.5-3.5zm33 2 .5 1.5h-1zm936 1v1zm-2 4v1zm-858 1v1zm261 0 1.5.5-1.5.5zm19 0 1.5.5-1.5.5zm111 0 1.5.5-1.5.5zm19 0 1.5.5-1.5.5zm102 0 1.5.5-1.5.5zm21 0 1.5.5-1.5.5zm496 0 1.5.5-1.5.5zm21 0 1.5.5-1.5.5zm120 0 1.5.5-1.5.5zm19 0 1.5.5-1.5.5zm-1292 1v1zm99 0v1zm70 0 9.5.5-9.5.5zm191 0v1zm28 0v1zm102 0v1zm28 0v1zm92 0 1.5.5-1.5.5zm32 0v1zm219 0 9.5.5-9.5.5zm266 0v1zm31 0 1.5.5-1.5.5zm111 0v1zm28 0v1zm-1201 1v1zm65 0 1.5.5-1.5.5zm24 0v1zm172 0v1zm35 0v1zm94 0v1zm35 0v1zm86 0v1zm39 0v1zm207 0 1.5.5-1.5.5zm23 0 1.5.5-1.5.5zm164 0 .5 112 26 .5-27 .5zm83 0v1zm39 0v1zm60 0 .5 112h26v-68.5h1V412h-28zm44 0v1zm35 0v1zm-1144 1v1zm32 0v1zm165 0v1zm40 0v1zm90 0v1zm40 0v1zm80 0v1zm45 0v1zm41 0v1zm116 0v1zm43 0v1zm32 0v1zm239 0v1zm45 0v1zm98 0v1zm40 0v1zm-1149 1v1zm38 0v1zm160 0v1zm174 0v1zm75 0v1zm245 0v1zm38 0v1zm284 0v1zm93 0v1zm-1110 1v1zm199 0v1zm48 0v1zm130 0v1zm71 0v1zm55 0v1zm65 0v1zm58 0v1zm66 0v1zm272 0v1zm55 0v1zm89 0v1zm48 0v1zm-1219 1v1zm61 0v1zm251 0v1zm78 0v1zm119 0v1zm59 0v1zm185 0v1zm272 0v1zm59 0v1zm85 0v1zm52 0v1zm-1162 1v1zm384 0v1zm64 0v1zm579 0v1zm-1089 1v1zm60 0v1zm55 0v1zm203 0 2.5 2.5-.5.5-2.5-2.5zm72 0v1zm217 0v1zm28 0v1zm56 0v1zm28 0v1zm33 0v1zm55 0v1zm362 0q1.5 1-1 2-1.5-1 1-2Zm-1227 1v1zm317 0q1.5 1-1 2-1.5-1 1-2Zm248 0v1zm69 0v1zm174 0v1zm273 0v1zm69 0v1zm136 0 5.5 5.5-.5.5-5.5-5.5zm-1110 1q2.5 1 1 2-2.5-1-1-2Zm332 0 3.5 3.5-.5.5-3.5-3.5zm-395 1q1.5 1-1 2-1.5-1 1-2Zm449 0v1zm75 0q2.5 1 1 2-2.5-1-1-2Zm29 0v1zm28 0v1zm54 0v1zm28 0v1zm29 0q1.5 1-1 2-1.5-1 1-2Zm64 0 6.5 6.5-.5.5-6.5-6.5zm209 0q1.5 1-1 2-1.5-1 1-2Zm75 0v1zm-710 1q1.5 1-1 2-1.5-1 1-2Zm-470 1v1zm26 0v1zm382 0 2.5 2.5-.5.5-2.5-2.5zm286 0v1zm108 0v1zm-80 1v1zm52 0v1zm53 1 .5.5-3.5 3.5-.5-.5zm358 0 2.5 2.5-.5.5-2.5-2.5zm-1160 1v1zm184 0q2.5 1 1 2-2.5-1-1-2Zm374 0v1zm112 0v1zm106 0v1zm-803 1v1zm543 0v1zm182 0v1zm50 0v1zm-749 1v1zm388 0v1zm909 0v1zm-1325 2q1.5 1-1 2-1.5-1 1-2Zm27 0v1zm390 0v1zm311 0v1zm48 0v1zm324 0q1.5 1-1 2-1.5-1 1-2Zm226 0v1zm-648 1q2.5 1 1 2-2.5-1-1-2Zm23 0v1zm102 0v1zm-670 1v1zm285 0v1zm164 0v1zm193 0v1zm50 0q1.5 1-1 2-1.5-1 1-2Zm370 0v1zm132 0v1zm-1331 1v1zm29 0v1zm156 0v1zm189 0v1zm130 0v1zm373 0v1zm406 0v1zm263 0v1zm-1368 1v1zm15 0v1zm175 0v1zm13 0 1.5.5-1.5.5zm42 0v1zm74 0v1zm14 0v1zm117 0v1zm13 0 1.5.5-1.5.5zm65 0v1zm100 0v1zm63 0 1.5.5-1.5.5zm15 0 1.5.5-1.5.5zm260 0v1zm13 0 1.5.5-1.5.5zm119 0 1.5.5-1.5.5zm14 0v1zm42 0v1zm-1336 1v1zm116 0 1.5.5-1.5.5zm23 0v1zm39 0v1zm22 0v1zm168 0v1zm130 0v1zm20 0v1zm39 0v1zm31 0v1zm40 0v1zm21 0v1zm40 0v1zm49 0v1zm44 0v1zm88 0v1zm22 0v1zm82 0v1zm130 0v1zm40 0v1zm21 0v1zm40 0v1zm72 0v1zm-1280 1v1zm115 0v1zm64 0v1zm27 0v1zm163 0v1zm25 0v1zm234 0v1zm27 0v1zm157 0v1zm59 0v1zm27 0v1zm273 0v1zm107 0v1zm25 0v1zm244 0v1zm-1514 1 .5.5-2.5 2.5-.5-.5zm79 0v1zm65 0v1zm31 0v1zm159 0v1zm259 0v1zm31 0v1zm243 0v1zm206 0v1zm36 0v1zm134 0v1zm64 0v1zm-1231 1v1zm31 0v1zm35 0v1zm222 0v1zm98 0q1.5 1-1 2-1.5-1 1-2Zm32 0 4.5 4.5-.5.5-4.5-4.5zm34 0v1zm28 0v1zm35 0v1zm35 0v1zm83 0v1zm42 0v1zm48 0v1zm35 0v1zm308 0v1zm35 0v1zm96 0v1zm-1095 1v1zm153 0 .5.5-4.5 4.5-.5-.5zm351 0v1zm96 0v1zm92 0v1zm236 0v1zm134 0 .5.5-4.5 4.5-.5-.5zm-1134 1v1zm293 0v1zm156 0v1zm74 0 4.5 4.5-.5.5-4.5-4.5zm169 0v1zm33 0 .5.5-4.5 4.5-.5-.5zm314 0q2.5 1 1 2-2.5-1-1-2Zm33 0v1zm130 0v1zm-1237 1 .5.5-4.5 4.5-.5-.5zm67 0 .5.5-3.5 3.5-.5-.5zm391 0 .5 1.5h-1zm58 0 .5.5-4.5 4.5-.5-.5zm123 0v1zm40 0v1zm353 0 .5.5-3.5 3.5-.5-.5zm-1109 1v1zm111 0v1zm77 0v1zm372 0v1zm129 0v1zm94 0v1zm20 0v1zm382 0v1zm329 0v1zm-1139 1v1zm909 0v1zm-1287 1v1zm409 0 .5 1.5h-1zm56 0v1zm228 0v1zm27 0v1zm38 0v1zm27 0v1zm20 0v1zm353 0q2.5 1 1 2-2.5-1-1-2Zm31 0v1zm327 0v1zm-1007 1v1zm164 0v1zm405 0v1zm240 0 .5 1.5h-1zm-1318 1v1zm194 0q2.5 1 1 2-2.5-1-1-2Zm140 0v1zm552 0v1zm357 0v1zm-1241 1v1zm110 0v1zm30 0v1zm321 0v1zm47 0v1zm29 0 .5 1.5h-1zm22 0v1zm113 0v1zm20 0v1zm27 0v1zm36 0v1zm27 0v1zm20 0v1zm303 0v1zm83 0v1zm325 0v1zm-1511 1v1zm70 0v1zm259 0v1zm257 0v1zm55 0v1zm188 0v1zm244 0v1zm84 0v1zm81 0v1zm-1046 1v1zm185 0v1zm507 0v1zm402 0v1zm-1283 1v1zm66 0v1zm67 0v1zm322 0v1zm49 0v1zm49 0v1zm86 0v1zm76 0v1zm34 0v1zm47 0v1zm29 0v1zm273 0v1zm86 0v1zm50 0v1zm-1130 1v1zm86 0v1zm135 0v1zm343 0v1zm214 0v1zm187 0v1zm-1066 1 5.5 5.5-.5.5-5.5-5.5zm62 0v1zm67 0v1zm449 0v1zm59 0v1zm49 0v1zm27 0v1zm32 0v1zm27 0v1zm49 0v1zm273 0v1zm-906 1v1zm184 0v1zm79 0 .5 1.5h-1zm830 0v1zm-779 1 .5 2.5h-1zm47 0 .5 1.5h-1zm28 0v1zm215 0 .5 1.5h-1zm362 0v1zm28 0v1zm-1082 1v1zm28 0v1zm193 0 .5 70-27-.5 26-.5zm317 0v1zm28 0v1zm21 0v1zm27 0v1zm30 0v1zm27 0v1zm294 0 .5 1.5h-1zm28 0v1zm-1032 1 .5 1.5h-1zm128 0v1zm692 0v1zm-305 1v1zm112 0v1zm82 0v1zm49 0 .5 1.5h-1zm336 0v1zm-1028 1v1zm512 0v1zm76 0v1zm28 0v1zm349 0v1zm-1162 1v1zm37 0 1.5.5-1.5.5zm1216 0 .5 2.5h-1zm-1211 1v1zm218 0v1zm358 0 .5 2.5h-1zm141 0v1zm80 0v1zm113 0 .5 1.5h-1zm-874 1v1zm567 0 .5 1.5h-1zm92 0 .5 2.5h-1zm49 0v1zm26 0v1zm49 0 .5 2.5h-1zm-692 1 .5 3.5h-1zm719 0 .5 1.5h-1zm246 0 .5 4.5h-1zm92 0 .5 1.5h-1zm-1178 1v1zm31 0v1zm117 0 .5 1.5h-1zm514 0 .5 2.5h-1zm50 0v1zm78 0v1zm323 0 .5 1.5h-1zm-374 1v1zm24 0v1zm-50 1v1zm76 0v1zm-756 2v1zm707 0v1zm22 0v1zm-48 1v1zm74 0v1zm-782 1v1zm28 1v1zm707 0v1zm345 0 .5 4.5h-1zm-1079 1v1zm114 0 .5 3.5h-1zm541 0 .5 2.5h-1zm-514 1 .5 1.5h-1zm594 0v1zm18 0v1zm353 0 .5 1.5h-1zm-424 1 .5 2.5h-1zm27 0v1zm70 0v1zm27 0 .5 2.5h-1zm27 0 .5 1.5h-1zm338 0 .5 1.5h-1zm-1170 1v1zm27 0v1zm535 0 .5 2.5h-1zm27 0 .5 1.5h-1zm-385 1 .5 1.5h-1zm531 0v1zm16 0v1zm145 0v1zm301 0 .5 2.5h-1zm-488 1v1zm68 0v1zm-124 1 .5 1.5h-1zm-512 1v1zm569 0v1zm26 0v1zm14 0v1zm26 0v1zm57 0 .5 1.5h-1zm273 0v1zm63 0v1zm-579 1v1zm305 0 .5 1.5h-1zm-894 1 .5 1.5h-1zm202 0v1zm876 0 .5 1.5h-1zm-965 1v1zm28 0v1zm421 0 .5 1.5h-1zm89 0v1zm28 0v1zm31 0v1zm26 0v1zm12 0v1zm26 0v1zm31 0 .5 1.5h-1zm301 0v1zm-516 1v1zm605 0v1zm-994 1v1zm-59 1v1zm449 0v1zm120 0v1zm26 0v1zm10 0v1zm87 0v1zm273 0v1zm59 0v1zm-1052 1v1zm86 0v1zm363 0 .5 1.5h-1zm115 0v1zm214 0v1zm187 0v1zm-936 1v1zm449 0v1zm120 0v1zm60 0v1zm34 0v1zm29 0v1zm273 0v1zm57 0v1zm29 0v1zm-1195 1v1zm200 0v1zm539 0v1zm8 0v1zm145 0v1zm93 0v1zm-391 1v1zm84 0v1zm159 0v1zm244 0v1zm84 0v1zm-1049 1v1zm30 0v1zm419 0v1zm83 0v1zm66 0v1zm58 0v1zm36 0v1zm303 0v1zm83 0v1zm-1195 1v1zm199 0v1zm692 0v1zm96 0v1zm-959 1 .5 1.5h-1zm650 0v1zm405 0v1zm-1084 1v1zm150 0 3.5 3.5-.5.5-3.5-3.5zm449 0 3.5 3.5-.5.5-3.5-3.5zm144 0v1zm4 0v1zm64 0v1zm31 0 4.5 4.5-.5.5-4.5-4.5zm322 0 .5.5-3.5 3.5-.5-.5zm-517 1 .5.5-2.5 2.5-.5-.5zm313 0 .5 1.5h-1zm125 0v1zm31 0q2.5 1 1 2-2.5-1-1-2Zm-996 1v1zm598 0v1zm54 0v1zm40 0v1zm178 0 3.5 3.5-.5.5-3.5-3.5zm204 0v1zm-450 1v1zm2 0v1zm-718 1v1zm93 0v1zm1072 0v1zm-1000 1v1zm412 0v1zm37 0v1zm77 0v1zm26 0v1zm26 0v1zm114 0v1zm236 0v1zm-1127 1v1zm128 0v1zm35 0v1zm692 0v1zm112 0v1zm196 0v1zm-998 1v1zm31 0v1zm418 0v1zm31 0v1zm36 0v1zm45 0v1zm50 0v1zm227 0v1zm91 0v1zm67 0v1zm-1165 1v1zm133 0v1zm38 0v1zm27 0v1zm422 0v1zm27 0v1zm178 0v1zm38 0v1zm147 0v1zm153 0v1zm-1166 1v1zm39 0v1zm137 0v1zm22 0v1zm388 0v1zm40 0v1zm21 0v1zm221 0v1zm22 0v1zm85 0v1zm167 0v1zm21 0v1zm40 0v1zm-1244 1v1zm35 0 2.5.5-2.5.5zm186 0v1zm14 0 1.5.5-1.5.5zm436 0v1zm13 0v1zm43 0v1zm48 0v1zm48 0v1zm90 0v1zm14 0 1.5.5-1.5.5zm217 0v1zm43 0 1.5.5-1.5.5zm13 0 1.5.5-1.5.5zm-1121 1v1zm100 0v1zm692 0v1zm-242 1q2.5 1 1 2-2.5-1-1-2Zm613 0q1.5 1-1 2-1.5-1 1-2Zm-517 1q1.5 1-1 2-1.5-1 1-2Zm51 0v1zm370 0 2.5 2.5-.5.5-2.5-2.5zm-1069 1v1zm104 0 2.5 2.5-.5.5-2.5-2.5zm692 0q2.5 1 1 2-2.5-1-1-2Zm-96 1v1zm44 0v1zm-746 2 .5.5-4.5 4.5-.5-.5zm945 0q2.5 1 1 2-2.5-1-1-2Zm-759 1 .5.5-6.5 6.5-.5-.5zm517 0v1zm42 0v1zm-102 2 .5.5-2.5 2.5-.5-.5zm233 0 .5.5-4.5 4.5-.5-.5zm202 0 2.5 2.5-.5.5-2.5-2.5zm-515 1q2.5 1 1 2-2.5-1-1-2Zm-449 1q2.5 1 1 2-2.5-1-1-2Zm1043 0v1zm-452 1v1zm38 0v1zm64 0v1zm-815 1v1zm646 0v1zm445 0v1zm-965 1v1zm450 0v1zm385 0v1zm200 0v1zm-583 1v1zm65 0v1zm71 0v1zm36 0v1zm69 0v1zm275 0v1zm65 0v1zm-1030 1v1zm55 0v1zm637 0v1zm55 0v1zm-884 1v1zm723 0v1zm34 0v1zm217 0v1zm-977 1v1zm980 0v1zm131 0v1zm-1114 1v1zm149 0v1zm44 0v1zm407 0v1zm49 0v1zm337 0v1zm130 0v1zm49 0v1zm-1170 1v1zm156 0v1zm495 0v1zm84 0 1 1h30l1.5-.5-1.5 1.5h-30q-2.5-1-1-2Zm113 0v1zm147 0v1zm129 0v1zm44 0v1zm-1112 1 26.5.5-26.5.5zm103 0v1zm34 0v1zm21 0 24.5.5-24.5.5zm50 0 26.5.5-26.5.5zm131 0 26.5.5-26.5.5zm51 0 26.5.5-26.5.5zm79 0 26.5.5-26.5.5zm86 0v1zm37 0v1zm203 0v1zm34 0v1zm21 0 24.5.5-24.5.5zm97 0 20.5.5-20.5.5zm124 0v1zm37 0v1zm140 0 26.5.5-26.5.5zm-1141 1v1zm26 0 1.5.5-1.5.5zm425 0 1.5.5-1.5.5zm30 0v1zm210 0 1.5.5-1.5.5zm27 0v1zm250 0v1zm29 0 1.5.5-1.5.5zm-992 1 1.5.5-1.5.5zm16 0 1.5.5-1.5.5zm436 0 1.5.5-1.5.5zm18 0 1.5.5-1.5.5zm222 0 1.5.5-1.5.5zm16 0 1.5.5-1.5.5zm260 0 2.5.5-2.5.5zm18 0 1.5.5-1.5.5zm306 28 .5 90.5h-1zm-712 7h8l1.5 1.5-1.5-.5h-8zm96 0h10l.5.5V597l-10-.5 9-.5V449.5l-.5-.5h-9zm-85 4v1zm2 3v1zm2 3v1zm2 3v1zm2 3v1zm2 3v1zm-9 3v1zm11 0v1zm-9 3v1zm11 0v1zm-9 3v1zm11 0v1zm245 2v1zm-254 1v1zm11 0v1zm-9 3v1zm11 0v1zm151 0 3.5.5-3.5.5zm10 0 2.5.5-2.5.5zm351 0 2.5.5-2.5.5zm10 0 3.5.5-3.5.5zm121 0 1.5.5-1.5.5zm-498 1 1.5.5-1.5.5zm24 0v1zm68 0v1zm268 0 1.5.5-1.5.5zm26 0v1zm107 0 1.5.5-1.5.5zm-497 1v1zm32 0v1zm47 0 13.5.5-13.5.5zm32 0 36.5.5-36.5.5zm44 0 10.5.5-10.5.5zm70 0 12.5.5-12.5.5zm72 0 10.5.5-10.5.5zm63 0v1zm34 0v1zm66.5 0 10 .5-9 .5v110.5l.5.5h9v1h-10l-.5-.5zm33.5 0v1zm107 0 13.5.5-2.5 2.5-.5-.5.5-1.5h-11l-1 1q-1.5-1 1-2Zm-751 1v1zm11 0v1zm136 0v1zm38 0v1zm322 0v1zm40 0v1zm95 0v1zm-497 1v1zm171 0v1zm141 0v1zm47 0v1zm46 0v1zm-360 1v1zm115 0v1zm69 0v1zm14 0v1zm114 0v1zm50 0v1zm86 0v1zm-636 1v1zm11 0v1zm179 0v1zm253 0v1zm55 0v1zm136 0v1zm110 0q1.5 1-1 2-1.5-1 1-2Zm-607 1v1zm317 0 .5 1.5h-1zm42 0v1zm58 0v1zm202 0q1.5 1-1 2-1.5-1 1-2Zm-621 1v1zm58 0v1zm111 0 .5 1.5h-1zm11 0v1zm56 0v1zm16 0v1zm169 0v1zm75 0q1.5 1-1 2-1.5-1 1-2Zm-629 1q2.5 1 1 2-2.5-1-1-2Zm11 0q2.5 1 1 2-2.5-1-1-2Zm146 0 2.5.5-2.5.5zm9 0 2.5.5-2.5.5zm325 0v1zm28 0 8.5.5-8.5.5zm-367 1v1zm21 0v1zm21 0q2.5 1 1 2-2.5-1-1-2Zm246 0v1zm73 0v1zm20 0v1zm24 0q2.5 1 1 2-2.5-1-1-2Zm91 0 1.5.5-1.5.5zm89 0q1.5 1-1 2-1.5-1 1-2Zm-608 1v1zm19 0v1zm28 0v1zm49 0 20.5.5-20.5.5zm32 0 36.5.5-37 .5-.5 69-.5-68.5zm57 0 .5 1.5h-1zm54 0v1zm18 0v1zm65 0v1zm37 0v1zm21 0v1zm28 0v1zm107 0v1zm105 0q1.5 1-1 2-1.5-1 1-2Zm-570 1v1zm124 0v1zm203 0v1zm34 0v1zm101 0v1zm-638 1v1zm11 0v1zm425 0v1zm65 0v1zm135 0v1zm-272 1v1zm20 0v1zm63 0 .5 1.5h-1zm95 0v1zm17 0 4.5 4.5-.5.5-4.5-4.5zm170 0q1.5 1-1 2-1.5-1 1-2Zm-547 1v1zm130 0v1zm320 0v1zm109 0 .5.5-2.5 2.5-.5-.5zm-739 1v1zm11 0v1zm122 0v1zm166 0v1zm194 0v1zm123 0q1.5 1-1 2-1.5-1 1-2Zm-433 1q2.5 1 1 2-2.5-1-1-2Zm178 0v1zm10 0v1zm12 0v1zm50 0v1zm112 0q2.5 1 1 2-2.5-1-1-2Zm82 0v1zm96 0q1.5 1-1 2-1.5-1 1-2Zm-350 1v1zm71 0v1zm46 0q1.5 1-1 2-1.5-1 1-2Zm-488 1v1zm11 0v1zm116 0 .5.5-4.5 4.5-.5-.5zm69 0q2.5 1 1 2-2.5-1-1-2Zm102 0v1zm11 0v1zm-196 1q1.5 1-1 2-1.5-1 1-2Zm245 0v1zm10 0v1z" opacity=".7"/><path fill="#3b3d41" stroke="#3b3d41" d="M1467.5 502q1.5 1-1 2-1.5-1 1-2Zm10 0 .5.5-2.5 2.5-.5-.5zm110 0q1.5 1-1 2-1.5-1 1-2Zm-359 1v1zm10 0v1zm48 0v1zm41 0q1.5 1-1 2-1.5-1 1-2Zm77 0 2.5 2.5-.5.5-2.5-2.5zm168 0q1.5 1-1 2-1.5-1 1-2Zm-714 1v1zm11 0v1zm428 0v1zm121 0v1zm-375 1q2.5 1 1 2-2.5-1-1-2Zm12 0v1zm100 0v1zm11 0v1zm47 0v1zm10 0v1zm-257 1v1zm263 0v1zm10 0v1zm46 0 .5 1.5h-1zm297 0q1.5 1-1 2-1.5-1 1-2Zm-722 1v1zm11 0v1zm425 0v1zm28 0v1zm96 0v1zm147 0q1.5 1-1 2-1.5-1 1-2Zm-411 1v1zm11 0v1zm45 0v1zm10 0v1zm114 0v1zm136 0v1zm-496 1v1zm70 0v1zm184 0v1zm10 0v1zm83 0v1zm86 0v1zm-547 1v1zm11 0v1zm411 0v1zm-321 1v1zm258 0v1zm74 0v1zm175 0v1zm92 0q1.5 1-1 2-1.5-1 1-2Zm14 0q1.5 1-1 2-1.5-1 1-2Zm-602 1v1zm183 0v1zm11 0v1zm43 0v1zm20 0v1zm10 0v1zm170 0v1zm12 0v1zm-559 1v1zm11 0v1zm87 0v1zm507 0v1zm-496 1v1zm247 0v1zm63 0v1zm11 0v1zm38 0v1zm-272 1v1zm98 0v1zm52 0v1zm22 0v1zm10 0v1zm78 0v1zm237 0q1.5 1-1 2-1.5-1 1-2Zm14 0q1.5 1-1 2-1.5-1 1-2Zm-705 1v1zm11 0v1zm95 0v1zm197 0v1zm162 0v1zm137 0v1zm-418 1v1zm169 0v1zm63 0 .5 1.5h-1zm37 0v1zm106 0v1zm-465 1v1zm11 0v1zm90 0v1zm148 0v1zm24 0v1zm10 0v1zm50 0v1zm37 0v1zm223 0q1.5 1-1 2-1.5-1 1-2Zm-685 1v1zm11 0v1zm280 0v1zm11 0v1zm256 0v1zm41 0v1zm99 0q1.5 1-1 2-1.5-1 1-2Zm-515 1v1zm267 0v1zm97 0v1zm-456 1v1zm11 0v1zm92 0v1zm146 0v1zm10 0v1zm16 0v1zm10 0v1zm37 0v1zm11 0v1zm37 0v1zm-459 1v1zm11 0v1zm279 0v1zm388 0q1.5 1-1 2-1.5-1 1-2Zm-496 1v1zm119 0v1zm157 0 .5 1.5h-1zm88 0v1zm11 0v1zm-469 1 .5 1.5h-1zm11 0v1zm238 0v1zm10 0v1zm18 0v1zm10 0v1zm72 0v1zm243 0q1.5 1-1 2-1.5-1 1-2Zm-688 1v1zm11 0v1zm397 0v1zm11 0v1zm-228 1 .5 1.5h-1zm98 0v1zm256 0v1zm126 0q1.5 1-1 2-1.5-1 1-2Zm-490 1 .5 1.5h-1zm119 0v1zm34 0v1zm10 0v1zm20 0v1zm91 0v1zm101 0 .5 1.5h-1zm-554 1v1zm11 0v1zm83 0v1zm278 0v1zm44 0v1zm26 0 .5 1.5h-1zm239 0q1.5 1-1 2-1.5-1 1-2Zm-598 1 .5 1.5h-1zm205 0v1zm117 0v1zm-106 1v1zm32 0v1zm10 0v1zm22 0 .5 1.5h-1zm301 0q1.5 1-1 2-1.5-1 1-2Zm-662 1v1zm11 0v1zm360 0v1zm171 0v1zm-140 1v1zm11 0v1zm37 0 .5 1.5h-1zm224 0q1.5 1-1 2-1.5-1 1-2Zm-387 1v1zm41 0v1zm10 0v1zm-336 1q2.5 1 1 2-2.5-1-1-2Zm11 0v1zm285 0v1zm64 0v1zm10 0v1zm181 0 .5 4.5h-1zm-141 1v1zm259 0v1zm-483 1 .5 6.5h-1zm100 0 .5 1.5h-1zm49 0v1zm64 0v1zm-386 1v1zm312 0v1zm36 0v1zm10 0v1zm-368 1v1zm294 0v1zm140 0 .5 4.5h-1zm-103 1v1zm75 0v1zm248 0 .5 58-11-.5 10-.5zm16 0 6.5 6.5-.5.5-6.5-6.5zm-386 1v1zm37 0v1zm38 0v1zm10 0v1zm26 0v1zm-393 1v1zm11 0v1zm282 0 .5 1.5h-1zm363 0 5.5 5.5-.5.5-5.5-5.5zm-328 1v1zm75 0 .5 1.5h-1zm143 0 .5 4.5h-1zm-228 1v1zm40 0v1zm10 0v1zm24 0 .5 1.5h-1zm-390 1v1zm11 0v1zm71 0 .5 2.5h-1zm199 0v1zm11 1v1zm33 0v1zm-10 1v1zm42 0v1zm10 0v1zm33 0v1zm-398 1v1zm11 0v1zm269 0v1zm107 0v1zm52 0 .5 1.5h-1zm-117 1v1zm-31 1v1zm21 0v1zm44 0v1zm175 0v1zm-529 1v1zm11 0v1zm57 0 .5 1.5h-1zm296 0v1zm31 0v1zm-316 1 .5 1.5h-1zm200 0v1zm40 0v1zm65 0v1zm43 0 .5 1.5h-1zm-137 1 .5 1.5h-1zm19 0v1zm46 0v1zm307 0 5.5 5.5-.5.5-5.5-5.5zm-660 1v1zm11 0v1zm352 0v1zm29 0v1zm44 0v1zm101 0v1zm-259 1v1zm38 0v1zm65 0 .5 1.5h-1zm145 0v1zm150 0 6.5 6.5-.5.5-6.5-6.5zm-370 1v1zm48 0v1zm-352 1v1zm11 0v1zm54 0v1zm11 0v1zm211 0v1zm75 0v1zm62 0 .5 1.5h-1zm11 0 .5 1.5h-1zm-122 1 .5 1.5h-1zm76 0v1zm134 0v1zm11 0v1zm-257 1v1zm26 0v1zm50 0v1zm25 0v1zm-376 1v1zm11 0v1zm64 0v1zm286 0v1zm-297 1v1zm222 0v1zm100 0v1zm37 0v1zm97 0v1zm-244 1v1zm34 0v1zm42 0v1zm179 0v1zm-529 1v1zm11 0v1zm287 0v1zm62 0v1zm13 0v1zm60 0v1zm-370 1v1zm93 0v1zm266 0v1zm244 0 5.5 5.5-.5.5-5.5-5.5zm-591 1v1zm210 0v1zm22 0v1zm44 0v1zm32 0v1zm51 0v1zm-432 1v1zm11 0v1zm51 0v1zm97 0v1zm114 0v1zm22 0v1zm64 0v1zm62 0v1zm-347 1v1zm87 0v1zm209 0v1zm63 0v1zm92 0v1zm-329 1 .5 1.5h-1zm88 0v1zm20 0v1zm46 0v1zm30 0v1zm-378 1v1zm11 0v1zm139 0v1zm55 0 .5 1.5h-1zm67 0v1zm20 0v1zm66 0v1zm152 0v1zm12 0v1zm-362 1v1zm207 0v1zm315 0 6.5 6.5-.5.5-6.5-6.5zm-381 1v1zm48 0v1zm172 0v1zm-519 1v1zm11 0v1zm62 0q2.5 1 1 2-2.5-1-1-2Zm208 0v1zm8 0v1zm68 0v1zm18 0v1zm131 0v1zm-302 1v1zm67 0v1zm162 0q2.5 1 1 2-2.5-1-1-2Zm-371 1v1zm83 0q1.5 1-1 2-1.5-1 1-2Zm48 0v1zm105 0v1zm50 0v1zm16 0v1zm57 0v1zm96 0v1zm-515 1v1zm11 0v1zm275 0v1zm86 0v1zm298 0 5.5 5.5-.5.5-5.5-5.5zm-517 1v1zm117 0v1zm10 0v1zm76 0v1zm158 0q1.5 1-1 2-1.5-1 1-2Zm-452 1v1zm130 0v1zm12 0v1zm91 0v1zm52 0v1zm74 0v1zm79 0q1.5 1-1 2-1.5-1 1-2Zm-498 1v1zm150 0q1.5 1-1 2-1.5-1 1-2Zm133 0v1zm76 0v1zm-80 1v1zm76 0v1zm14 0v1zm-165 1 3.5 3.5-.5.5-3.5-3.5zm65 0v1zm23 0v1zm54 0v1zm90 0q2.5 1 1 2-2.5-1-1-2Zm-373 1 6.5 6.5-.5.5-6.5-6.5zm15 0q2.5 1 1 2-2.5-1-1-2Zm204 0v1zm76 0 .5 1.5h-1zm135 0q1.5 1-1 2-1.5-1 1-2Zm15 0 .5.5-5.5 5.5-.5-.5zm-505 1v1zm130 0v1zm14 0 .5.5-6.5 6.5-.5-.5zm209 0v1zm12 0v1zm55 0 3.5 3.5-.5.5-3.5-3.5zm-153 1 .5 1.5h-1zm10 0q2.5 1 1 2-2.5-1-1-2Zm11 0v1zm56 0 .5 1.5h-1zm93 0v1zm-310 1v1zm227 0v1zm-352 1v1zm79 0v1zm44 0v1zm66 0q2.5 1 1 2-2.5-1-1-2Zm498 0 7.5 7.5-.5.5-7.5-7.5zm-606 1v1zm40 0v1zm164 0v1zm77 0v1zm79 0v1zm234 0 5.5 5.5-.5.5-5.5-5.5zm-591 1v1zm34 0v1zm93 0v1zm55 0v1zm77 0v1zm100 0v1zm34 0v1zm-475 1v1zm85 0v1zm28 0v1zm102 0h15.5v10l-21-.5 20-.5v-8h-14.5zm229 0v1zm28 0v1zm-383 1v1zm19 0 1.5.5-1.5.5zm174 0v1zm77 0 .5 1.5h-1zm65 0v1zm24 0v1zm20 0v1zm24 0v1zm-426 1v1zm126 0q2.5 1 1 2-2.5-1-1-2Zm73 0 .5 1.5h-1zm77 0v1zm112 0 8.5.5-8.5.5zm-452 1v1zm128 0v1zm297 0v1zm62 0v1zm-420 1v1zm212 0v1zm-210 1v1zm272 0v1zm15 0v1zm-354 1v1zm69 0v1zm193 0v1zm-191 1v1zm47 0v1zm79 0v1zm79 0v1zm155 0v1zm-315 1v1zm84 0 1.5.5-1.5.5zm140 0 1 1h11l1.5-.5-1.5 1.5h-11q-2.5-1-1-2Zm93 0v1zm42 0v1zm-570 1 9.5.5-9.5.5zm171 0 1.5.5-1.5.5zm37 0v1zm150 0 12.5.5-12.5.5zm173 0v1zm36 0v1zm209 0 12.5.5-12.5.5zm-601 1v1zm28 0 1.5.5-1.5.5zm332 0 1.5.5-1.5.5zm28 0v1zm-382 1 1.5.5-1.5.5zm15 0 2.5.5-2.5.5zm345 0 1.5.5-1.5.5zm15 0 1.5.5-1.5.5z" opacity=".7"/></svg>
+    <div class="title">Foundations</div>
+    <div class="badge">Course</div>
+  </header>
+
+  <div class="progress-wrap">
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="progress-text" id="progress-text">Welcome</div>
+  </div>
+
+  <div class="module-stage" id="module-stage">
+    <section class="module" data-kind="intro" data-index="0">
+  <div class="module-body">
+    <div class="mod-num"><span class="dot"></span>Welcome</div>
+    <h1>Foundations</h1>
+    <p class="tagline">Pain is your brain&#x27;s best guess about danger, not a readout of damage.</p>
+    <p class="lede">Most of what we were taught about pain turns out to be wrong. Pain isn&#x27;t a signal that travels from a hurt body part up to the brain like water through a pipe. It&#x27;s something the brain produces when it decides protection is needed. This course covers the eight ideas that change how the rest makes sense.</p>
+    <div class="key-facts">
+      <h4>What you'll learn</h4>
+      <ul><li>Pain is an alarm, not a damage report</li><li>Three flavors of pain, and why the label changes everything</li><li>Pain is made in the brain (and that&#x27;s not an insult)</li><li>Nociception is not pain</li><li>The window where acute pain becomes persistent</li><li>More pain doesn&#x27;t mean more damage</li><li>The pain neuromatrix in plain English</li><li>What this all means for you</li></ul>
+    </div>
+  </div>
+</section><section class="module" data-kind="module" data-index="1">
+  <div class="module-body">
+    <div class="mod-num"><span class="dot"></span>Module 1 of 8</div>
+    <div class="mod-title">Pain is an alarm, not a damage report</div>
+    <div class="mod-objective">Understand that pain is a protective output, not a measurement of tissue injury.</div>
+    <div class="body-text"><p>Stub your toe and the pain feels like proof something broke. It usually isn&#x27;t.</p><p>Pain works more like a smoke detector than a damage report. The detector doesn&#x27;t tell you how much of the kitchen is on fire, only that the brain has decided something might be wrong and you should pay attention. Sometimes the toast is just a little dark and the alarm still goes off at full volume.</p><h4 class="body-heading">Why it&#x27;s unpleasant by design</h4><p>The biological job of pain is to make you stop, protect, and learn, so you survive long enough to do it again tomorrow. A pleasant warning would be a useless warning.</p><p>The system evolved to err on the side of caution. The cost of missing a real threat (infection, a torn tendon, a predator&#x27;s tooth) was death. The cost of a false alarm was a bad afternoon.</p><h4 class="body-heading">What this lens explains</h4><p>The protective lens makes sense of pain experiences that confused the old wiring-diagram model:</p><ul class="body-list"><li>Soldiers with serious wounds sometimes feel little pain in the moment, because survival demands action, not rest.</li><li>Paper cuts can feel sharp out of proportion to the tiny injury, because the brain treats the unexpected as more dangerous.</li><li>Phantom limbs hurt because the alarm system is intact even after the body part is gone.</li></ul><p>Pain is not lying when it shows up without obvious damage. <strong>It&#x27;s doing its job.</strong> The job is just more complicated than the old model suggested.</p><blockquote class="body-quote">You don&#x27;t argue with a smoke detector. You investigate, ventilate, and reset.</blockquote><p>The next module breaks down the three flavors of pain that researchers now recognize, and why telling them apart changes what helps.</p></div>
+    <div class="before-after"><div class="ba-tabs"><button class="ba-tab active" data-tab="before">Old model</button><button class="ba-tab" data-tab="after">Current model</button></div><div class="ba-panels"><div class="ba-panel active" data-panel="before"><h5>Pain = damage detected</h5><p>A simple wire runs from a stubbed toe up to the brain, carrying a damage signal. The idea: tissue damage produces pain in proportion to itself.</p></div><div class="ba-panel" data-panel="after"><h5>Pain = the brain&#x27;s protective output</h5><p>The brain weighs many inputs at once, including tissue input, context, memory, and expectation, and then produces pain as a protective response. Damage is one input among many, not the whole story.</p></div></div></div>
+    <div class="key-facts"><h4>Evidence</h4><ul><li>Pain is defined by the IASP as an unpleasant sensory and emotional experience associated with, or resembling that associated with, actual or potential tissue damage (Raja et al., 2020).</li><li>Pain and nociception are different phenomena, and pain cannot be inferred solely from activity in sensory neurons (Raja et al., 2020).</li><li>Pain serves a protective function and is shaped by biological, psychological, and social factors (Moseley &amp; Butler, 2017).</li></ul></div>
+    <div class="myth-card"><h4>Myth check</h4><p>Myth: If it hurts, something must be damaged. Reality: Pain reflects the brain&#x27;s judgment about danger, which doesn&#x27;t always match what&#x27;s happening in tissue.</p></div>
+    
+    <details class="citations"><summary>References</summary><ol><li>Raja, S. N., Carr, D. B., Cohen, M., Finnerup, N. B., Flor, H., Gibson, S., Keefe, F. J., Mogil, J. S., Ringkamp, M., Sluka, K. A., Song, X. J., Stevens, B., Sullivan, M. D., Tutelman, P. R., Ushida, T., &amp; Vader, K. (2020). The revised International Association for the Study of Pain definition of pain: Concepts, challenges, and compromises. Pain, 161(9), 1976-1982.</li><li>Moseley, G. L., &amp; Butler, D. S. (2017). Explain Pain Supercharged. Noigroup Publications.</li><li>Melzack, R., &amp; Katz, J. (2013). Pain. Wiley Interdisciplinary Reviews: Cognitive Science, 4(1), 1-15.</li></ol></details>
+  </div>
+</section><section class="module" data-kind="module" data-index="2">
+  <div class="module-body">
+    <div class="mod-num"><span class="dot"></span>Module 2 of 8</div>
+    <div class="mod-title">Three flavors of pain, and why the label changes everything</div>
+    <div class="mod-objective">Distinguish nociceptive, neuropathic, and nociplastic pain and recognize why the category guides treatment.</div>
+    <div class="body-text"><p>For most of medical history, pain was sorted into two bins: tissue injury (nociceptive) or nerve damage (neuropathic). That worked until clinicians kept seeing patients with real, severe pain and neither.</p><p>Kosek and colleagues proposed a third mechanistic descriptor in 2016, and the IASP adopted <strong>nociplastic pain</strong> as official terminology in 2017. The word looks intimidating, the idea is simple. Nociplastic pain comes from a nervous system that has become more sensitive than it should be, without clear tissue or nerve damage to explain it.</p><h4 class="body-heading">The three flavors</h4><ul class="body-list"><li><strong>Nociceptive pain</strong> is what you&#x27;d predict from the injury. Sprain an ankle and the swollen tissue activates nociceptors. A burn, a cut, a bruise. It fades as healing happens.</li><li><strong>Neuropathic pain</strong> comes from damage or disease in the nerves themselves. Shingles, diabetic foot pain, sciatica. It tends to feel electric, burning, or shooting, often along a nerve&#x27;s territory.</li><li><strong>Nociplastic pain</strong> comes from amplified processing without clear damage. Fibromyalgia, many cases of chronic low back pain with normal imaging, IBS, and complex regional pain syndrome often fit here.</li></ul><p>A point worth naming: nociplastic pain is not the same as central sensitization. Central sensitization is a mechanism (amplified processing in the central nervous system) that can underlie nociplastic pain but also shows up in nociceptive and neuropathic states. Nociplastic is a clinical descriptor; central sensitization is one of its likely engines.</p><p>Nijs and colleagues developed criteria to help spot nociplastic pain: regional rather than discrete distribution, hypersensitivity to multiple kinds of input (light, sound, touch, temperature), and pain that doesn&#x27;t track with physical activity in expected ways.</p><h4 class="body-heading">Why the labels change treatment</h4><p>The treatments differ:</p><ul class="body-list"><li>Nociceptive pain often responds to anti-inflammatories, load management, and time.</li><li>Neuropathic pain responds better to specific medications such as gabapentinoids or certain antidepressants.</li><li>Nociplastic pain typically responds best to graded movement, education, sleep work, and approaches that calm the nervous system, and tends to do worse with aggressive imaging-driven treatment.</li></ul><blockquote class="body-quote">Mismatching the treatment to the type is one of the main reasons people with chronic pain bounce through the system without getting better.</blockquote><p>Many people have a mix of two or three types, which is normal and worth naming.</p></div>
+    <div class="drag-match" data-mode="bucket">
+  <div class="dm-instruction">Drag each example into the right pain category.</div>
+  <div class="dm-board dm-board-bucket">
+    <div class="dm-col"><h5>Examples</h5><div class="dm-pool"><div class="dm-item" draggable="true" data-id="i0" data-match="nociceptive" tabindex="0">Sprained ankle</div><div class="dm-item" draggable="true" data-id="i1" data-match="nociceptive" tabindex="0">Sunburn</div><div class="dm-item" draggable="true" data-id="i2" data-match="nociceptive" tabindex="0">Post-surgery healing pain</div><div class="dm-item" draggable="true" data-id="i3" data-match="neuropathic" tabindex="0">Sciatica from disc compression</div><div class="dm-item" draggable="true" data-id="i4" data-match="neuropathic" tabindex="0">Diabetic foot burning</div><div class="dm-item" draggable="true" data-id="i5" data-match="neuropathic" tabindex="0">Post-shingles nerve pain</div><div class="dm-item" draggable="true" data-id="i6" data-match="nociplastic" tabindex="0">Fibromyalgia</div><div class="dm-item" draggable="true" data-id="i7" data-match="nociplastic" tabindex="0">Long-standing low back pain with normal MRI</div><div class="dm-item" draggable="true" data-id="i8" data-match="nociplastic" tabindex="0">IBS-related abdominal pain</div></div></div>
+    <div class="dm-col"><h5>Categories</h5><div class="dm-bucket" data-match="nociceptive" data-label="Nociceptive: pain from tissue damage or threat to tissue"><div class="dm-bucket-label">Nociceptive: pain from tissue damage or threat to tissue</div><div class="dm-bucket-items"></div></div><div class="dm-bucket" data-match="neuropathic" data-label="Neuropathic: pain from a damaged or diseased nerve"><div class="dm-bucket-label">Neuropathic: pain from a damaged or diseased nerve</div><div class="dm-bucket-items"></div></div><div class="dm-bucket" data-match="nociplastic" data-label="Nociplastic: pain from a sensitized nervous system without ongoing tissue damage"><div class="dm-bucket-label">Nociplastic: pain from a sensitized nervous system without ongoing tissue damage</div><div class="dm-bucket-items"></div></div></div>
+  </div>
+  <div class="dm-feedback" data-success="Nice work. All matched."></div>
+</div>
+    <div class="key-facts"><h4>Evidence</h4><ul><li>Kosek et al. (2016) proposed nociplastic pain as a third mechanistic descriptor; the IASP formally adopted the term in 2017 to describe pain arising from altered nociception without clear tissue damage or somatosensory lesion.</li><li>Clinical criteria for nociplastic pain include regional rather than discrete distribution, hypersensitivity in the painful region, and comorbid features like fatigue, sleep, and cognitive problems (Fitzcharles et al., 2021).</li><li>Treatment effectiveness varies by pain type: nociplastic pain typically responds best to graded movement, education, and central-acting medications, while nociceptive and neuropathic pain have distinct first-line options (Nijs et al., 2021).</li></ul></div>
+    <div class="myth-card"><h4>Myth check</h4><p>Myth: If imaging is clean, the pain isn&#x27;t real. Reality: Nociplastic pain is real, common, and recognized by international pain bodies, and shows up with normal scans.</p></div>
+    <div class="clinician-note"><h4>Clinical note</h4><p>Pain type is rarely pure. Many patients have mixed pictures (e.g., osteoarthritis with central sensitization). These categories are a guide for matching strategy, not a diagnostic verdict. Confirming the dominant type, ideally with a clinician familiar with mechanism-based pain phenotyping, helps before committing to a plan.</p></div>
+    <details class="citations"><summary>References</summary><ol><li>Kosek, E., Cohen, M., Baron, R., Gebhart, G. F., Mico, J. A., Rice, A. S., Rief, W., &amp; Sluka, A. K. (2016). Do we need a third mechanistic descriptor for chronic pain states? Pain, 157(7), 1382-1386.</li><li>Fitzcharles, M. A., Cohen, S. P., Clauw, D. J., Littlejohn, G., Usui, C., &amp; Hauser, W. (2021). Nociplastic pain: Towards an understanding of prevalent pain conditions. The Lancet, 397(10289), 2098-2110.</li><li>Nijs, J., Lahousse, A., Kapreli, E., Bilika, P., Saracoglu, I., Malfliet, A., Coppieters, I., De Baets, L., Leysen, L., Roose, E., Clark, J., Voogt, L., &amp; Huysmans, E. (2021). Nociplastic pain criteria or recognition of central sensitization? Pain phenotyping in the past, present and future. Journal of Clinical Medicine, 10(15), 3203.</li></ol></details>
+  </div>
+</section><section class="module" data-kind="module" data-index="3">
+  <div class="module-body">
+    <div class="mod-num"><span class="dot"></span>Module 3 of 8</div>
+    <div class="mod-title">Pain is made in the brain (and that&#x27;s not an insult)</div>
+    <div class="mod-objective">Understand that pain is constructed by the brain from many inputs, not simply detected at the site of injury.</div>
+    <div class="body-text"><p>When people hear that pain is produced by the brain, they often hear something else: that the pain is fake, made up, or psychological in the dismissive sense. That&#x27;s not what brain scientists mean.</p><p>Every experience you have, including the color red, the taste of coffee, the feeling of your foot on the floor, is constructed in the brain. The brain is the only organ that can produce conscious experience.</p><p>Tissues don&#x27;t feel pain, they send information about chemistry, pressure, and temperature. The brain decides what to do with that information, and one option is to produce pain.</p><h4 class="body-heading">What the brain factors in</h4><p>The decision uses more than the tissue input. It uses:</p><ul class="body-list"><li>Context (where you are, what you&#x27;re doing)</li><li>Memory (what happened last time something like this came up)</li><li>Expectation (what you think will happen next)</li><li>Mood, sleep, attention, and social signals</li></ul><p>This is why the same blood draw hurts more when a stranger does it without warning than when your favorite nurse does it while chatting. Same needle, same skin, different pain.</p><h4 class="body-heading">Imaging confirms it&#x27;s a network</h4><p>Brain imaging studies show pain involves sensory areas plus regions handling emotion, attention, threat appraisal, and self-referential thinking. Wager and colleagues (2013) mapped what they called the <strong>neurologic pain signature</strong>, a pattern of brain activity that predicts experimental pain reports across people. The pattern involves a network, not a single &#x27;pain center.&#x27; There isn&#x27;t one.</p><p>The clinical implication: pain can be turned up or down by changing inputs the brain uses. Effect sizes for any single input are usually modest, and stacking several inputs over weeks tends to do more than any one alone.</p><p>A patient who learns that their persistent back pain doesn&#x27;t mean their spine is crumbling often reports lower pain even before they start moving differently. A surgeon&#x27;s confident reassurance, a placebo, a hand held by someone you love, a good night&#x27;s sleep, none of these fix tissue. They change the calculation.</p><blockquote class="body-quote">The pain is still produced in the brain. The brain just produces less of it.</blockquote></div>
+    <div class="diagram"><div style="font-size:13px;color:var(--bn-muted);margin-bottom:10px">Click each region to see its role in pain.</div><svg class="diagram-svg" viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg"><line x1="152.0" y1="66.66666666666667" x2="304.0" y2="66.66666666666667" stroke="rgba(64,126,201,.30)" stroke-width="1.5" stroke-dasharray="4 4"/><line x1="304.0" y1="66.66666666666667" x2="456.0" y2="66.66666666666667" stroke="rgba(64,126,201,.30)" stroke-width="1.5" stroke-dasharray="4 4"/><line x1="456.0" y1="66.66666666666667" x2="608.0" y2="66.66666666666667" stroke="rgba(64,126,201,.30)" stroke-width="1.5" stroke-dasharray="4 4"/><line x1="608.0" y1="66.66666666666667" x2="152.0" y2="133.33333333333334" stroke="rgba(64,126,201,.30)" stroke-width="1.5" stroke-dasharray="4 4"/><line x1="152.0" y1="133.33333333333334" x2="304.0" y2="133.33333333333334" stroke="rgba(64,126,201,.30)" stroke-width="1.5" stroke-dasharray="4 4"/><line x1="304.0" y1="133.33333333333334" x2="456.0" y2="133.33333333333334" stroke="rgba(64,126,201,.30)" stroke-width="1.5" stroke-dasharray="4 4"/><g class="diagram-hotspot" data-label="Somatosensory" data-info="This is where on the body it hurts. It maps the location and basic quality of the sensation." tabindex="0"><circle cx="152.0" cy="66.66666666666667" r="32" fill="rgba(64,126,201,.18)" stroke="#407EC9" stroke-width="2"/><text x="152.0" y="71.66666666666667" text-anchor="middle" fill="#1B365D" font-weight="700" font-size="13">Somatosensory</text></g><g class="diagram-hotspot" data-label="Insula" data-info="How bad it feels and your bodily awareness of it. The insula tracks the felt intensity from inside the body." tabindex="0"><circle cx="304.0" cy="66.66666666666667" r="32" fill="rgba(64,126,201,.18)" stroke="#407EC9" stroke-width="2"/><text x="304.0" y="71.66666666666667" text-anchor="middle" fill="#1B365D" font-weight="700" font-size="13">Insula</text></g><g class="diagram-hotspot" data-label="Ant. cingulate" data-info="The unpleasantness and the urge to escape. It&#x27;s why pain bothers you, not just where it is." tabindex="0"><circle cx="456.0" cy="66.66666666666667" r="32" fill="rgba(64,126,201,.18)" stroke="#407EC9" stroke-width="2"/><text x="456.0" y="71.66666666666667" text-anchor="middle" fill="#1B365D" font-weight="700" font-size="13">Ant. cingulate</text></g><g class="diagram-hotspot" data-label="Prefrontal" data-info="Meaning-making, expectation, and what you&#x27;ll do about it. It evaluates the situation and shapes your response." tabindex="0"><circle cx="608.0" cy="66.66666666666667" r="32" fill="rgba(64,126,201,.18)" stroke="#407EC9" stroke-width="2"/><text x="608.0" y="71.66666666666667" text-anchor="middle" fill="#1B365D" font-weight="700" font-size="13">Prefrontal</text></g><g class="diagram-hotspot" data-label="Amygdala" data-info="Threat detection and fear coloring. It tags the experience with how dangerous it feels." tabindex="0"><circle cx="152.0" cy="133.33333333333334" r="32" fill="rgba(64,126,201,.18)" stroke="#407EC9" stroke-width="2"/><text x="152.0" y="138.33333333333334" text-anchor="middle" fill="#1B365D" font-weight="700" font-size="13">Amygdala</text></g><g class="diagram-hotspot" data-label="Hippocampus" data-info="Memory of past pain experiences. It pulls in what&#x27;s happened before, which colors what&#x27;s happening now." tabindex="0"><circle cx="304.0" cy="133.33333333333334" r="32" fill="rgba(64,126,201,.18)" stroke="#407EC9" stroke-width="2"/><text x="304.0" y="138.33333333333334" text-anchor="middle" fill="#1B365D" font-weight="700" font-size="13">Hippocampus</text></g><g class="diagram-hotspot" data-label="PAG (dimmer)" data-info="Built-in dimmer switch in the midbrain. It can amplify or dampen incoming pain signals before they reach awareness." tabindex="0"><circle cx="456.0" cy="133.33333333333334" r="32" fill="rgba(64,126,201,.18)" stroke="#407EC9" stroke-width="2"/><text x="456.0" y="138.33333333333334" text-anchor="middle" fill="#1B365D" font-weight="700" font-size="13">PAG (dimmer)</text></g></svg><div class="diagram-info">Click each region to see its role in pain.</div></div>
+    <div class="key-facts"><h4>Evidence</h4><ul><li>The neurologic pain signature is a brain-based biomarker that predicts physical pain across individuals using a distributed network of regions rather than a single locus (Wager et al., 2013).</li><li>Contextual factors including expectation, attention, and emotional state reliably modulate pain experience and corresponding brain activity (Bushnell, Ceko, &amp; Low, 2013).</li><li>Pain neuroscience education (helping patients understand pain is produced by the brain) reduces pain and disability in chronic musculoskeletal pain (Louw et al., 2016).</li></ul></div>
+    <div class="myth-card"><h4>Myth check</h4><p>Myth: If pain is in the brain, it&#x27;s imaginary. Reality: All experience is brain-produced. That doesn&#x27;t make pain less real, it makes it more changeable.</p></div>
+    
+    <details class="citations"><summary>References</summary><ol><li>Wager, T. D., Atlas, L. Y., Lindquist, M. A., Roy, M., Woo, C. W., &amp; Kross, E. (2013). An fMRI-based neurologic signature of physical pain. New England Journal of Medicine, 368(15), 1388-1397.</li><li>Bushnell, M. C., Ceko, M., &amp; Low, L. A. (2013). Cognitive and emotional control of pain and its disruption in chronic pain. Nature Reviews Neuroscience, 14(7), 502-511.</li><li>Louw, A., Zimney, K., Puentedura, E. J., &amp; Diener, I. (2016). The efficacy of pain neuroscience education on musculoskeletal pain: A systematic review of the literature. Physiotherapy Theory and Practice, 32(5), 332-355.</li></ol></details>
+  </div>
+</section><section class="module" data-kind="module" data-index="4">
+  <div class="module-body">
+    <div class="mod-num"><span class="dot"></span>Module 4 of 8</div>
+    <div class="mod-title">Nociception is not pain</div>
+    <div class="mod-objective">Separate the body&#x27;s danger-signaling activity (nociception) from the conscious experience of pain.</div>
+    <div class="body-text"><p>There&#x27;s one distinction that, once you get it, makes most pain confusion go away. <strong>Nociception</strong> is the activity in your sensory neurons when they detect something potentially harmful. <strong>Pain</strong> is the conscious, unpleasant experience that sometimes results.</p><p>They are not the same thing.</p><h4 class="body-heading">Nociception without pain</h4><p>You bang your shin against a coffee table while engrossed in a phone call and feel nothing until you look down and see the bruise forming.</p><p>The nociceptors fired. Your brain was busy. No pain was constructed.</p><p>Surgical patients under general anesthesia have nociceptive activity throughout an operation. They feel nothing.</p><h4 class="body-heading">Pain without nociception</h4><p>The reverse happens too:</p><ul class="body-list"><li>People with phantom limbs feel pain in a body part that no longer exists, so no peripheral nociceptor in that part is firing.</li><li>People with central sensitization feel pain from a light touch because the nervous system is amplifying input that isn&#x27;t dangerous.</li><li>Stress and threat can produce pain in the absence of any new tissue input.</li></ul><p>When the IASP updated the official definition of pain in 2020 (Raja et al.), it included a key note: pain and nociception are different phenomena, and the experience of pain cannot be inferred solely from activity in sensory neurons.</p><p>That single sentence quietly rewrites a lot of clinical practice. A clinician can&#x27;t &#x27;see&#x27; your pain on a scan. Tissue damage doesn&#x27;t equal pain and pain doesn&#x27;t equal tissue damage.</p><p>Asking the patient is still the most accurate way to measure pain, because the patient is the only one with access to the experience.</p><blockquote class="body-quote">When your pain feels disproportionate to what your body has been through, you&#x27;re not exaggerating. You&#x27;re observing a real feature of how the system works.</blockquote><p>Nociception and pain are linked but separable. The brain decides whether to translate one into the other based on dozens of factors, only some of which are conscious.</p></div>
+    <div class="cmp"><div class="cmp-grid cols-3"><div class="cmp-cell head">Question</div><div class="cmp-cell head">Nociception</div><div class="cmp-cell head">Pain</div><div class="cmp-cell">What it is</div><div class="cmp-cell">Sensory neuron activity in response to a noxious stimulus.</div><div class="cmp-cell">A conscious experience generated by the brain.</div><div class="cmp-cell">Where it happens</div><div class="cmp-cell">Peripheral and spinal nerves.</div><div class="cmp-cell">Distributed brain network.</div><div class="cmp-cell">Can be measured directly?</div><div class="cmp-cell">Yes, with electrodes and imaging of nerve activity.</div><div class="cmp-cell">No, only via self-report.</div><div class="cmp-cell">Can occur without the other?</div><div class="cmp-cell">Yes. Common under anesthesia, where signals fire but aren&#x27;t felt.</div><div class="cmp-cell">Yes. Phantom limb pain happens with no remaining nociceptor input.</div><div class="cmp-cell">Required for pain?</div><div class="cmp-cell">No, pain can occur without it.</div><div class="cmp-cell">Not always present even when nociception is.</div><div class="cmp-cell">Example</div><div class="cmp-cell">Touching a hot stove activates C-fibers.</div><div class="cmp-cell">The conscious &#x27;ouch&#x27; that may or may not follow.</div></div></div>
+    <div class="key-facts"><h4>Evidence</h4><ul><li>The 2020 IASP definition explicitly notes that pain and nociception are different phenomena and pain cannot be inferred solely from activity in sensory neurons (Raja et al., 2020).</li><li>Strong nociceptive input can occur with no pain experience (combat injuries, athletic competition) and severe pain can occur with no nociceptive input (phantom limb pain) (Melzack &amp; Katz, 2013).</li><li>Self-report remains the gold standard for assessing pain because pain is a subjective experience that brain imaging cannot fully replicate (Williams &amp; Craig, 2016).</li></ul></div>
+    <div class="myth-card"><h4>Myth check</h4><p>Myth: A scan or a nerve test can show how much pain someone is in. Reality: Nociception is measurable, pain is not, because pain is an experience produced by the brain.</p></div>
+    
+    <details class="citations"><summary>References</summary><ol><li>Raja, S. N., Carr, D. B., Cohen, M., Finnerup, N. B., Flor, H., Gibson, S., et al. (2020). The revised International Association for the Study of Pain definition of pain: Concepts, challenges, and compromises. Pain, 161(9), 1976-1982.</li><li>Melzack, R., &amp; Katz, J. (2013). Pain. Wiley Interdisciplinary Reviews: Cognitive Science, 4(1), 1-15.</li><li>Williams, A. C., &amp; Craig, K. D. (2016). Updating the definition of pain. Pain, 157(11), 2420-2423.</li></ol></details>
+  </div>
+</section><section class="module" data-kind="module" data-index="5">
+  <div class="module-body">
+    <div class="mod-num"><span class="dot"></span>Module 5 of 8</div>
+    <div class="mod-title">The window where acute pain becomes persistent</div>
+    <div class="mod-objective">Recognize the 3-month transition threshold (IASP/ICD-11), how it&#x27;s defined, and the factors that shape whether pain resolves or persists.</div>
+    <div class="body-text"><p>Most pain is acute. You injure something, the tissue heals, the pain fades on roughly the timeline you&#x27;d expect.</p><p>When pain hangs around longer than the tissue should need, something else is happening. The current international standard, formalized in the IASP classification for ICD-11 (Treede et al., 2019), defines <strong>chronic pain</strong> as pain that persists or recurs for more than three months.</p><h4 class="body-heading">Why three months</h4><p>Some older literature uses six months, and certain conditions are typically slower to resolve. We use three months here because that&#x27;s the operative cutoff in the global classification system.</p><p>The number isn&#x27;t magic. It&#x27;s the rough point at which expected healing should be done, so persistent pain past that mark suggests the nervous system, and not just the tissue, is involved.</p><p>Sprains take weeks. Broken bones, six to twelve. Soft-tissue surgery, three to six months.</p><h4 class="body-heading">Who&#x27;s at risk in the transition window</h4><p>The window between three and six months is high-value for prevention. Linton, Nicholas, and Shaw (2018) catalogued well-replicated predictors of who&#x27;s more likely to transition to chronic pain:</p><ul class="body-list"><li>High pain intensity at the start</li><li>High distress and depression</li><li>Fear of movement (kinesiophobia)</li><li>Catastrophic thinking about pain</li><li>Low social support</li><li>Sleep disruption</li><li>Previous chronic pain elsewhere</li></ul><p>Notice that very few of these are about the tissue. They&#x27;re about the system processing the tissue.</p><h4 class="body-heading">Why aggressive workups can backfire</h4><p>For non-specific musculoskeletal pain, early over-medicalization often makes things worse. Repeated imaging finds normal age-related changes that get blamed for the pain.</p><p>Strong opioids reduce pain in the short term but can sensitize the nervous system. Bed rest deconditions the body and confirms the brain&#x27;s suspicion that the area is fragile. (When red flags are present, a different approach applies, see the red-flags module.)</p><p>The interventions with the best evidence in this window are often the least dramatic: reassurance based on a careful exam, education about how pain works, gentle graded return to movement, and treating sleep and mood.</p><blockquote class="body-quote">When pain outlasts the healing schedule, the question shifts from &#x27;what&#x27;s still wrong with the tissue&#x27; to &#x27;what&#x27;s keeping the alarm system on.&#x27;</blockquote></div>
+    <div class="timeline"><div style="font-size:13px;color:var(--bn-muted);margin-bottom:10px">From acute injury to persistent pain: what changes when.</div><div class="tl-track"><div class="tl-fill"></div><div class="tl-marker" style="left:0.0%" data-label="Day 0" data-info="Injury happens. Pain is sharp and protective, tissue damage is at its peak, and the priority is keeping the area calm while inflammation does its job."><span class="tl-label">Day 0</span></div><div class="tl-marker" style="left:20.0%" data-label="Week 2" data-info="Inflammation winds down and tissue repair is well underway. Most people see pain dropping noticeably from the day-zero peak."><span class="tl-label">Week 2</span></div><div class="tl-marker" style="left:40.0%" data-label="Week 6" data-info="Soft tissue is largely rebuilt. The typical trajectory keeps falling, while an at-risk trajectory may be plateauing instead."><span class="tl-label">Week 6</span></div><div class="tl-marker" style="left:60.0%" data-label="Month 3" data-info="Most soft-tissue is 80 to 100 percent healed. This is the threshold where pain that&#x27;s still around is considered persistent."><span class="tl-label">Month 3</span></div><div class="tl-marker" style="left:80.0%" data-label="Month 6" data-info="On the typical curve, pain is near baseline. On the at-risk curve, the nervous system has often become the main driver, even though tissues look fine."><span class="tl-label">Month 6</span></div><div class="tl-marker" style="left:100.0%" data-label="Month 12" data-info="One year out, the helpful interventions look different than they did at week one. Education, graded movement, and nervous-system-focused care matter more than scans or rest."><span class="tl-label">Month 12</span></div></div><div class="tl-info">Click any marker to learn more.</div></div>
+    <div class="key-facts"><h4>Evidence</h4><ul><li>Chronic pain is defined in the IASP/ICD-11 classification as pain persisting or recurring for longer than 3 months (Treede et al., 2019). Older literature sometimes uses a 6-month cutoff; this course uses the ICD-11 standard.</li><li>Psychosocial risk factors including catastrophizing, fear-avoidance, low recovery expectations, and depression predict the transition from acute to chronic pain better than tissue-based factors (Linton, Nicholas, &amp; Shaw, 2018).</li><li>Roughly 10-40% of people with acute low back pain develop chronic symptoms, with the proportion strongly influenced by early management and modifiable risk factors (Hartvigsen et al., 2018).</li></ul></div>
+    <div class="myth-card"><h4>Myth check</h4><p>Myth: Pain that lasts must mean the injury never healed. Reality: Tissue healing is usually complete by 3-6 months, and ongoing pain reflects changes in how the nervous system processes signals.</p></div>
+    <div class="clinician-note"><h4>Clinical note</h4><p>Reassurance and graded movement assume red flags have been ruled out. New severe pain with weight loss, fever, history of cancer, IV drug use, neurological deficit (saddle anesthesia, bowel/bladder change, progressive weakness), or significant trauma needs medical evaluation before this protective-pain framing applies.</p></div>
+    <details class="citations"><summary>References</summary><ol><li>Treede, R. D., Rief, W., Barke, A., Aziz, Q., Bennett, M. I., Benoliel, R., et al. (2019). Chronic pain as a symptom or a disease: The IASP classification of chronic pain for the International Classification of Diseases (ICD-11). Pain, 160(1), 19-27.</li><li>Linton, S. J., Nicholas, M., &amp; Shaw, W. (2018). Why wait to address high-risk cases of acute low back pain? A comparison of stepped, stratified, and matched care. Pain, 159(12), 2437-2441.</li><li>Hartvigsen, J., Hancock, M. J., Kongsted, A., Louw, Q., Ferreira, M. L., Genevay, S., et al. (2018). What low back pain is and why we need to pay attention. The Lancet, 391(10137), 2356-2367.</li></ol></details>
+  </div>
+</section><section class="module" data-kind="module" data-index="6">
+  <div class="module-body">
+    <div class="mod-num"><span class="dot"></span>Module 6 of 8</div>
+    <div class="mod-title">More pain doesn&#x27;t mean more damage</div>
+    <div class="mod-objective">Dismantle the linear hurt-equals-harm assumption and replace it with a context-sensitive model.</div>
+    <div class="body-text"><p>Ask someone how badly they&#x27;re injured and they&#x27;ll usually answer with how much it hurts. That makes intuitive sense and it&#x27;s wrong often enough to matter.</p><p>The relationship between tissue damage and pain intensity is loose. It&#x27;s loose in the acute setting, where two people with identical knee injuries report wildly different pain. It&#x27;s even looser in chronic pain, where pain can roar without any new damage at all.</p><h4 class="body-heading">The damage assumption fails in both directions</h4><p>Studies of healthy adults with no back pain show that more than half have disc bulges visible on MRI by middle age, and the percentage rises every decade. Spinal degeneration is so common in pain-free people that the radiology community has stopped considering it diagnostic by itself. People with severe chronic back pain often have unremarkable scans.</p><p>The classic case study by Fisher and colleagues described a construction worker who jumped onto a 15-cm nail that went through his boot. He arrived in agony.</p><p>Removing the boot revealed the nail had passed cleanly between his toes. <strong>No tissue damage at all.</strong></p><p>The pain was real. The damage assumption was wrong.</p><p>The reverse case is just as instructive. Every emergency department has stories of patients who walk in with a knife wound and underestimate how serious it is because they&#x27;re not in much pain yet. Adrenaline, focus, and the brain&#x27;s threat appraisal can mute even severe injuries until safety is reached.</p><h4 class="body-heading">Why this matters in daily life</h4><p>People with persistent pain often interpret a flare as evidence that they re-injured themselves:</p><ul class="body-list"><li>They restrict movement</li><li>They fear they&#x27;re getting worse</li><li>The flare resolves and they conclude they got lucky</li><li>The cycle repeats and the world shrinks</li></ul><p>The truth is more useful. Pain volume is set by the brain&#x27;s protective decision, which can change with stress, sleep, mood, expectation, and a hundred other things. A bad pain day after a hard week often reflects a sensitized nervous system, not new damage.</p><blockquote class="body-quote">Knowing pain isn&#x27;t a damage meter doesn&#x27;t make it less real. It makes it more workable.</blockquote></div>
+    <div class="reveal-stack"><div class="reveal-card" data-revealed="false" tabindex="0"><div class="reveal-front"><span>A construction worker felt agony from a nail he was never actually touched by.</span></div><div class="reveal-back">In the Fisher 1995 case, a builder jumped onto a nail that pierced his boot. He was in screaming pain until the boot came off and the nail had passed cleanly between his toes. His expectation, not his tissue, drove the pain.</div></div><div class="reveal-card" data-revealed="false" tabindex="0"><div class="reveal-front"><span>Disc bulges show up on MRI in roughly 4 out of 10 pain-free 30-year-olds, and the figure rises every decade.</span></div><div class="reveal-back">Brinjikji and colleagues (2015) pooled imaging from over 3,000 asymptomatic adults. Disc bulges were present in about 30 percent of pain-free 20-year-olds and around 40 percent in 30-year-olds, climbing to 84 percent at age 80. Disc degeneration, height loss, and other &#x27;abnormalities&#x27; show up in huge numbers of people who feel fine, so a finding on a scan rarely explains pain by itself.</div></div><div class="reveal-card" data-revealed="false" tabindex="0"><div class="reveal-front"><span>Soldiers with severe wounds sometimes feel little pain.</span></div><div class="reveal-back">Beecher&#x27;s WWII observations on the Anzio beachhead found that many badly wounded soldiers asked for little or no morphine. Context, in this case the relief of leaving the front line, dialed their pain way down.</div></div><div class="reveal-card" data-revealed="false" tabindex="0"><div class="reveal-front"><span>Phantom limb pain is real pain in a body part that doesn&#x27;t exist.</span></div><div class="reveal-back">Ramachandran&#x27;s mirror box work showed amputees feeling pain, cramping, and itching in missing limbs. The brain&#x27;s body map continues to generate sensation even with no peripheral input, which proves pain is made centrally.</div></div><div class="reveal-card" data-revealed="false" tabindex="0"><div class="reveal-front"><span>Placebo surgery for knee arthritis works as well as the real thing.</span></div><div class="reveal-back">Moseley&#x27;s 2002 randomized trial compared real arthroscopic knee surgery with a sham incision-only procedure. Two years later, both groups had the same pain and function, which says a lot about belief, expectation, and the natural course of the condition.</div></div></div>
+    <div class="key-facts"><h4>Evidence</h4><ul><li>Disc bulges, degeneration, and protrusions are present in 30-84% of pain-free adults across the lifespan, making isolated imaging findings poor predictors of back pain (Brinjikji et al., 2015).</li><li>Pain intensity correlates only weakly with imaging findings in low back pain, knee osteoarthritis, and shoulder pain (Hartvigsen et al., 2018).</li><li>Striking case reports such as the nail-through-the-boot case (Fisher, Hassan, &amp; O&#x27;Connor, 1995) illustrate that severe pain can occur without tissue damage and severe damage without immediate pain.</li></ul></div>
+    <div class="myth-card"><h4>Myth check</h4><p>Myth: A pain flare means I re-injured myself. Reality: Flares often reflect a temporarily more sensitive nervous system, not fresh damage.</p></div>
+    
+    <details class="citations"><summary>References</summary><ol><li>Brinjikji, W., Luetmer, P. H., Comstock, B., Bresnahan, B. W., Chen, L. E., Deyo, R. A., et al. (2015). Systematic literature review of imaging features of spinal degeneration in asymptomatic populations. American Journal of Neuroradiology, 36(4), 811-816.</li><li>Fisher, J. P., Hassan, D. T., &amp; O&#x27;Connor, N. (1995). Minerva. BMJ, 310, 70.</li><li>Moseley, J. B., O&#x27;Malley, K., Petersen, N. J., Menke, T. J., Brody, B. A., Kuykendall, D. H., et al. (2002). A controlled trial of arthroscopic surgery for osteoarthritis of the knee. New England Journal of Medicine, 347(2), 81-88.</li></ol></details>
+  </div>
+</section><section class="module" data-kind="module" data-index="7">
+  <div class="module-body">
+    <div class="mod-num"><span class="dot"></span>Module 7 of 8</div>
+    <div class="mod-title">The pain neuromatrix in plain English</div>
+    <div class="mod-objective">Grasp Melzack&#x27;s neuromatrix concept as a useful frame for understanding pain as a whole-system output.</div>
+    <div class="body-text"><p>Ronald Melzack spent his career working through anomalies the older theory of pain couldn&#x27;t explain. Phantom limb pain was the big one. If pain comes from the body sending damage signals up to the brain, how does an amputated limb still hurt?</p><p>His answer, developed across the 1990s and refined since, was the <strong>neuromatrix theory</strong>. The pain neuromatrix is a network of brain regions that work together to produce what Melzack called a neurosignature, a unique output pattern, every time you experience pain.</p><h4 class="body-heading">The band metaphor</h4><p>Think of it like a band. No single instrument is &#x27;the song.&#x27; The song emerges from the whole group playing together. Take one instrument away and the band still plays, just differently.</p><p>The regions Melzack pointed to include:</p><ul class="body-list"><li>The somatosensory cortex (the where)</li><li>The limbic system (the emotional weight)</li><li>The prefrontal cortex (the meaning-making)</li><li>Regions that handle threat appraisal, memory, and motor planning</li></ul><p>Together, this network can produce pain even when the body isn&#x27;t sending current input. That&#x27;s why phantom limbs hurt. The neuromatrix has a stored pattern for that limb, and stress, memory, or stump activity can trigger the pattern with no limb to receive signals.</p><h4 class="body-heading">Why this matters for everyday pain</h4><p>The frame helps explain why two people with identical injuries have different pain, why pain often worsens under stress, and why emotional and physical pain share so much neural real estate that brain scans struggle to tell them apart.</p><p>The neuromatrix is shaped by genetics, but also by experience. Repeated activation strengthens the pattern. This is part of why chronic pain becomes its own condition, the pattern gets practiced, like a song the band has played a thousand times.</p><blockquote class="body-quote">If pain is a learned pattern in a network, the network can also learn quieter patterns.</blockquote><p>Most modern pain treatments, from graded movement to pain reprocessing therapy, are essentially attempts to reshape the neuromatrix toward a less protective, less loud signature. The reshaping is real but gradual, measured in weeks to months of consistent practice.</p></div>
+    <div class="diagram"><div style="font-size:13px;color:var(--bn-muted);margin-bottom:10px">The pain neuromatrix: five overlapping jobs, one experience.</div><svg class="diagram-svg" viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg"><line x1="152.0" y1="66.66666666666667" x2="304.0" y2="66.66666666666667" stroke="rgba(64,126,201,.30)" stroke-width="1.5" stroke-dasharray="4 4"/><line x1="304.0" y1="66.66666666666667" x2="456.0" y2="66.66666666666667" stroke="rgba(64,126,201,.30)" stroke-width="1.5" stroke-dasharray="4 4"/><line x1="456.0" y1="66.66666666666667" x2="608.0" y2="66.66666666666667" stroke="rgba(64,126,201,.30)" stroke-width="1.5" stroke-dasharray="4 4"/><line x1="608.0" y1="66.66666666666667" x2="152.0" y2="133.33333333333334" stroke="rgba(64,126,201,.30)" stroke-width="1.5" stroke-dasharray="4 4"/><g class="diagram-hotspot" data-label="Sensory" data-info="Where it hurts, how intense it is, and what kind of sensation it is. This is the dimension most people think of first." tabindex="0"><circle cx="152.0" cy="66.66666666666667" r="32" fill="rgba(64,126,201,.18)" stroke="#407EC9" stroke-width="2"/><text x="152.0" y="71.66666666666667" text-anchor="middle" fill="#1B365D" font-weight="700" font-size="13">Sensory</text></g><g class="diagram-hotspot" data-label="Affective" data-info="How awful it feels and the urge to escape. This is the part that turns sensation into suffering." tabindex="0"><circle cx="304.0" cy="66.66666666666667" r="32" fill="rgba(64,126,201,.18)" stroke="#407EC9" stroke-width="2"/><text x="304.0" y="71.66666666666667" text-anchor="middle" fill="#1B365D" font-weight="700" font-size="13">Affective</text></g><g class="diagram-hotspot" data-label="Cognitive-Eval" data-info="What it means, what you&#x27;ll do about it, and how you&#x27;ll remember it. Beliefs and expectations live here." tabindex="0"><circle cx="456.0" cy="66.66666666666667" r="32" fill="rgba(64,126,201,.18)" stroke="#407EC9" stroke-width="2"/><text x="456.0" y="71.66666666666667" text-anchor="middle" fill="#1B365D" font-weight="700" font-size="13">Cognitive-Eval</text></g><g class="diagram-hotspot" data-label="Threat" data-info="Is this dangerous, should I be scared? The brain&#x27;s alarm system weighs in on every pain experience." tabindex="0"><circle cx="608.0" cy="66.66666666666667" r="32" fill="rgba(64,126,201,.18)" stroke="#407EC9" stroke-width="2"/><text x="608.0" y="71.66666666666667" text-anchor="middle" fill="#1B365D" font-weight="700" font-size="13">Threat</text></g><g class="diagram-hotspot" data-label="Motor" data-info="Should I freeze, fight, flee, or guard? Pain almost always comes with a movement response, even a subtle one." tabindex="0"><circle cx="152.0" cy="133.33333333333334" r="32" fill="rgba(64,126,201,.18)" stroke="#407EC9" stroke-width="2"/><text x="152.0" y="138.33333333333334" text-anchor="middle" fill="#1B365D" font-weight="700" font-size="13">Motor</text></g></svg><div class="diagram-info">The pain neuromatrix: five overlapping jobs, one experience.</div></div>
+    <div class="key-facts"><h4>Evidence</h4><ul><li>Melzack&#x27;s neuromatrix theory proposes that pain is produced by a widely distributed brain network rather than a single pain center, with the output being a &#x27;neurosignature&#x27; (Melzack, 2001).</li><li>The neuromatrix concept successfully accounts for phantom limb pain, an anomaly that earlier specificity theories of pain could not explain (Melzack, 2005).</li><li>Pain network activity overlaps substantially with networks involved in emotion regulation, attention, and threat processing (Tracey &amp; Mantyh, 2007).</li></ul></div>
+    <div class="myth-card"><h4>Myth check</h4><p>Myth: There&#x27;s a pain center in the brain that lights up when you&#x27;re hurt. Reality: Pain is produced by a network of regions working together, with no single &#x27;pain spot.&#x27;</p></div>
+    
+    <details class="citations"><summary>References</summary><ol><li>Melzack, R. (2001). Pain and the neuromatrix in the brain. Journal of Dental Education, 65(12), 1378-1382.</li><li>Melzack, R. (2005). Evolution of the neuromatrix theory of pain. The Prithvi Raj Lecture. Pain Practice, 5(2), 85-94.</li><li>Tracey, I., &amp; Mantyh, P. W. (2007). The cerebral signature for pain perception and its modulation. Neuron, 55(3), 377-391.</li></ol></details>
+  </div>
+</section><section class="module" data-kind="module" data-index="8">
+  <div class="module-body">
+    <div class="mod-num"><span class="dot"></span>Module 8 of 8</div>
+    <div class="mod-title">What this all means for you</div>
+    <div class="mod-objective">Pull the foundational ideas together into actionable framing for the rest of the courses.</div>
+    <div class="body-text"><p>Seven modules in, the picture should look different than when you started. Pain isn&#x27;t a damage report. It&#x27;s an alarm built by your brain from many inputs, only one of which is what&#x27;s happening in tissue.</p><h4 class="body-heading">The headlines so far</h4><ul class="body-list"><li>There are three kinds of pain that researchers recognize, and the kind you have changes what helps.</li><li>Nociception is the body&#x27;s signaling activity. Pain is the conscious experience the brain may or may not produce in response.</li><li>Most pain resolves on a predictable timeline. When it doesn&#x27;t, the question shifts from &#x27;what&#x27;s still broken&#x27; to &#x27;what&#x27;s keeping the alarm on.&#x27;</li><li>Pain intensity isn&#x27;t a measure of how much damage you have. It&#x27;s a measure of how much protection your brain has decided you need.</li></ul><p>None of this is meant to make you doubt your pain. The opposite. Pain is real, every time, in every form.</p><p>The nail-through-the-boot worker felt real pain. The fibromyalgia patient feels real pain. The post-surgical patient under anesthesia has real nociception even though they feel nothing.</p><p>These aren&#x27;t contradictions. They&#x27;re features of a system more interesting than the old wiring-diagram model could capture.</p><h4 class="body-heading">Three takeaways for the next courses</h4><ol class="body-list-num"><li><strong>You can stop treating pain as a verdict on your body.</strong> It isn&#x27;t. It&#x27;s a vote, weighted by inputs you can influence.</li><li><strong>The categories matter.</strong> Pushing through fibromyalgia like it&#x27;s a sprained ankle makes things worse. Babying a sprained ankle like it&#x27;s fibromyalgia also makes things worse.</li><li><strong>Pain past the healing window isn&#x27;t a sign that you&#x27;re broken or making it up.</strong> It&#x27;s a sign that the alarm system has gotten louder than it needs to be, and quieting it is a learnable skill backed by decades of evidence.</li></ol><p>The next course goes deep on why persistent pain happens and what&#x27;s actually going on in a sensitized nervous system. The course after that covers what to do about it.</p><blockquote class="body-quote">Your brain makes pain. That&#x27;s the door, and now you know where the handle is.</blockquote></div>
+    <div class="mquiz"><div class="mquiz-q"><div class="mquiz-prompt">Pain is best described as:</div><div class="mquiz-opts"><button class="mquiz-opt" data-correct="false">A damage report from tissue</button><button class="mquiz-opt" data-correct="true">The brain&#x27;s protective decision based on many inputs</button><button class="mquiz-opt" data-correct="false">The same thing as nociception</button><button class="mquiz-opt" data-correct="false">Only real if it shows up on a scan</button></div><div class="mquiz-explain">Pain is the brain&#x27;s protective output, weighing tissue input alongside context, memory, and expectation. It&#x27;s not a one-to-one readout of damage.</div></div><div class="mquiz-q"><div class="mquiz-prompt">A friend has had low back pain for 8 months with a normal MRI. Which is most likely true?</div><div class="mquiz-opts"><button class="mquiz-opt" data-correct="false">The pain isn&#x27;t real</button><button class="mquiz-opt" data-correct="false">The pain is purely psychological</button><button class="mquiz-opt" data-correct="true">The pain may be nociplastic, with a sensitized nervous system</button><button class="mquiz-opt" data-correct="false">She needs more imaging</button></div><div class="mquiz-explain">Persistent pain with normal imaging often reflects a sensitized nervous system, which is real and treatable. It&#x27;s still worth a clinical exam to rule out non-imaging red flags (fever, weight loss, neurological signs), but more scans rarely add useful information at this point.</div></div><div class="mquiz-q"><div class="mquiz-prompt">A pain flare during a stressful week most likely means:</div><div class="mquiz-opts"><button class="mquiz-opt" data-correct="false">You re-injured yourself</button><button class="mquiz-opt" data-correct="true">Your nervous system is temporarily more sensitive</button><button class="mquiz-opt" data-correct="false">The original injury is back</button><button class="mquiz-opt" data-correct="false">You should rest in bed for several days</button></div><div class="mquiz-explain">Stress turns up nervous-system gain, so the same inputs can register as more pain. It&#x27;s a sensitivity shift, not a sign of new damage.</div></div></div>
+    <div class="key-facts"><h4>Evidence</h4><ul><li>Pain neuroscience education improves pain, function, and reduces fear of movement in chronic pain across multiple systematic reviews (Wood &amp; Hendrick, 2019).</li><li>The biopsychosocial framing of pain has been adopted by major bodies including the IASP, NICE, and the WHO as the basis for chronic pain management (Engel, 1977; Gatchel et al., 2007).</li><li>Patient understanding of pain mechanisms is itself associated with better outcomes, independent of any specific treatment (Moseley &amp; Butler, 2015).</li></ul></div>
+    <div class="myth-card"><h4>Myth check</h4><p>Myth: Understanding pain is for clinicians, not patients. Reality: Patient understanding of how pain works is one of the strongest predictors of recovery.</p></div>
+    
+    <details class="citations"><summary>References</summary><ol><li>Wood, L., &amp; Hendrick, P. A. (2019). A systematic review and meta-analysis of pain neuroscience education for chronic low back pain: Short- and long-term outcomes of pain and disability. European Journal of Pain, 23(2), 234-249.</li><li>Engel, G. L. (1977). The need for a new medical model: A challenge for biomedicine. Science, 196(4286), 129-136.</li><li>Gatchel, R. J., Peng, Y. B., Peters, M. L., Fuchs, P. N., &amp; Turk, D. C. (2007). The biopsychosocial approach to chronic pain: Scientific advances and future directions. Psychological Bulletin, 133(4), 581-624.</li><li>Moseley, G. L., &amp; Butler, D. S. (2015). Fifteen years of explaining pain: The past, present, and future. Journal of Pain, 16(9), 807-813.</li></ol></details>
+  </div>
+</section><section class="module" data-kind="outro" data-index="end">
+  <div class="module-body completion">
+    <div class="completion-icon">✨</div>
+    <h1>Course complete</h1>
+    <p class="tagline">You've made it through Foundations.</p>
+    <p class="lede">The next time pain shows up, you'll have a different lens for understanding what's actually happening, and you can share what you've learned with the people in your community.</p>
+    <div class="completion-stats">
+      <div class="stat"><div class="n">8</div><div class="l">Modules</div></div>
+      <div class="stat"><div class="n">100%</div><div class="l">Complete</div></div>
+    </div>
+    <div class="cert-actions" style="margin-top:24px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center">
+      <button class="btn" onclick="emailCertificate()">Email Certificate</button>
+      <button class="btn ghost" onclick="restartCourse()">Start Over</button>
+    </div>
+    <p style="font-size:13px;color:var(--bn-muted);margin-top:18px">Your progress is saved on this device for 60 days. Continue your learning by exploring the other courses in the series.</p>
+  </div>
+</section>
+  </div>
+
+  <div class="module-nav" id="module-nav">
+    <button type="button" class="btn ghost" id="btn-prev"><span class="arrow">←</span> Previous</button>
+    <button type="button" class="btn" id="btn-next">Continue <span class="arrow">→</span></button>
+  </div>
+</div>
+<script>
+window.COURSE_ID = "foundations";
+window.COURSE_TITLE = "Foundations";
+window.COURSE_SUBTITLE = "What pain actually is";
+
+function $(s,r){return (r||document).querySelector(s)}
+function $$(s,r){return Array.from((r||document).querySelectorAll(s))}
+function toast(msg){var t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('show')},1800)}
+function fmtDate(){return new Date().toLocaleString()}
+
+// ---- click ripple anywhere ----
+document.addEventListener('click', function(e){
+  if(e.target.closest('.no-ripple')) return;
+  var r = document.createElement('span');
+  r.className = 'click-ripple';
+  r.style.left = e.clientX + 'px';
+  r.style.top = e.clientY + 'px';
+  document.body.appendChild(r);
+  setTimeout(function(){r.remove()}, 750);
+}, true);
+
+// ---- logo pulse ----
+function pulseLogo(){
+  var logo = $('.bn-logo');
+  if(!logo) return;
+  logo.classList.remove('pulse');
+  void logo.offsetWidth;
+  logo.classList.add('pulse');
+  setTimeout(function(){logo.classList.remove('pulse')}, 720);
+}
+
+// ---- module controller ----
+// ---- 60-day local storage ----
+var STORAGE_KEY = 'bn-course-' + (window.COURSE_ID || 'unknown');
+var STORAGE_TTL_MS = 60 * 24 * 60 * 60 * 1000; // 60 days
+
+function loadState(){
+  try{
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return null;
+    var data = JSON.parse(raw);
+    if(!data || !data.ts) return null;
+    if(Date.now() - data.ts > STORAGE_TTL_MS){ localStorage.removeItem(STORAGE_KEY); return null; }
+    return data;
+  } catch(e){ return null; }
+}
+function saveState(state){
+  try{
+    state.ts = Date.now();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch(e){}
+}
+function clearState(){
+  try{ localStorage.removeItem(STORAGE_KEY); } catch(e){}
+}
+function snapshotState(){
+  var s = {ts: Date.now(), current: controller ? controller.current : 0, reveal:{}, quiz:{}, ba:{}, slider:{}, drag:{}, diagram:{}, timeline:{}};
+  // reveal cards
+  $$('.reveal-card').forEach(function(c, i){ if(c.dataset.revealed === 'true') s.reveal[i] = true; });
+  // before/after active tab
+  $$('.before-after').forEach(function(ba, i){
+    var active = $('.ba-tab.active', ba);
+    if(active) s.ba[i] = active.dataset.tab;
+  });
+  // quiz answers
+  $$('.mquiz-q').forEach(function(q, i){
+    var picked = $$('.mquiz-opt', q).findIndex(function(o){return o.classList.contains('correct')||o.classList.contains('incorrect')});
+    var anyDisabled = $$('.mquiz-opt[disabled]', q).length > 0;
+    if(anyDisabled){
+      // record which option was clicked (the one that has correct/incorrect class without partner)
+      var clicked = $$('.mquiz-opt', q).findIndex(function(o, idx){
+        // The clicked one is whichever doesn't equal the auto-correct hint
+        // Simpler: any disabled one is fine; record disabled state only.
+        return o.classList.contains('correct') || o.classList.contains('incorrect');
+      });
+      s.quiz[i] = { answered: true };
+    }
+  });
+  // slider explore values
+  $$('.slider-explore .bn-slider').forEach(function(sl, i){ s.slider[i] = Number(sl.value || 0); });
+  // drag-match: list matched item ids per slot
+  $$('.drag-match').forEach(function(dm, i){
+    var matched = $$('.dm-item.matched', dm).map(function(it){ return it.dataset.id; });
+    s.drag[i] = matched;
+  });
+  // diagram active hotspot
+  $$('.diagram').forEach(function(d, i){
+    var active = $('.diagram-hotspot.active', d);
+    if(active) s.diagram[i] = active.dataset.label;
+  });
+  // timeline active marker
+  $$('.timeline').forEach(function(tl, i){
+    var actives = $$('.tl-marker.active', tl);
+    if(actives.length) s.timeline[i] = actives.length - 1;
+  });
+  return s;
+}
+function persistDebounced(){
+  if(persistDebounced._t) clearTimeout(persistDebounced._t);
+  persistDebounced._t = setTimeout(function(){ if(controller) saveState(snapshotState()); }, 220);
+}
+function restoreState(){
+  var s = loadState();
+  if(!s) return null;
+  // Reveal cards
+  $$('.reveal-card').forEach(function(c, i){ if(s.reveal && s.reveal[i]) c.dataset.revealed = 'true'; });
+  // Before/after
+  $$('.before-after').forEach(function(ba, i){
+    if(!s.ba || !s.ba[i]) return;
+    var key = s.ba[i];
+    $$('.ba-tab', ba).forEach(function(t){ t.classList.toggle('active', t.dataset.tab === key); });
+    $$('.ba-panel', ba).forEach(function(p){ p.classList.toggle('active', p.dataset.panel === key); });
+  });
+  // Sliders
+  $$('.slider-explore').forEach(function(se, i){
+    if(s.slider && s.slider[i] != null){
+      var sl = $('.bn-slider', se);
+      if(sl){ sl.value = s.slider[i]; sl.dispatchEvent(new Event('input', {bubbles:true})); }
+    }
+  });
+  // Diagram hotspot
+  $$('.diagram').forEach(function(d, i){
+    var label = s.diagram && s.diagram[i];
+    if(!label) return;
+    var hs = $$('.diagram-hotspot', d).find(function(h){return h.dataset.label === label;});
+    if(hs) hs.click();
+  });
+  // Timeline marker
+  $$('.timeline').forEach(function(tl, i){
+    var idx = s.timeline && s.timeline[i];
+    if(idx == null) return;
+    var marker = $$('.tl-marker', tl)[idx];
+    if(marker) marker.click();
+  });
+  return s;
+}
+
+function ModuleController(){
+  this.stage = $('#module-stage');
+  this.modules = $$('.module');
+  this.current = 0;
+  this.transitioning = false;
+  var self = this;
+  this.modules.forEach(function(m,i){m.dataset.index = i; if(i===0){m.classList.add('active')} else {m.classList.add('stale')}});
+  // restore saved state if any
+  var saved = restoreState();
+  if(saved && typeof saved.current === 'number' && saved.current > 0 && saved.current < this.modules.length){
+    // jump straight to saved module without animation
+    var target = saved.current;
+    this.modules.forEach(function(m, i){
+      m.classList.remove('active','exiting-forward','exiting-back','entering-back');
+      if(i===target){ m.classList.add('active'); m.classList.remove('stale'); }
+      else { m.classList.add('stale'); }
+    });
+    this.current = target;
+    showResumeNotice();
+  }
+  this.lockHeightToActive();
+  this.updateNav();
+  $('#btn-prev').addEventListener('click', function(){self.prev()});
+  $('#btn-next').addEventListener('click', function(){self.next()});
+  document.addEventListener('keydown', function(e){
+    if(e.target.matches('input,textarea,select')) return;
+    if(e.key === 'Enter' || e.key === 'ArrowRight'){e.preventDefault(); self.next()}
+    if(e.key === 'ArrowLeft' || e.key === 'Escape'){e.preventDefault(); self.prev()}
+  });
+  window.addEventListener('resize', function(){if(!self.transitioning) self.lockHeightToActive()});
+}
+ModuleController.prototype.lockHeightToActive = function(){
+  var act = this.modules[this.current];
+  if(act) this.stage.style.height = act.offsetHeight + 'px';
+};
+ModuleController.prototype.measureModule = function(m){
+  this.stage.classList.add('measuring');
+  var wasStale = m.classList.contains('stale');
+  if(wasStale) m.classList.remove('stale');
+  var prev = {pos:m.style.position,opa:m.style.opacity,tr:m.style.transform,fl:m.style.filter,trs:m.style.transition,p:m.style.pointerEvents,v:m.style.visibility,d:m.style.display};
+  m.style.transition = 'none';
+  m.style.position = 'relative';
+  m.style.opacity = '0';
+  m.style.transform = 'none';
+  m.style.filter = 'none';
+  m.style.pointerEvents = 'none';
+  m.style.visibility = 'hidden';
+  m.style.display = 'block';
+  void m.offsetWidth;
+  var h = m.offsetHeight;
+  Object.keys(prev).forEach(function(k){
+    var pmap = {pos:'position',opa:'opacity',tr:'transform',fl:'filter',trs:'transition',p:'pointerEvents',v:'visibility',d:'display'};
+    m.style[pmap[k]] = prev[k] || '';
+  });
+  if(wasStale) m.classList.add('stale');
+  this.stage.classList.remove('measuring');
+  return h;
+};
+ModuleController.prototype.goTo = function(target, direction){
+  if(this.transitioning) return;
+  if(target < 0 || target >= this.modules.length) return;
+  var dir = direction || (target > this.current ? 'forward' : 'back');
+  this.transitioning = true;
+  pulseLogo();
+  var cur = this.modules[this.current], next = this.modules[target];
+  var curH = cur.offsetHeight;
+  this.stage.style.height = curH + 'px';
+  var nextH = this.measureModule(next);
+  next.classList.remove('stale');
+  cur.classList.remove('active');
+  cur.classList.add(dir === 'forward' ? 'exiting-forward' : 'exiting-back');
+  next.classList.remove('exiting-forward','exiting-back');
+  if(dir === 'back') next.classList.add('entering-back');
+  var self = this;
+  setTimeout(function(){
+    self.stage.style.height = nextH + 'px';
+    next.classList.remove('entering-back');
+    next.classList.add('active');
+  }, 100);
+  setTimeout(function(){
+    cur.classList.remove('exiting-forward','exiting-back');
+    cur.classList.add('stale');
+    self.stage.style.height = '';
+    self.transitioning = false;
+  }, 780);
+  this.current = target;
+  this.updateNav();
+  persistDebounced();
+};
+ModuleController.prototype.next = function(){
+  if(this.current < this.modules.length - 1) this.goTo(this.current + 1, 'forward');
+};
+ModuleController.prototype.prev = function(){
+  if(this.current > 0) this.goTo(this.current - 1, 'back');
+};
+ModuleController.prototype.updateNav = function(){
+  var total = this.modules.length;
+  var prevBtn = $('#btn-prev'), nextBtn = $('#btn-next');
+  prevBtn.classList.toggle('ghost-hidden', this.current === 0);
+  var isLast = this.current === total - 1;
+  if(isLast){nextBtn.innerHTML = 'Restart <span class="arrow">↻</span>';}
+  else{nextBtn.innerHTML = 'Continue <span class="arrow">→</span>';}
+  nextBtn.onclick = isLast ? function(){window.scrollTo({top:0,behavior:'smooth'}); controller.goTo(0,'back')} : function(){controller.next()};
+  // progress
+  var fill = $('#progress-fill'), txt = $('#progress-text');
+  if(fill) fill.style.width = (((this.current + 1) / total) * 100) + '%';
+  if(txt){
+    var mod = this.modules[this.current];
+    if(mod.dataset.kind === 'intro'){txt.textContent = 'Welcome'}
+    else if(mod.dataset.kind === 'outro'){txt.textContent = 'Course complete'}
+    else{txt.textContent = 'Module ' + (this.current) + ' of ' + (total - 2)}
+  }
+};
+var controller;
+
+// ---- interactive components ----
+function wireRevealCards(){
+  $$('.reveal-card').forEach(function(c){
+    c.addEventListener('click', function(){
+      c.dataset.revealed = c.dataset.revealed === 'true' ? 'false' : 'true';
+    });
+  });
+}
+function wireBeforeAfter(){
+  $$('.before-after').forEach(function(ba){
+    var tabs = $$('.ba-tab', ba);
+    var panels = $$('.ba-panel', ba);
+    tabs.forEach(function(t){
+      t.addEventListener('click', function(){
+        tabs.forEach(function(x){x.classList.remove('active')});
+        panels.forEach(function(x){x.classList.remove('active')});
+        t.classList.add('active');
+        var key = t.dataset.tab;
+        var p = ba.querySelector('.ba-panel[data-panel="'+key+'"]');
+        if(p) p.classList.add('active');
+      });
+    });
+  });
+}
+function wireDiagram(){
+  $$('.diagram').forEach(function(d){
+    var info = $('.diagram-info', d);
+    var hotspots = $$('.diagram-hotspot', d);
+    var defaultText = info ? info.innerHTML : '';
+    hotspots.forEach(function(h){
+      h.setAttribute('tabindex','0');
+      h.setAttribute('role','button');
+      function activate(){
+        hotspots.forEach(function(x){x.classList.remove('active')});
+        h.classList.add('active');
+        var key = h.dataset.label;
+        var content = h.dataset.info;
+        if(info && content){info.innerHTML = '<strong>' + key + '</strong>' + content;}
+      }
+      h.addEventListener('click', activate);
+      h.addEventListener('keydown', function(e){if(e.key===' '||e.key==='Enter'){e.preventDefault();activate()}});
+    });
+  });
+}
+function wireMicroQuiz(){
+  $$('.mquiz-q').forEach(function(q){
+    var opts = $$('.mquiz-opt', q);
+    var explain = $('.mquiz-explain', q);
+    opts.forEach(function(o){
+      o.addEventListener('click', function(){
+        if(o.disabled) return;
+        opts.forEach(function(x){x.disabled = true});
+        var correct = o.dataset.correct === 'true';
+        o.classList.add(correct ? 'correct' : 'incorrect');
+        if(!correct){
+          // also highlight the correct option
+          var rightOne = opts.filter(function(x){return x.dataset.correct === 'true'})[0];
+          if(rightOne) rightOne.classList.add('correct');
+        }
+        if(explain) explain.classList.add('show');
+      });
+    });
+  });
+}
+function wireSliderExplore(){
+  var allSliders = $$('.slider-explore');
+  allSliders.forEach(function(se, idx){
+    var slider = $('.bn-slider', se);
+    var output = $('.se-output', se);
+    if(!slider || !output){  return; }
+    var states;
+    try{ states = JSON.parse(se.dataset.states || '[]'); }catch(e){  states = []; }
+    if(!states.length){  return; }
+    var viz = se.dataset.visualization || '';
+    var painRegion = $('.se-body-figure .pain-region', se);
+    var breathCircle = $('.breath-circle', se);
+    var breathLabel = $('.breath-label', se);
+    var breathTimer1 = null, breathTimer2 = null;
+    var lastBreathStateIdx = -1;
+
+    function escText(t){ return (t==null?'':String(t)); }
+    function indexFromValue(v){
+      var pct = Math.max(0, Math.min(100, Number(v))) / 100;
+      var i = Math.round(pct * (states.length - 1));
+      return Math.max(0, Math.min(states.length - 1, i));
+    }
+    function continuousIntensity(v){
+      var pct = Math.max(0, Math.min(100, Number(v))) / 100;
+      var pos = pct * (states.length - 1);
+      var lo = Math.floor(pos), hi = Math.min(states.length - 1, lo + 1), t = pos - lo;
+      var iLo = (states[lo] && typeof states[lo].intensity === 'number') ? states[lo].intensity : pct;
+      var iHi = (states[hi] && typeof states[hi].intensity === 'number') ? states[hi].intensity : pct;
+      return iLo + (iHi - iLo) * t;
+    }
+    function updateBodyFigure(intensity){
+      if(!painRegion) return;
+      var i = Math.max(0, Math.min(1, intensity));
+      painRegion.setAttribute('rx', 6 + i * 56);
+      painRegion.setAttribute('ry', 8 + i * 90);
+      painRegion.setAttribute('cy', 130 - i * 8);
+      painRegion.style.opacity = Math.max(0.2, Math.min(1, i * 1.1));
+    }
+    function clearBreath(){
+      if(breathTimer1){ clearTimeout(breathTimer1); breathTimer1 = null; }
+      if(breathTimer2){ clearTimeout(breathTimer2); breathTimer2 = null; }
+    }
+    function startBreath(state){
+      if(!breathCircle) return;
+      clearBreath();
+      var inhale = (state && state.inhale) || 4, exhale = (state && state.exhale) || 4;
+      breathCircle.classList.remove('inhale','exhale');
+      function cycle(){
+        breathCircle.style.setProperty('--breath-dur', inhale + 's');
+        breathCircle.classList.remove('exhale'); breathCircle.classList.add('inhale');
+        if(breathLabel) breathLabel.textContent = 'Inhale';
+        breathTimer1 = setTimeout(function(){
+          breathCircle.style.setProperty('--breath-dur', exhale + 's');
+          breathCircle.classList.remove('inhale'); breathCircle.classList.add('exhale');
+          if(breathLabel) breathLabel.textContent = 'Exhale';
+          breathTimer2 = setTimeout(cycle, exhale * 1000);
+        }, inhale * 1000);
+      }
+      cycle();
+    }
+    function render(){
+      var v = Number(slider.value || 0);
+      var i = indexFromValue(v);
+      var s = states[i] || {title:'',body:''};
+      output.innerHTML = '<strong>' + escText(s.title) + '</strong>' + escText(s.body);
+      if(viz === 'body_figure') updateBodyFigure(continuousIntensity(v));
+      else if(viz === 'breath_pace'){
+        if(i !== lastBreathStateIdx){ lastBreathStateIdx = i; startBreath(s); }
+      }
+    }
+    slider.addEventListener('input', function(e){
+      render();
+    });
+    slider.addEventListener('change', function(){ render(); });
+    render();
+  });
+}
+function wireTimeline(){
+  $$('.timeline').forEach(function(tl){
+    var markers = $$('.tl-marker', tl);
+    var info = $('.tl-info', tl);
+    var fill = $('.tl-fill', tl);
+    function activate(idx){
+      markers.forEach(function(m,i){m.classList.toggle('active', i <= idx)});
+      var pct = markers.length > 1 ? (idx / (markers.length - 1)) * 100 : 0;
+      if(fill) fill.style.width = pct + '%';
+      var m = markers[idx];
+      if(m && info){
+        info.innerHTML = '<strong>' + (m.dataset.label||'') + '</strong>' + (m.dataset.info||'');
+      }
+    }
+    markers.forEach(function(m, i){
+      m.setAttribute('tabindex','0');
+      m.setAttribute('role','button');
+      m.addEventListener('click', function(){activate(i)});
+      m.addEventListener('keydown', function(e){if(e.key===' '||e.key==='Enter'){e.preventDefault();activate(i)}});
+    });
+    if(markers.length) activate(0);
+  });
+}
+function wireDragMatch(){
+  $$('.drag-match').forEach(function(dm){
+    var isBucket = dm.dataset.mode === 'bucket';
+    var items = $$('.dm-item', dm);
+    var slots = isBucket ? $$('.dm-bucket', dm) : $$('.dm-slot', dm);
+    var feedback = $('.dm-feedback', dm);
+    var dragged = null;
+    items.forEach(function(it){
+      it.draggable = true;
+      it.addEventListener('dragstart', function(e){dragged = it; it.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', it.dataset.id)});
+      it.addEventListener('dragend', function(){it.classList.remove('dragging'); dragged = null});
+      it.addEventListener('click', function(){
+        if(it.classList.contains('matched')) return;
+        items.forEach(function(x){x.classList.remove('selected')});
+        it.classList.add('selected');
+      });
+    });
+    function placeIntoBucket(item, bucket){
+      var holder = $('.dm-bucket-items', bucket);
+      if(!holder) return;
+      var clone = item.cloneNode(true);
+      clone.draggable = false;
+      clone.classList.remove('dragging','selected');
+      clone.classList.add('matched');
+      holder.appendChild(clone);
+      item.classList.add('matched');
+      item.draggable = false;
+      item.style.display = 'none';
+      checkAllMatched();
+    }
+    slots.forEach(function(s){
+      s.addEventListener('dragover', function(e){e.preventDefault(); s.classList.add('over')});
+      s.addEventListener('dragleave', function(){s.classList.remove('over')});
+      s.addEventListener('drop', function(e){
+        e.preventDefault();
+        s.classList.remove('over');
+        if(!dragged) return;
+        var match = dragged.dataset.match === s.dataset.match;
+        if(match){
+          if(isBucket){
+            placeIntoBucket(dragged, s);
+          } else {
+            s.classList.add('filled');
+            s.innerHTML = '<span class="dm-target">' + s.dataset.label + '</span>' + dragged.textContent;
+            dragged.classList.add('matched');
+            dragged.draggable = false;
+            checkAllMatched();
+          }
+        } else {
+          // visual hint of wrong
+          s.classList.add('over');
+          setTimeout(function(){s.classList.remove('over')}, 200);
+          dragged.style.animation = 'shake 360ms';
+          setTimeout(function(){if(dragged) dragged.style.animation = ''}, 400);
+        }
+      });
+      s.addEventListener('click', function(){
+        var sel = $('.dm-item.selected', dm);
+        if(!sel) return;
+        var match = sel.dataset.match === s.dataset.match;
+        if(match){
+          if(isBucket){
+            placeIntoBucket(sel, s);
+          } else {
+            s.classList.add('filled');
+            s.innerHTML = '<span class="dm-target">' + s.dataset.label + '</span>' + sel.textContent;
+            sel.classList.add('matched');
+            sel.draggable = false;
+            sel.classList.remove('selected');
+            checkAllMatched();
+          }
+        } else {
+          sel.classList.remove('selected');
+        }
+      });
+    });
+    function checkAllMatched(){
+      var unmatched = items.filter(function(x){return !x.classList.contains('matched')});
+      if(unmatched.length === 0 && feedback){
+        feedback.classList.add('success');
+        feedback.textContent = feedback.dataset.success || 'All matched. Nice work.';
+      }
+    }
+  });
+}
+
+function showResumeNotice(){
+  setTimeout(function(){ toast('Welcome back, picking up where you left off'); }, 800);
+}
+function emailCertificate(){
+  var courseTitle = (window.COURSE_TITLE || document.title || 'Brainnovation Network course');
+  var courseSubtitle = (window.COURSE_SUBTITLE || '');
+  var modulesCompleted = $$('.module[data-kind="module"]').length;
+  var dateStr = new Date().toLocaleDateString(undefined, {year:'numeric', month:'long', day:'numeric'});
+  var subject = 'Certificate of Completion - ' + courseTitle + ' (Brainnovation Network)';
+  var body =
+    'CERTIFICATE OF COMPLETION\n' +
+    'Brainnovation Network\n\n' +
+    '----------------------------------------\n\n' +
+    'This confirms successful completion of:\n\n' +
+    courseTitle.toUpperCase() + '\n' +
+    (courseSubtitle ? courseSubtitle + '\n' : '') +
+    '\n' +
+    'Date completed: ' + dateStr + '\n' +
+    'Modules completed: ' + modulesCompleted + '\n\n' +
+    '----------------------------------------\n\n' +
+    'This course covered evidence-based pain science from peer-reviewed sources. The certificate is for personal records of self-directed learning. It is not a clinical credential, license, or substitute for professional medical advice.\n\n' +
+    'Continue your learning at the Brainnovation Network community.\n';
+  var href = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  window.open(href, '_blank');
+  toast('Opening your email');
+}
+function restartCourse(){
+  clearState();
+  if(window.controller) window.controller.goTo(0,'back');
+  // reset interactive state
+  $$('.reveal-card').forEach(function(c){ c.dataset.revealed = 'false'; });
+  $$('.before-after').forEach(function(ba){
+    var tabs = $$('.ba-tab', ba), panels = $$('.ba-panel', ba);
+    tabs.forEach(function(t,i){ t.classList.toggle('active', i===0); });
+    panels.forEach(function(p,i){ p.classList.toggle('active', i===0); });
+  });
+  $$('.mquiz-opt').forEach(function(o){ o.disabled=false; o.classList.remove('correct','incorrect'); });
+  $$('.mquiz-explain').forEach(function(e){ e.classList.remove('show'); });
+  $$('.dm-item').forEach(function(i){ i.classList.remove('matched','selected'); i.draggable=true; i.style.display=''; });
+  $$('.dm-bucket-items').forEach(function(b){ b.innerHTML=''; });
+  $$('.dm-bucket').forEach(function(b){ b.classList.remove('over'); });
+  $$('.dm-slot').forEach(function(s){
+    s.classList.remove('filled','over');
+    s.innerHTML = '<span class="dm-target">' + (s.dataset.label||'') + '</span>';
+  });
+  $$('.dm-feedback').forEach(function(f){ f.classList.remove('success'); f.textContent=''; });
+  $$('.diagram-hotspot').forEach(function(h){ h.classList.remove('active'); });
+  $$('.tl-marker').forEach(function(m){ m.classList.remove('active'); });
+  $$('.tl-fill').forEach(function(f){ f.style.width='0%'; });
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  wireRevealCards();
+  wireBeforeAfter();
+  wireDiagram();
+  wireMicroQuiz();
+  wireSliderExplore();
+  wireTimeline();
+  wireDragMatch();
+  controller = new ModuleController();
+  // persist on any interaction
+  document.addEventListener('click', persistDebounced, true);
+  document.addEventListener('input', persistDebounced, true);
+});
+
+</script>
+</body>
+</html>
