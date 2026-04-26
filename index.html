@@ -181,13 +181,13 @@ p{margin:0 0 14px}
 
 /* ---- myth callout ---- */
 .myth-card{background:linear-gradient(135deg,rgba(241,180,52,.08),rgba(224,98,135,.06));border:1px solid rgba(241,180,52,.30);border-radius:14px;padding:16px 18px;margin:18px 0;position:relative}
-.myth-card::before{content:"\2728";position:absolute;top:-12px;left:14px;background:var(--bn-card);padding:0 6px;font-size:18px}
+.myth-card::before{content:"✨";position:absolute;top:-12px;left:14px;background:var(--bn-card);padding:0 6px;font-size:18px}
 .myth-card h4{font-size:11px;font-weight:800;color:#a17500;letter-spacing:.12em;text-transform:uppercase;margin:0 0 6px}
 .myth-card p{margin:0;font-size:14px;color:#5a4a25}
 
 /* clinician note callout */
 .clinician-note{background:linear-gradient(135deg,rgba(64,126,201,.06),rgba(109,205,184,.08));border:1px solid rgba(64,126,201,.25);border-left:4px solid var(--bn-blue);border-radius:0 14px 14px 0;padding:16px 18px;margin:18px 0;position:relative}
-.clinician-note::before{content:"\2695\FE0F";position:absolute;top:-12px;left:14px;background:var(--bn-card);padding:0 6px;font-size:16px}
+.clinician-note::before{content:"⚕️";position:absolute;top:-12px;left:14px;background:var(--bn-card);padding:0 6px;font-size:16px}
 .clinician-note h4{font-size:11px;font-weight:800;color:var(--bn-navy);letter-spacing:.12em;text-transform:uppercase;margin:0 0 6px}
 .clinician-note p{margin:0;font-size:13.5px;color:#34465f;line-height:1.55}
 
@@ -195,7 +195,7 @@ p{margin:0 0 14px}
 .citations{margin-top:18px;font-size:12px}
 .citations summary{cursor:pointer;font-weight:600;color:var(--bn-muted);font-size:12px;letter-spacing:.05em;text-transform:uppercase;list-style:none;display:inline-flex;align-items:center;gap:6px}
 .citations summary::-webkit-details-marker{display:none}
-.citations summary::before{content:"\203A";display:inline-block;transition:transform .25s var(--ease-out-quint);font-weight:800}
+.citations summary::before{content:"›";display:inline-block;transition:transform .25s var(--ease-out-quint);font-weight:800}
 .citations[open] summary::before{transform:rotate(90deg)}
 .citations ol{margin:8px 0 0;padding-left:18px;color:var(--bn-muted);line-height:1.5}
 .citations li{margin-bottom:6px;font-size:11px}
@@ -304,9 +304,9 @@ p{margin:0 0 14px}
 .mquiz-opt{appearance:none;border:1.5px solid rgba(64,126,201,.20);background:rgba(255,255,255,.7);color:var(--bn-navy);padding:13px 16px;border-radius:12px;font-size:14px;text-align:left;cursor:pointer;font-family:inherit;font-weight:500;transition:all 200ms var(--ease-spring);position:relative;display:flex;justify-content:space-between;align-items:center;gap:10px}
 .mquiz-opt:hover:not(:disabled){border-color:var(--bn-blue);background:rgba(255,255,255,.95);transform:translateY(-1px);box-shadow:0 6px 16px rgba(64,126,201,.12)}
 .mquiz-opt.correct{background:rgba(109,205,184,.20);border-color:var(--bn-teal);color:#0e5240}
-.mquiz-opt.correct::after{content:"\2713";color:var(--bn-teal);font-weight:800;font-size:18px}
+.mquiz-opt.correct::after{content:"✓";color:var(--bn-teal);font-weight:800;font-size:18px}
 .mquiz-opt.incorrect{background:rgba(224,98,135,.18);border-color:var(--bn-pink);color:#7a1d3a}
-.mquiz-opt.incorrect::after{content:"\2715";color:var(--bn-pink);font-weight:800;font-size:18px}
+.mquiz-opt.incorrect::after{content:"✕";color:var(--bn-pink);font-weight:800;font-size:18px}
 .mquiz-opt:disabled{cursor:default}
 .mquiz-explain{margin-top:12px;padding:12px 16px;background:rgba(64,126,201,.08);border-left:3px solid var(--bn-blue);border-radius:0 12px 12px 0;font-size:13px;color:#34465f;display:none}
 .mquiz-explain.show{display:block;animation:fadeIn 360ms var(--ease-spring)}
